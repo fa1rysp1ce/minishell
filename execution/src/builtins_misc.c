@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:04:11 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/15 14:16:36 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:39:12 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 //{"echo", "-n" / "", "txt...", "txt...", "null"}
 int     echo(t_token *token)

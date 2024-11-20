@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 21:58:32 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/19 16:46:39 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:40:47 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 //will push shell->token to the next token that is a command. NULL if there is no
 void    next_cmd_token(t_shell *shell)

@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:07 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/19 20:11:05 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:39:26 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 //void    free_pipes(int **fd, int pipes_num)
 // void    free_processes(int *pid, int proc_num)

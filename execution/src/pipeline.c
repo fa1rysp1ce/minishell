@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/20 13:28:40 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:40:51 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int new_pipe);
 static void    set_pipes(int pipe_fd[2][2], int last_pipe, int new_pipe, int i);

@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 14:20:56 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:39:37 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 void    get_next_heredoc(t_token *token, t_token **doc_token)
 {

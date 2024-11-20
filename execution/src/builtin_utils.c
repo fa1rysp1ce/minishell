@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:19:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/15 14:19:15 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:39:02 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 //have to check this!
 void    exit_cmd(t_shell *shell)

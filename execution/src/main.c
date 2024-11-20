@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:33:26 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 13:56:11 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:40:42 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 int main(int ac, char **av, char **env)
 {

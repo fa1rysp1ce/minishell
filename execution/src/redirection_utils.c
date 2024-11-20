@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:18:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/18 18:20:47 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:40:58 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 int    save_fds(t_shell *shell)
 {

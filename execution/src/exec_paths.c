@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:38:10 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/15 13:40:07 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:39:30 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 static char	**get_paths(t_shell *shell);
 static char	*find_correct_path(t_shell *shell, char *arg, char **paths, char *cmd);

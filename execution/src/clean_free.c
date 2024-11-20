@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:17:35 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/19 19:58:45 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:39:17 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 void    clean_shell(t_shell *shell)
 {

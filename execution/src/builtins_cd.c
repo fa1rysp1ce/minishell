@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:49:37 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/08 17:18:51 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:39:06 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 /*
 Handling absolute paths:

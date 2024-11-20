@@ -1,6 +1,6 @@
 
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 void    print_list(t_token **head);
 
@@ -10,7 +10,7 @@ void    init_tokens(t_token **head)
 
     //CMD
     new_node = NULL;
-    new_node = add_node(head);
+    new_node = add_node_inbar(head);
     // new_node->is_append = 1;
     new_node->type = CMD;
     new_node->args = malloc(sizeof(char *) * 2);
@@ -22,7 +22,7 @@ void    init_tokens(t_token **head)
 
     //REDIRECT
     new_node = NULL;
-    new_node = add_node(head);
+    new_node = add_node_inbar(head);
     new_node->type = HDOC;
     new_node->args = malloc(sizeof(char *) * 2);
     new_node->args[0] = ft_strdup("dimi0");
@@ -30,7 +30,7 @@ void    init_tokens(t_token **head)
 
     //REDIRECT
     new_node = NULL;
-    new_node = add_node(head);
+    new_node = add_node_inbar(head);
     new_node->type = HDOC;
     new_node->args = malloc(sizeof(char *) * 2);
     new_node->args[0] = ft_strdup("dimi");
@@ -38,7 +38,7 @@ void    init_tokens(t_token **head)
 /*
     //REDIRECT
     new_node = NULL;
-    new_node = add_node(head);
+    new_node = add_node_inbar(head);
     new_node->type = IN;
     new_node->args = malloc(sizeof(char *) * 2);
     new_node->args[0] = ft_strdup("test.txt");
@@ -47,13 +47,13 @@ void    init_tokens(t_token **head)
 
     //PIPE
     new_node = NULL;
-    new_node = add_node(head);
+    new_node = add_node_inbar(head);
     new_node->type = PIPE;
 
 
     //CMD
     new_node = NULL;
-    new_node = add_node(head);
+    new_node = add_node_inbar(head);
     new_node->type = CMD;
     new_node->args = malloc(sizeof(char *) * 3);
     new_node->args[0] = ft_strdup("grep");
@@ -66,12 +66,12 @@ void    init_tokens(t_token **head)
 
 
 // 2 cmds 
-    new_node = add_node(head);
+    new_node = add_node_inbar(head);
     new_node->type = PIPE;
 
     new_node = NULL;
 
-    new_node = add_node(head);
+    new_node = add_node_inbar(head);
     new_node->type = CMD;
     new_node->args = malloc(sizeof(char *) * 3);
     new_node->args[0] = ft_strdup("grep");
@@ -131,7 +131,7 @@ void    print_list(t_token **head)
 }
 
 
-t_token	*add_node(t_token **node)
+t_token	*add_node_inbar(t_token **node)
 {
 	t_token	*new_node;
 	t_token *curr;

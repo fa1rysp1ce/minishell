@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 19:37:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 13:27:44 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:41:03 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 int    redirect_output(t_token *red_token)
 {

@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 13:30:11 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:39:33 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_exec.h"
+#include "minishell.h"
 
 int    count_pipes(t_token **token)
 {
