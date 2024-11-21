@@ -135,6 +135,7 @@ char	*get_cmd_path(t_shell *shell);
 t_token	*add_node_inbar(t_token **node);
 void    init_tokens(t_token **head);
 void    clean_tokens(t_token **head_token);
+//remember to remove the jake_nodes file from the makefile
 
 
 //builtins

@@ -15,8 +15,9 @@ PARSING_SRCS = main.c exit_funcs.c variables.c nodes.c parse.c \
 		cmd_split.c check_input.c fill_list.c
 		
 EXECUTION_SRCS = clean_free.c init_shell.c debug.c execute.c errors.c \
-		redirection.c heredoc.c builtin_utils.c builtins_misc.c builtins_cd.c \
-		pipeline.c pipeline_utils.c exec_paths.c
+		redirection.c redirection_utils.c heredoc.c \
+		builtin_utils.c builtins_misc.c builtins_cd.c \
+		pipeline.c pipeline_utils.c exec_paths.c jake_nodes.c
 
 SRCS = $(addprefix parsing/, $(PARSING_SRCS)) \
        $(addprefix execution/, $(EXECUTION_SRCS))
@@ -30,7 +31,7 @@ LIB_INC_DIR = $(LIB_DIR)/includes/
 CC = cc
 RM = rm -rf
 CFLAGS = -Wall -Werror -Wextra
-IFLAGS = -I$(INCLUDE_DIR) -I$(LIB_INC_DIR) -I$(MALLOC_DIR)
+IFLAGS = -I $(INCLUDE_DIR) -I$(LIB_INC_DIR) -I$(MALLOC_DIR)
 RLFLAGS = -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory
 
 
@@ -41,7 +42,6 @@ all: $(NAME)
 $(LIB_PATH):
 	make -C $(LIB_DIR)
 	cp $(LIB_PATH) .
-	#cp $(LIB_DIR)$(LIB) .
 	
 $(MALLOC_PATH):
 	make -C $(MALLOC_DIR)

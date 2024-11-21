@@ -2,7 +2,7 @@
 
 #include "minishell.h"
 
-void    print_list(t_token **head);
+void    print_list_inbar(t_token **head);
 
 void    init_tokens(t_token **head)
 {
@@ -83,7 +83,7 @@ void    init_tokens(t_token **head)
 
 
 }
-void    print_list(t_token **head)
+void    print_list_inbar(t_token **head)
 {
     t_token *node;
     int i;

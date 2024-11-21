@@ -56,7 +56,10 @@ LIBFT_FLS = $(addprefix $(SRC_DIR)/,\
 				$(LIBFT_DIR)/ft_strtrim.c\
 				$(LIBFT_DIR)/ft_substr.c\
 				$(LIBFT_DIR)/ft_tolower.c\
-				$(LIBFT_DIR)/ft_toupper.c)
+				$(LIBFT_DIR)/ft_toupper.c\
+				$(LIBFT_DIR)/ft_putchar_fd.c\
+				$(LIBFT_DIR)/ft_putstr_fd.c\
+				$(LIBFT_DIR)/ft_strcmp.c)
 
 GNL_FLS = $(addprefix $(SRC_DIR)/,\
 			$(GNL_DIR)/get_next_line.c\
