@@ -5,7 +5,7 @@ LIB_DIR = ./libftplus
 LIB = libftplus.a
 LIB_PATH = $(addprefix $(LIB_DIR)/,$(LIB))
 MALLOC_DIR = ./safe_malloc
-MALLOC = safe_malloc.a
+MALLOC = lib_malloc.a
 MALLOC_PATH = $(addprefix $(MALLOC_DIR)/,$(MALLOC))
 
 EXTRA_PARH = $(LIB_PATH) $(MALLOC_PATH)

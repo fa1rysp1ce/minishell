@@ -1,4 +1,4 @@
-NAME = safe_malloc.a
+NAME = lib_malloc.a
 SRCS = safe_malloc.c
 OBJS = $(SRCS:.c=.o)
 
