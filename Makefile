@@ -40,12 +40,12 @@ all: $(NAME)
 
 $(LIB_PATH):
 	make -C $(LIB_DIR)
-	cp $(LIB_PATH)
+	cp $(LIB_PATH) .
 	#cp $(LIB_DIR)$(LIB) .
 	
 $(MALLOC_PATH):
 	make -C $(MALLOC_DIR)
-	cp $(MALLOC_PATH)
+	cp $(MALLOC_PATH) .
 	
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -57,8 +57,8 @@ $(OBJ_DIR)/%.o: execution/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(IFLAGS) -c -o $@ $<
 
 
-$(NAME): $(OBJS) $(LIB_PATH) $(MALLOC_PATH)
-	$(CC) $(OBJS) $(EXTRA_PARH) $(LIB_LINK) -lftplus $(RLFLAGS) -o $(NAME)
+$(NAME):  $(LIB_PATH) $(MALLOC_PATH) $(OBJS)
+	$(CC) $(OBJS) $(EXTRA_PARH) $(LIB_LINK) $(RLFLAGS) -lftplus -o $(NAME)
 
 clean:
 	make fclean -C $(LIB_DIR)
