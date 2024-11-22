@@ -3,7 +3,7 @@
 
 int	parse(t_token **list, char **line)
 {
-	char **strarr;
+	char 	**strarr;
 	int		arrsize;
 
 	strarr = NULL;
@@ -24,8 +24,9 @@ int	parse(t_token **list, char **line)
 		i++;
 	}
 	fill_list(strarr, list);
-	print_list(list);
-	free_list(list);
+	print_list_inbar(list);
+	// print_list(list);
+	// free_list(list);
 	return (0);
 }
 

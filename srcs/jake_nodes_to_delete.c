@@ -13,13 +13,14 @@ void    init_tokens(t_token **head)
     new_node = add_node_inbar(head);
     // new_node->is_append = 1;
     new_node->type = CMD;
-    new_node->args = malloc(sizeof(char *) * 2);
-    new_node->args[0] = ft_strdup("cat");
-    // new_node->args[1] = ft_strdup("h=666");
+    new_node->args = malloc(sizeof(char *) * 3);
+    new_node->args[0] = ft_strdup("ls");
+    new_node->args[1] = ft_strdup("-l");
     // new_node->args[2] = ft_strdup("l");
-    new_node->args [1] = NULL;
+    new_node->args [2] = NULL;
 
 
+/*
     //REDIRECT
     new_node = NULL;
     new_node = add_node_inbar(head);
@@ -35,7 +36,6 @@ void    init_tokens(t_token **head)
     new_node->args = malloc(sizeof(char *) * 2);
     new_node->args[0] = ft_strdup("dimi");
     new_node->args [1] = NULL;
-/*
     //REDIRECT
     new_node = NULL;
     new_node = add_node_inbar(head);
@@ -78,7 +78,7 @@ void    init_tokens(t_token **head)
     new_node->args[1] = ft_strdup("");
     new_node->args [1] = NULL;
 */
-    print_list(head);
+    print_list_inbar(head);
 
 
 
@@ -124,6 +124,8 @@ void    print_list_inbar(t_token **head)
                 printf("args[%d]: %s\n", i, node->args[i]);
                 i++;
             }
+            if (node->args[i] == NULL)
+                printf("args[%d]: NULL\n", i);
         }
         node = node->next;
     }
@@ -160,7 +162,7 @@ t_token	*add_node_inbar(t_token **node)
 }
 
 
-void    clean_tokens(t_token **head_token)
+void    clean_tokens_inbar(t_token **head_token)
 {
     t_token *token;
     t_token *tmp;

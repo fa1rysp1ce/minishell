@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/20 18:40:51 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/22 18:06:00 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
     }
     restore_fds(shell);
     clean_exec(shell);
+    clean_tokens(shell);
     clean_shell(shell);
     exit(status);
 }

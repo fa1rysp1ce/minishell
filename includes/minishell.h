@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 18:38:33 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/22 18:02:15 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
-
-//#include "libftplus/includes/libft.h"   ///to take care of
-//#include "safe_malloc/safe_malloc.h"
 
 #define GREEN "\033[32m"
 #define BOLD "\033[1m"
@@ -131,10 +128,11 @@ void	exit_fill_list(char **strarr, int pos, t_token **list);
 char	*get_cmd_path(t_shell *shell);
 
 
-//nodes
+//jake nodes
 t_token	*add_node_inbar(t_token **node);
 void    init_tokens(t_token **head);
-void    clean_tokens(t_token **head_token);
+void    clean_tokens_inbar(t_token **head_token);
+void    print_list_inbar(t_token **head);
 //remember to remove the jake_nodes file from the makefile
 
 
@@ -185,6 +183,7 @@ char	*expand_arg(t_shell *shell, char *arg);
 void 	clean_shell(t_shell *shell);
 void    clean_exec(t_shell *shell);
 void    clean_heredocs(t_execute *exec);
+void    clean_tokens(t_shell *shell);
 void    free_2d_charr(char **arr);
 
 //errors

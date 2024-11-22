@@ -1,5 +1,7 @@
 NAME = minishell
 
+# to supress unavoidable readline leaks:
+# valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
 
 LIB_DIR = ./libftplus
 LIB = libftplus.a

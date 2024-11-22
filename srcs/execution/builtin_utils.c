@@ -6,17 +6,18 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:19:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 18:39:02 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/22 18:00:11 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//have to check this!
 void    exit_cmd(t_shell *shell)
 {
     clean_exec(shell);
+    clean_tokens(shell);
     clean_shell(shell);
+    exit(EXIT_SUCCESS);
 }
 
 int     is_builtin(char *str)
