@@ -1,3 +1,19 @@
+To update your branch according to the main branch, follow these steps:
+Fetch the latest changes from the remote repository:
+
+git fetch origin
+
+Switch to your branch:
+
+git checkout <your-branch-name>
+
+Merge the changes from the main branch into your branch:
+
+git merge origin/main
+
+
+
+
 To update your GitHub branch with your local changes, follow these steps:
 Commit your local changes:
 
@@ -44,4 +60,5 @@ Push the updated main branch to the remote repository:
 git push origin main
 
 If there are any conflicts during the merge, you'll need to resolve them manually. After resolving conflicts, add the resolved files and commit the changes
+
 
