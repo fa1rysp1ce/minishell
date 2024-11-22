@@ -8,7 +8,7 @@ int	main(void)
 	ls_ptr = NULL;
 	while (1)
 	{
-		line = readline(GREEN BOLD"minishell:"DEFAULT" ");
+		line = readline(GREEN BOLD"minishell>"DEFAULT" ");
 		//add_history(line);
 		//rl_replace_line((const char *)line, 0);
 		//printf("%s (main)\n", line);
