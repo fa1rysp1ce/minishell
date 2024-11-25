@@ -14,20 +14,11 @@ void    init_tokens(t_token **head)
     // new_node->is_append = 1;
     new_node->type = CMD;
     new_node->args = malloc(sizeof(char *) * 3);
-    new_node->args[0] = ft_strdup("ls");
-    new_node->args[1] = ft_strdup("-l");
+    new_node->args[0] = ft_strdup("cat");
+    // new_node->args[1] = ft_strdup("-l");
     // new_node->args[2] = ft_strdup("l");
-    new_node->args [2] = NULL;
-
-
-/*
-    //REDIRECT
-    new_node = NULL;
-    new_node = add_node_inbar(head);
-    new_node->type = HDOC;
-    new_node->args = malloc(sizeof(char *) * 2);
-    new_node->args[0] = ft_strdup("dimi0");
     new_node->args [1] = NULL;
+
 
     //REDIRECT
     new_node = NULL;
@@ -36,13 +27,22 @@ void    init_tokens(t_token **head)
     new_node->args = malloc(sizeof(char *) * 2);
     new_node->args[0] = ft_strdup("dimi");
     new_node->args [1] = NULL;
+
     //REDIRECT
     new_node = NULL;
     new_node = add_node_inbar(head);
-    new_node->type = IN;
+    new_node->type = HDOC;
     new_node->args = malloc(sizeof(char *) * 2);
-    new_node->args[0] = ft_strdup("test.txt");
+    new_node->args[0] = ft_strdup("2");
     new_node->args [1] = NULL;
+    //REDIRECT
+    new_node = NULL;
+    new_node = add_node_inbar(head);
+    new_node->type = HDOC;
+    new_node->args = malloc(sizeof(char *) * 2);
+    new_node->args[0] = ft_strdup("3");
+    new_node->args [1] = NULL;
+/*
 
 
     //PIPE
@@ -106,13 +106,13 @@ void    print_list_inbar(t_token **head)
                 printf("type: IN\n");
                 break ;
             case 3:
-                printf("type: OUT\n");
+                printf("type: HDOC\n");
                 break ;
             case 4:
-                printf("type: OUT_APP\n");
+                printf("type: OUT\n");
                 break ;
             case 5:
-                printf("type: HDOC\n");
+                printf("type: OUT_APP\n");
                 break ;
         }
         // printf("type: %d\n", node->type);

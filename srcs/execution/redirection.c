@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 19:37:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 18:41:03 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/25 17:12:09 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int    redirect_heredoc(t_shell *shell)
     i = 0;
     while (heredocs[i].read_end_open == 0) //searches for the next unused heredoc
         i++;
-    
     // printf("herexxx content: %s\n", heredocs[i].content);
     dup2(heredocs[i].doc_pipe[0], STDIN_FILENO);
     close(heredocs[i].doc_pipe[0]);

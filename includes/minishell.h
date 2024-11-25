@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/22 18:02:15 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/25 16:47:02 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ typedef struct s_shell
 
 typedef struct s_heredoc
 {
-	char	*content;
-	size_t	length;
 	int     doc_pipe[2];
 	int		read_end_open;
 	

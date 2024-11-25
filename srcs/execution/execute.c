@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/22 17:30:48 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/25 17:04:43 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void    execution_junction(t_shell *shell, t_token **head_token)
     // printf("cmds: %d\n", shell->execute->cmds);
     
     shell->execute->hdocs = count_heredocs(shell);
-    // printf("hdocs: %d\n", shell->execute->hdocs);
+    printf("hdocs: %d\n", shell->execute->hdocs);
     process_heredocs(shell);
     
     printf("##STDOUT:##\n\n");
