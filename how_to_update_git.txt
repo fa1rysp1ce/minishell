@@ -1,6 +1,8 @@
 To update your branch according to the main branch, follow these steps:
 Fetch the latest changes from the remote repository:
 
+git checkout main
+
 git fetch origin
 
 Switch to your branch:
