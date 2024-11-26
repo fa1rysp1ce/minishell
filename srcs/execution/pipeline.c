@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/22 18:06:00 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/26 14:41:18 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,9 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
     cmd_path = NULL;
     if (pipe_fd)
         set_pipes(pipe_fd, last_pipe, shell->execute->cmds, cmd_count);
+    
+    ft_putstr_fd("enter redirection\n", STDERR_FILENO);
+    
     if (redirection(shell) == EXIT_SUCCESS)
     {
         if (is_builtin(args[0]))

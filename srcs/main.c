@@ -48,6 +48,9 @@ int	main(int ac, char **av, char **env)
 	*/
 
 	execution_junction(&shell, &head_token); //for debug
+
+
+
 	clean_tokens(&shell);
 	clean_shell(&shell);
 

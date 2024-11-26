@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 19:37:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/25 17:15:58 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/26 15:34:19 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,28 @@ int    redirect_input(t_token *red_token)
 
 int    redirect_heredoc(t_shell *shell)
 {
-    t_heredoc *heredocs;
+    // t_heredoc *heredocs;
     int        i;
 
-    heredocs = shell->execute->heredocs;
+    // heredocs = shell->execute->heredocs;
     i = 0;
-    while (heredocs[i].read_end_open == 0) //searches for the next unused heredoc
+    while (shell->execute->heredocs[i].read_end_open == 0) //searches for the next unused heredoc
         i++;
-    // printf("herexxx content: %s\n", heredocs[i].content);
-    dup2(heredocs[i].doc_pipe[0], STDIN_FILENO);
-    close(heredocs[i].doc_pipe[0]);
-    heredocs[i].read_end_open = 0;
+    // printf("heredoc i: %d\n", i);
+    dup2(shell->execute->heredocs[i].doc_pipe[0], STDIN_FILENO);
+    close(shell->execute->heredocs[i].doc_pipe[0]);
+
+    
+    shell->execute->heredocs[i].read_end_open = 0;
+    
+    
+    // fprintf(STDERR_FILENO, "heredoc i: %d\n", i);
+    if (i == 1)
+        ft_putstr_fd("i = 1\n", STDERR_FILENO);
+    if (i == 2)
+        ft_putstr_fd("i = 2\n", STDERR_FILENO);
+    
+    ft_putstr_fd("heredoc read\n", STDERR_FILENO);
 
     return (EXIT_SUCCESS);
 }

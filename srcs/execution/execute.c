@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/25 17:04:43 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/26 14:48:54 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,16 @@ void    execution_junction(t_shell *shell, t_token **head_token)
         single_builtin(shell);
     else
         pipeline(shell);
-
+        
+        
+    //print heredocs
+int i = 0;
+	while (i < shell->execute->hdocs)
+    {
+        printf("heredoc[%d] read end open: %d\n", i, shell->execute->heredocs[i].read_end_open);
+        i++;
+    }
+    
     clean_heredocs(shell->execute);
     free(shell->execute);
     shell->execute = NULL;

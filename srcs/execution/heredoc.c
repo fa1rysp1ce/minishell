@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/25 17:11:39 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/26 14:54:23 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,10 @@ int    process_heredocs(t_shell *shell)
             abort_exec("Error: heredoc pipe\n", shell);
         //all these stuff may happen in a child proc
         printf("reading heredocs[%d]\n", i);
+        // if (i == 1)
+        //     ft_putstr_fd("reading doc i = 1\n", STDERR_FILENO);
+        // if (i == 2)
+        //     ft_putstr_fd("reading doc i = 2\n", STDERR_FILENO);
         read_heredoc(doc_token, shell->execute->heredocs[i]);
         
         shell->execute->heredocs[i].read_end_open = 1;

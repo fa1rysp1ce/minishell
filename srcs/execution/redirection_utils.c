@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:18:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 18:40:58 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/26 15:45:28 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,11 @@ void    restore_fds(t_shell *shell)
 void    get_next_redirection(t_token **red_token)
 {
     t_token *next_red;
-
+    
     next_red = *red_token;
     next_red = next_red->next;
     if (next_red == NULL || next_red->type == PIPE || next_red->type == CMD)
         *red_token = NULL;
-    *red_token = next_red;
-    // if (*red_token)
-    //     printf("red token type: %d\n", next_red->type);   
+    else
+        *red_token = next_red; 
 }
