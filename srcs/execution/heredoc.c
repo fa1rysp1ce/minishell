@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/26 14:54:23 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:53:13 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ int    process_heredocs(t_shell *shell)
         //     ft_putstr_fd("reading doc i = 2\n", STDERR_FILENO);
         read_heredoc(doc_token, shell->execute->heredocs[i]);
         
+        // (shell->execute->heredocs[i].read_end_open) = malloc(sizeof(int));
         shell->execute->heredocs[i].read_end_open = 1;
+        
         i++;
     }
     return (EXIT_SUCCESS);

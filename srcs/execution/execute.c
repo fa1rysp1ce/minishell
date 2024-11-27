@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/26 14:48:54 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/27 14:41:03 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void    execution_junction(t_shell *shell, t_token **head_token)
     shell->execute->pipes = count_pipes(shell->head_token);
     // printf("pipes: %d\n", shell->execute->pipes);
     shell->execute->cmds = shell->execute->pipes + 1; //assume cmds processes number depends on pipes
-    // printf("cmds: %d\n", shell->execute->cmds);
+    printf("cmds: %d\n", shell->execute->cmds);
     
     shell->execute->hdocs = count_heredocs(shell);
     printf("hdocs: %d\n", shell->execute->hdocs);
@@ -60,15 +60,6 @@ void    execution_junction(t_shell *shell, t_token **head_token)
         single_builtin(shell);
     else
         pipeline(shell);
-        
-        
-    //print heredocs
-int i = 0;
-	while (i < shell->execute->hdocs)
-    {
-        printf("heredoc[%d] read end open: %d\n", i, shell->execute->heredocs[i].read_end_open);
-        i++;
-    }
     
     clean_heredocs(shell->execute);
     free(shell->execute);

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/26 14:41:18 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:56:43 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ void    pipeline(t_shell *shell)
         exit_malloc_err(shell);
     new_pipe = 1;
     last_pipe = 0;
-    // int i = 0;
-    // while (i < 1)
-    {
-        // printf("heryy %s\n", shell->execute->heredocs[0].content);
-        // i++;
-    }
+
     shell->last_exit_status = fork_pipeline(shell, pipe_fd, last_pipe, new_pipe);
+
+    //print heredocs
+    int i = 0;
+	while (i < shell->execute->hdocs)
+    {
+        printf("heredoc[%d] read end open: %d\n", i, shell->execute->heredocs[i].read_end_open);
+        i++;
+    }
+    
 }
 
 static void    wait_pids(t_execute *exec, int *status)
@@ -55,6 +59,8 @@ static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int n
     int status;
     int cmd_count;
     
+int i;
+i = 0;
     status = 0;
     cmd_count = 0;
     while (cmd_count < shell->execute->cmds)
@@ -71,6 +77,14 @@ static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int n
                 close_pipes(pipe_fd, last_pipe);
         next_cmd_token(shell);
         swap_pipes(&last_pipe, &new_pipe);
+
+    //print heredocs
+	while (i < shell->execute->hdocs)
+    {
+        printf("heredocpip[%d] read end open: %d\n", i, shell->execute->heredocs[i].read_end_open);
+        i++;
+    }
+        
         cmd_count++;
     }
     // close_pipes(pipe_fd, new_pipe); // - ?
@@ -114,8 +128,8 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
     status = 127;
     args = shell->token->args;
     cmd_path = NULL;
-    if (pipe_fd)
-        set_pipes(pipe_fd, last_pipe, shell->execute->cmds, cmd_count);
+    // if (pipe_fd)
+    set_pipes(pipe_fd, last_pipe, shell->execute->cmds, cmd_count);
     
     ft_putstr_fd("enter redirection\n", STDERR_FILENO);
     
@@ -159,6 +173,7 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
 //     //     }
 // }
 
+//do nothing if theres only one cmd
 static void    set_pipes(int pipe_fd[2][2], int last_pipe, int cmds, int cmd_count)
 {
     int new_pipe;

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:17:35 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/25 17:09:25 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:53:34 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void    clean_heredocs(t_execute *exec)
             if (exec->heredocs[i].read_end_open == 1)
             {
                 close(exec->heredocs[i].doc_pipe[0]);
-                exec->heredocs[i].read_end_open = 0;
+                // free(exec->heredocs[i].read_end_open);
+                //*exec->heredocs[i].read_end_open) = 0;
             }
             i++;
         }
