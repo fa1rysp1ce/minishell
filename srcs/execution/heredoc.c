@@ -6,11 +6,37 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/27 15:53:13 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/27 23:13:05 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// cat <<d1 <<d2 | cat <<d3
+//close all heredocs of associated cmd, if there are any
+void    close_used_heredocs(t_shell *shell)
+{
+    t_token     *current_token;
+    int         i;
+
+    if (shell->execute->hdocs == 0)
+        return ;
+    i = 0;
+    while (shell->execute->heredocs[i].read_end_open == 0)
+        i++;
+    current_token = shell->token->next; //current cmd next token
+    while (i < shell->execute->hdocs && current_token && (current_token->type != PIPE))
+    {
+        if (current_token && current_token->type == HDOC)
+        {
+            printf("open heredoc[%d] : closing in parent during pipe\n", i);
+            close(shell->execute->heredocs[i].doc_pipe[0]);
+            shell->execute->heredocs[i].read_end_open = 0;
+            i++;
+        }
+        current_token = current_token->next;
+    }
+}
 
 //if *doc_token is null - returns the first heredoc node in the token list
 //else the next heredoc in list after doc_token. if no more heredocs returns null.
@@ -89,15 +115,11 @@ int    process_heredocs(t_shell *shell)
         get_next_heredoc(shell->token, &doc_token);
         if (pipe(shell->execute->heredocs[i].doc_pipe) == -1)
             abort_exec("Error: heredoc pipe\n", shell);
+        
+        
         //all these stuff may happen in a child proc
         printf("reading heredocs[%d]\n", i);
-        // if (i == 1)
-        //     ft_putstr_fd("reading doc i = 1\n", STDERR_FILENO);
-        // if (i == 2)
-        //     ft_putstr_fd("reading doc i = 2\n", STDERR_FILENO);
         read_heredoc(doc_token, shell->execute->heredocs[i]);
-        
-        // (shell->execute->heredocs[i].read_end_open) = malloc(sizeof(int));
         shell->execute->heredocs[i].read_end_open = 1;
         
         i++;

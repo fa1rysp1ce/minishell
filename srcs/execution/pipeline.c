@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/27 15:56:43 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/27 23:19:38 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void    pipeline(t_shell *shell)
     int i = 0;
 	while (i < shell->execute->hdocs)
     {
-        printf("heredoc[%d] read end open: %d\n", i, shell->execute->heredocs[i].read_end_open);
+        printf("heredoc[%d] read_end after pipe: %d\n", i, shell->execute->heredocs[i].read_end_open);
         i++;
     }
     
@@ -59,8 +59,6 @@ static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int n
     int status;
     int cmd_count;
     
-int i;
-i = 0;
     status = 0;
     cmd_count = 0;
     while (cmd_count < shell->execute->cmds)
@@ -75,22 +73,17 @@ i = 0;
             child_exec(shell, pipe_fd, last_pipe, cmd_count);
         if (cmd_count > 0 && shell->execute->cmds >= 1) //not 1st cmd and no single cmd
                 close_pipes(pipe_fd, last_pipe);
+        close_used_heredocs(shell); //set 0 to indicate what heredocs were used. hopefully not closing them too fast for the children
+        printf("pipe!\n");
         next_cmd_token(shell);
         swap_pipes(&last_pipe, &new_pipe);
-
-    //print heredocs
-	while (i < shell->execute->hdocs)
-    {
-        printf("heredocpip[%d] read end open: %d\n", i, shell->execute->heredocs[i].read_end_open);
-        i++;
-    }
-        
         cmd_count++;
     }
-    // close_pipes(pipe_fd, new_pipe); // - ?
+    close_pipes(pipe_fd, new_pipe); // - ?
     wait_pids(shell->execute, &status);
     return (WEXITSTATUS(status));
 }
+
 /*
 static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int new_pipe)
 {
@@ -130,9 +123,6 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
     cmd_path = NULL;
     // if (pipe_fd)
     set_pipes(pipe_fd, last_pipe, shell->execute->cmds, cmd_count);
-    
-    ft_putstr_fd("enter redirection\n", STDERR_FILENO);
-    
     if (redirection(shell) == EXIT_SUCCESS)
     {
         if (is_builtin(args[0]))

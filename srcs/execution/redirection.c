@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 19:37:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/27 15:55:01 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/27 23:18:22 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int    redirect_output(t_token *red_token)
     }
     dup2(fd, STDOUT_FILENO);
     close(fd);
-    // printf("redirected output\n");
     return (EXIT_SUCCESS);
 }
 
@@ -54,29 +53,17 @@ int    redirect_input(t_token *red_token)
 //  searches for the next unused heredoc
 int    redirect_heredoc(t_shell *shell)
 {
-    // t_heredoc *heredocs;
     int        i;
 
-    // heredocs = shell->execute->heredocs;
     i = 0;
     while (shell->execute->heredocs[i].read_end_open == 0) 
         i++;
-    // printf("heredoc i: %d\n", i);
     dup2(shell->execute->heredocs[i].doc_pipe[0], STDIN_FILENO);
     close(shell->execute->heredocs[i].doc_pipe[0]);
-
+    // shell->execute->heredocs[i].read_end_open = 0;
     
-    shell->execute->heredocs[i].read_end_open = 0;
     ft_putstr_fd("heredoc read!\n", STDERR_FILENO);
     
-    
-    // fprintf(STDERR_FILENO, "heredoc i: %d\n", i);
-    if (i == 1)
-        ft_putstr_fd("i = 1\n", STDERR_FILENO);
-    if (i == 2)
-        ft_putstr_fd("i = 2\n", STDERR_FILENO);
-    
-
     return (EXIT_SUCCESS);
 }
 
@@ -91,27 +78,17 @@ int    redirection(t_shell *shell)
     get_next_redirection(&red_token);
     if (red_token != NULL)
         save_fds(shell);
-    while (red_token != NULL)
+    //if error occured in any - should not check the next
+    while (red_token != NULL && error != EXIT_FAILURE)
     {
         if (red_token->type == IN)
             error = redirect_input(red_token);
-        if (red_token->type == HDOC)
+        else if (red_token->type == HDOC)
             error = redirect_heredoc(shell);
-        if ((red_token->type == OUT || red_token->type == OUT_APP) && error != EXIT_FAILURE) //if input redirection failed - wont check output
+        else if ((red_token->type == OUT || red_token->type == OUT_APP))
             error = redirect_output(red_token);
         get_next_redirection(&red_token);
-        // if (red_token)
-            // printf("loop end type: %d\n", red_token->type);
     }
-
-int i = 0;
-    //print heredocs
-	while (i < shell->execute->hdocs)
-    {
-        printf("heredocredirect[%d] read end open: %d\n", i, shell->execute->heredocs[i].read_end_open);
-        i++;
-    }
-    
     if (error == EXIT_FAILURE)
     {
         restore_fds(shell);

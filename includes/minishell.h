@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/27 15:53:58 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:11:31 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ void    restore_fds(t_shell *shell);
 //heredoc
 int    process_heredocs(t_shell *shell);
 int    count_heredocs(t_shell *shell);
+void    close_used_heredocs(t_shell *shell);
 
 //init shell
 void    init_shell(t_shell *shell, char **env);
