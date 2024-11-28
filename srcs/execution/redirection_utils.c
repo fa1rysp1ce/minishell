@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:18:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/26 15:45:28 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/28 16:16:59 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int    save_fds(t_shell *shell)
     original_fds[0] = dup(STDIN_FILENO);
     original_fds[1] = dup(STDOUT_FILENO);
     shell->execute->org_fds = original_fds;
-    // printf("fd[0]%d\n", original_fds[0]);
-    // printf("fd[1]%d\n", original_fds[1]);
     return (EXIT_SUCCESS);
 }
 
@@ -40,7 +38,7 @@ void    restore_fds(t_shell *shell)
     close(original_fds[1]);
     free(original_fds);
     shell->execute->org_fds = NULL;
-    printf("fds have restored\n");
+    // printf("fds have restored\n");
 }
 
 void    get_next_redirection(t_token **red_token)

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:38:10 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/20 18:39:30 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/28 17:28:32 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static char	**get_paths(t_shell *shell);
 static char	*find_correct_path(t_shell *shell, char *arg, char **paths, char *cmd);
 
 //returns a string containing the full path and name of the command. null if no path exists
-char    *get_cmd_path(t_shell *shell)
+//updates the status variable in case absolute path is not executable
+char    *get_cmd_path(t_shell *shell, int *status)
 {
     char	**paths;
     char    **args;
@@ -24,8 +25,12 @@ char    *get_cmd_path(t_shell *shell)
     char	*cmd;
     
     args = shell->token->args;
-    if (access(args[0], F_OK | X_OK) == 0)
+    if (access(args[0], F_OK) == 0)
+    {
+        if (access(args[0], X_OK) != 0)
+            *status = NON_EXEC;
         return (ft_strdup(args[0]));
+    }
     paths = get_paths(shell);
     cmd = ft_strjoin("/", args[0]);
     if (cmd == NULL)

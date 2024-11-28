@@ -11,7 +11,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_shell shell;
 	t_token *ls_ptr;
-	// char	*line;
+	char	*line;
 
 
     t_token *head_token; //for debug
@@ -21,15 +21,10 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	ls_ptr = NULL;
 	init_shell(&shell, env);
-	init_tokens(&head_token); //for debug
+	// init_tokens(&head_token); //for debug
 
-	// line = ft_strdup("ls -l");
-	// parse(&ls_ptr, &line);
-	// printf("checkpoint1\n");
-	// print_list_inbar(&ls_ptr);
-	// printf("checkpoint2\n");
 
-	/*
+	// /*
 	while (1)
 	{
 		line = readline(GREEN BOLD"minishell>"DEFAULT" ");
@@ -39,19 +34,19 @@ int	main(int ac, char **av, char **env)
 		//rl_redisplay();
 		if (parse(&ls_ptr, &line) != 0)
 			continue ;
-		// print_list_inbar(&ls_ptr);
+		print_list_inbar(&ls_ptr);
 		execution_junction(&shell, &ls_ptr);
 		clean_tokens(&shell);
+		printf("exit status: %d\n", shell.last_exit_status);
 		// execution_junction(&shell, &head_token); //for debug
-
 	}
-	*/
+	// */
 
-	execution_junction(&shell, &head_token); //for debug
+	// execution_junction(&shell, &head_token); //for debug
 
 
+	// clean_tokens(&shell);
 
-	clean_tokens(&shell);
 	clean_shell(&shell);
 
 	//rl_clear_history();

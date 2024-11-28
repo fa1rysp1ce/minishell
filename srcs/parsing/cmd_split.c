@@ -38,7 +38,7 @@ static int	quotes(char const *s, int *i, char c)
 		*i += 1;
 	if (s[*i] != 0 && (s[*i + 1]  != ' ' && s[*i + 1] != '|' && s[*i + 1] != '<' && s[*i + 1] != '>'))
 		re = 0;
-	printf("%d re flag\n", re);
+	// printf("%d re flag\n", re);
 	return (re);
 }
 
@@ -54,15 +54,15 @@ int	ft_ccount(char const *s)
 	//printf("%d, %c counted\n", ccount, s[i]);
 	while (s[i] != '\0')
 	{
-		printf("%d, %c\n", i, s[i]);
+		// printf("%d, %c\n", i, s[i]);
 		while (s[i] == ' ' || s[i] == '|' || s[i] == '<' || s[i] == '>')
 			i++;
 		
-		printf("%d quote flag bei %c\n", quote_flag, s[i]);
+		// printf("%d quote flag bei %c\n", quote_flag, s[i]);
 		if (s[i] != '\0' && quote_flag == 0)
 		{
 			ccount++;
-			printf("%d, %c counted\n", ccount, s[i]);
+			// printf("%d, %c counted\n", ccount, s[i]);
 		}
 		quote_flag = 0;
 		//printf("dann: %d, %c\n", i, s[i]);
@@ -86,7 +86,7 @@ int	ft_ccount(char const *s)
 			i++;
 		}
 	}
-	printf("%d is count\n", ccount);
+	// printf("%d is count\n", ccount);
 	return (ccount);
 }
 
@@ -164,7 +164,7 @@ static int	getslen(char const *s, int start)
 		if (s[len + start] != 0)
 			len++;
 	}
-	printf("%d in len\n", len);
+	// printf("%d in len\n", len);
 	return (len);
 }
 

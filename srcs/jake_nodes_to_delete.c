@@ -14,7 +14,7 @@ void    init_tokens(t_token **head)
     // new_node->is_append = 1;
     new_node->type = CMD;
     new_node->args = malloc(sizeof(char *) * 3);
-    new_node->args[0] = ft_strdup("cat");
+    new_node->args[0] = ft_strdup("caxt");
     // new_node->args[1] = ft_strdup("-l");
     // new_node->args[2] = ft_strdup("l");
     new_node->args [1] = NULL;
@@ -23,28 +23,28 @@ void    init_tokens(t_token **head)
     //REDIRECT
     new_node = NULL;
     new_node = add_node_inbar(head);
-    new_node->type = HDOC;
-    // new_node->type = IN;
+    // new_node->type = HDOC;
+    new_node->type = IN;
     new_node->args = malloc(sizeof(char *) * 2);
-    new_node->args[0] = ft_strdup("d1");
+    new_node->args[0] = ft_strdup("infile");
     new_node->args [1] = NULL;
 
-    //REDIRECT
-    new_node = NULL;
-    new_node = add_node_inbar(head);
-    new_node->type = HDOC;
-    new_node->args = malloc(sizeof(char *) * 2);
-    new_node->args[0] = ft_strdup("d");
-    new_node->args [1] = NULL;
-
-    //REDIRECT
-    new_node = NULL;
-    new_node = add_node_inbar(head);
-    new_node->type = HDOC;
-    new_node->args = malloc(sizeof(char *) * 2);
-    new_node->args[0] = ft_strdup("d");
-    new_node->args [1] = NULL;
 /*
+    //REDIRECT
+    new_node = NULL;
+    new_node = add_node_inbar(head);
+    new_node->type = HDOC;
+    new_node->args = malloc(sizeof(char *) * 2);
+    new_node->args[0] = ft_strdup("1");
+    new_node->args [1] = NULL;
+
+    //REDIRECT
+    new_node = NULL;
+    new_node = add_node_inbar(head);
+    new_node->type = HDOC;
+    new_node->args = malloc(sizeof(char *) * 2);
+    new_node->args[0] = ft_strdup("1");
+    new_node->args [1] = NULL;
 
 
 */
@@ -59,7 +59,7 @@ void    init_tokens(t_token **head)
     new_node = add_node_inbar(head);
     new_node->type = CMD;
     new_node->args = malloc(sizeof(char *) * 3);
-    new_node->args[0] = ft_strdup("cat");
+    new_node->args[0] = ft_strdup("catx");
     // new_node->args[1] = ft_strdup("a");
     new_node->args [1] = NULL;
 
@@ -70,12 +70,26 @@ void    init_tokens(t_token **head)
     new_node->type = HDOC;
     // new_node->type = IN;
     new_node->args = malloc(sizeof(char *) * 2);
-    new_node->args[0] = ft_strdup("d2");
+    new_node->args[0] = ft_strdup("2");
     new_node->args [1] = NULL;
 
+
+    //REDIRECT
+    new_node = NULL;
+    new_node = add_node_inbar(head);
+    new_node->type = HDOC;
+    new_node->args = malloc(sizeof(char *) * 2);
+    new_node->args[0] = ft_strdup("2");
+    new_node->args [1] = NULL;
+
+
+
+
+
+
+
+
 /*
-
-
     //PIPE
     new_node = NULL;
     new_node = add_node_inbar(head);
@@ -85,10 +99,10 @@ void    init_tokens(t_token **head)
     new_node = NULL;
     new_node = add_node_inbar(head);
     new_node->type = CMD;
-    new_node->args = malloc(sizeof(char *) * 3);
-    new_node->args[0] = ft_strdup("grep");
-    new_node->args[1] = ft_strdup("x");
-    new_node->args [2] = NULL;
+    new_node->args = malloc(sizeof(char *) * 2);
+    new_node->args[0] = ft_strdup("catt");
+    // new_node->args[1] = ft_strdup("x");
+    new_node->args [1] = NULL;
 
 
     //REDIRECT
@@ -96,9 +110,8 @@ void    init_tokens(t_token **head)
     new_node = add_node_inbar(head);
     new_node->type = HDOC;
     new_node->args = malloc(sizeof(char *) * 2);
-    new_node->args[0] = ft_strdup("limx");
+    new_node->args[0] = ft_strdup("2");
     new_node->args [1] = NULL;
-
 
 
 

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:49:37 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 18:39:06 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/28 17:26:50 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ static int cd_path(t_shell *shell)
     return (EXIT_FAILURE);
 }
 
+//problem with oldpwd
+//problem with if (token->args[2] != NULL) -- cus it might no be null but full of random shit
 int     cd(t_shell *shell)
 {
     t_token *token;

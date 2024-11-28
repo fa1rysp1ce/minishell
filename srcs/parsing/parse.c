@@ -20,11 +20,11 @@ int	parse(t_token **list, char **line)
 	int i = 0;
 	while (strarr[i] != NULL)
 	{
-		printf("%s\n", strarr[i]);
+		// printf("%s\n", strarr[i]);
 		i++;
 	}
 	fill_list(strarr, list);
-	print_list_inbar(list);
+	// print_list_inbar(list);
 	// print_list(list);
 	// free_list(list);
 	return (0);

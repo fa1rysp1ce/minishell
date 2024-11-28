@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/27 19:11:31 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/28 17:15:54 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,23 @@
 # define OUT 		4
 # define OUT_APP 	5
 
-#define EXIT_FAILURE 	1
-#define EXIT_SUCCESS 	0
+
+//Exit status
+#define EXIT_SUCCESS 	0	//Success
+#define EXIT_FAILURE 	1	//General error
+#define BUILTIN_MISUSE 	2 	//Misuse of shell builtins
+#define NON_EXEC 		126 //Command not executable
+#define NO_CMD 			127 //Command not found
+/*
+128+n: Fatal error with signal n
+130: Script terminated by Ctrl+C
+*/
+
+
+//Costum errors
 #define MALLOC_ERROR 	-1
 #define EXEC_ERROR 		-2
+
 
 typedef struct s_token
 {
@@ -123,7 +136,7 @@ void	exit_fill_list(char **strarr, int pos, t_token **list);
 
 //##########execution##########
 //exec_paths
-char	*get_cmd_path(t_shell *shell);
+char	*get_cmd_path(t_shell *shell, int *status);
 
 
 //jake nodes
@@ -137,7 +150,7 @@ void    print_list_inbar(t_token **head);
 //builtins
 int     is_builtin(char *str);
 int     execute_builtin(t_shell *shell);
-void    exit_cmd(t_shell *shell);
+int    exit_cmd(t_shell *shell);
 int    export(t_shell *shell, t_token *token);
 int    unset(t_shell *shell, t_token *token);
 int     env(t_shell *shell);
@@ -160,6 +173,7 @@ void    next_cmd_token(t_shell *shell);
 void    swap_pipes(int *last_pipe, int *new_pipe);
 void    close_pipes(int pipe_fd[2][2], int pipe);
 void    update_exit_status(t_shell *shell, int status);
+void    child_exec_fail(t_shell *shell);
 
 //redirection
 int    redirection(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 19:37:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/27 23:18:22 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/28 13:44:14 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int    redirect_input(t_token *red_token)
     return (EXIT_SUCCESS);
     
 }
-//  searches for the next unused heredoc
+//searches for the next unused heredoc
 int    redirect_heredoc(t_shell *shell)
 {
     int        i;
@@ -60,7 +60,6 @@ int    redirect_heredoc(t_shell *shell)
         i++;
     dup2(shell->execute->heredocs[i].doc_pipe[0], STDIN_FILENO);
     close(shell->execute->heredocs[i].doc_pipe[0]);
-    // shell->execute->heredocs[i].read_end_open = 0;
     
     ft_putstr_fd("heredoc read!\n", STDERR_FILENO);
     

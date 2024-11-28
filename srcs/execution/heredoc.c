@@ -6,14 +6,14 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/27 23:13:05 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/28 13:24:00 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // cat <<d1 <<d2 | cat <<d3
-//close all heredocs of associated cmd, if there are any
+//close all pipes of heredocs of the associated cmd, if there are any
 void    close_used_heredocs(t_shell *shell)
 {
     t_token     *current_token;

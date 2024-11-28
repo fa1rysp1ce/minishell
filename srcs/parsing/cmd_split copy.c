@@ -10,13 +10,13 @@ int	ft_ccount(char const *s)
 	//printf("%d, %c counted\n", ccount, s[i]);
 	while (s[i] != '\0')
 	{
-		printf("%d, %c\n", i, s[i]);
+		// printf("%d, %c\n", i, s[i]);
 		while (s[i] == ' ' || s[i] == '|' || s[i] == '<' || s[i] == '>')
 			i++;
 		if (s[i] != '\0')
 		{
 			ccount++;
-			printf("%d, %c counted\n", ccount, s[i]);
+			// printf("%d, %c counted\n", ccount, s[i]);
 		}
 		if (s[i] == '"')
 		{
@@ -34,7 +34,7 @@ int	ft_ccount(char const *s)
 			&& s[i] != '\0')
 			i++;
 	}
-	printf("%d is count\n", ccount);
+	// printf("%d is count\n", ccount);
 	return (ccount);
 }
 /*

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:17:35 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/27 23:14:44 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/28 13:36:42 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,23 @@ void    clean_exec(t_shell *shell)
 
 void    clean_heredocs(t_execute *exec)
 {
-    int     i;
+    // int     i;
     
     if (exec->heredocs)
     {
-        i = 0;
-        while (i < exec->hdocs)
-        {
-            if (exec->heredocs[i].read_end_open == 1)
-            {
-                printf("open heredoc[%d] : closing it while clening\n", i);
-                close(exec->heredocs[i].doc_pipe[0]);
-                // free(exec->heredocs[i].read_end_open);
-                //*exec->heredocs[i].read_end_open) = 0;
-            }
-            i++;
-        }
+        //for some reason it closes the last heredoc again - no error reported
+        // i = 0;
+        // while (i < exec->hdocs)
+        // {
+        //     if (exec->heredocs[i].read_end_open == 1)
+        //     {
+        //         printf("open heredoc[%d] : closing it while cleaning\n", i);
+        //         close(exec->heredocs[i].doc_pipe[0]);
+        //         // free(exec->heredocs[i].read_end_open);
+        //         //*exec->heredocs[i].read_end_open) = 0;
+        //     }
+        //     i++;
+        // }
     }
     free(exec->heredocs);
     exec->heredocs = NULL;

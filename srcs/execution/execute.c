@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/27 14:41:03 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/28 16:40:34 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void    execution_junction(t_shell *shell, t_token **head_token)
 
     shell->execute->pipes = count_pipes(shell->head_token);
     // printf("pipes: %d\n", shell->execute->pipes);
-    shell->execute->cmds = shell->execute->pipes + 1; //assume cmds processes number depends on pipes
-    printf("cmds: %d\n", shell->execute->cmds);
+    shell->execute->cmds = shell->execute->pipes + 1;
+    // printf("cmds: %d\n", shell->execute->cmds);
     
     shell->execute->hdocs = count_heredocs(shell);
-    printf("hdocs: %d\n", shell->execute->hdocs);
+    // printf("hdocs: %d\n", shell->execute->hdocs);
     process_heredocs(shell);
     
-    printf("##STDOUT:##\n\n");
+    // printf("##STDOUT:##\n\n");
     
     if (shell->execute->cmds == 1 && is_builtin(shell->token->args[0]))
         single_builtin(shell);
