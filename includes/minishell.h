@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/28 17:15:54 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/29 15:28:57 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ void    clean_tokens_inbar(t_token **head_token);
 void    print_list_inbar(t_token **head);
 //remember to remove the jake_nodes file from the makefile
 
+//signals
+void    sigint_handler(int sig);
 
 //builtins
 int     is_builtin(char *str);

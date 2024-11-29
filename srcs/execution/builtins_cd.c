@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:49:37 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/28 17:26:50 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/29 18:06:39 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int cd_home(t_shell *shell) //if getcwd fails - no solution
     return (EXIT_FAILURE);
 }
 
-static int cd_oldpwd(t_shell *shell)
+static int cd_parent_dir(t_shell *shell)
 {
     char    *pwd;
     char    *buff;
@@ -86,7 +86,7 @@ static int cd_oldpwd(t_shell *shell)
     pwd = getcwd(buff, buff_size);
     if (pwd == NULL)
         return (EXIT_FAILURE);
-    if (chdir(expand_arg(shell, "OLDPWD")) == 0)
+    if (chdir("..") == 0)
     {
         change_env(shell, pwd, "OLDPWD");
         free(pwd);
@@ -142,10 +142,9 @@ int     cd(t_shell *shell)
         ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
         return(EXIT_FAILURE);
     }
-    if (token->args[1] == NULL || ft_strcmp(token->args[1], ".") == 0 \
-    || ft_strcmp(token->args[1], "~") == 0)
+    if (token->args[1] == NULL || ft_strcmp(token->args[1], "~") == 0)
         return (cd_home(shell));
     if (ft_strcmp(token->args[1], "..") == 0)
-        return (cd_oldpwd(shell));
+        return (cd_parent_dir(shell));
     return (cd_path(shell));
 }

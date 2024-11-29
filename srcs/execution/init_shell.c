@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:04:14 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/28 16:31:18 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/29 17:55:26 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static	char **picture_env_vars(char **env, char **envc)
 	return (envc);
 }
 
-
 //takes an envirment argument, for example $USER ("USER") and returns its value
 //returns NULL if error occures 
 char	*expand_arg(t_shell *shell, char *arg)
@@ -99,5 +98,9 @@ char	*expand_arg(t_shell *shell, char *arg)
 	if (env[i][j] == '\0')
 		return (NULL);
 	j++;
+	// printf("%s\n", shell->envc[i] + j);
 	return (shell->envc[i] + j);
 }
+	//about $?
+	// if (ft_strcmp(arg, "?") == 0)
+		// return (ft_itoa(shell->last_exit_status));

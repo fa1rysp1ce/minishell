@@ -13,29 +13,21 @@ void    init_tokens(t_token **head)
     new_node = add_node_inbar(head);
     // new_node->is_append = 1;
     new_node->type = CMD;
-    new_node->args = malloc(sizeof(char *) * 3);
-    new_node->args[0] = ft_strdup("caxt");
+    new_node->args = malloc(sizeof(char *) * 2);
+    new_node->args[0] = ft_strdup("0");
     // new_node->args[1] = ft_strdup("-l");
     // new_node->args[2] = ft_strdup("l");
     new_node->args [1] = NULL;
 
 
+/*
     //REDIRECT
     new_node = NULL;
     new_node = add_node_inbar(head);
     // new_node->type = HDOC;
     new_node->type = IN;
     new_node->args = malloc(sizeof(char *) * 2);
-    new_node->args[0] = ft_strdup("infile");
-    new_node->args [1] = NULL;
-
-/*
-    //REDIRECT
-    new_node = NULL;
-    new_node = add_node_inbar(head);
-    new_node->type = HDOC;
-    new_node->args = malloc(sizeof(char *) * 2);
-    new_node->args[0] = ft_strdup("1");
+    new_node->args[0] = ft_strdup("f1.txt");
     new_node->args [1] = NULL;
 
     //REDIRECT
@@ -46,8 +38,15 @@ void    init_tokens(t_token **head)
     new_node->args[0] = ft_strdup("1");
     new_node->args [1] = NULL;
 
+    //REDIRECT
+    new_node = NULL;
+    new_node = add_node_inbar(head);
+    new_node->type = HDOC;
+    new_node->args = malloc(sizeof(char *) * 2);
+    new_node->args[0] = ft_strdup("1");
+    new_node->args [1] = NULL;
 
-*/
+
 
     //PIPE
     new_node = NULL;
@@ -85,6 +84,7 @@ void    init_tokens(t_token **head)
 
 
 
+*/
 
 
 
@@ -141,7 +141,7 @@ void    print_list_inbar(t_token **head)
     if (!*head || !head)
         return ;
     node = *head;
-    while (node)
+    while (node != NULL)
     {
         printf("####\n");
         switch (node->type)
@@ -166,10 +166,10 @@ void    print_list_inbar(t_token **head)
                 break ;
         }
         // printf("type: %d\n", node->type);
-        if (node->args)
+        if (node->args != NULL)
         {
             i = 0;
-            while (node->args[i])
+            while (node->args[i] != NULL)
             {
                 printf("args[%d]: %s\n", i, node->args[i]);
                 i++;

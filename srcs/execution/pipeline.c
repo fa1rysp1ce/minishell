@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/28 17:13:31 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/11/29 15:42:44 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int n
             return (abort_exec("Error: fork\n", shell));
         if (shell->execute->pid[cmd_count] == 0)
             child_exec(shell, pipe_fd, last_pipe, cmd_count);
-        if (cmd_count > 0 && shell->execute->cmds >= 1) //not 1st cmd and no single cmd
+        if (cmd_count > 0 && shell->execute->cmds > 1) //not 1st cmd and no single cmd
                 close_pipes(pipe_fd, last_pipe);
         close_used_heredocs(shell); //set 0 to indicate what heredocs were used
         // printf("pipe!\n");
@@ -78,7 +78,6 @@ static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int n
         swap_pipes(&last_pipe, &new_pipe);
         cmd_count++;
     }
-    close_pipes(pipe_fd, new_pipe); // - ?
     wait_pids(shell->execute, &status);
     return (WEXITSTATUS(status));
 }
