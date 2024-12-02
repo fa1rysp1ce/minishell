@@ -1,0 +1,12 @@
+how_to_update_git.txt
+includes
+libftplus
+libftplus.a
+lib_malloc.a
+Makefile
+minishell
+obj
+readline.supp
+safe_malloc
+srcs
+test

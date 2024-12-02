@@ -26,11 +26,17 @@ int	eval_str(char **strarr, t_token **list)
 int	arg_count(char **strarr, int pos)
 {
 	int	count;
+	int i;
 
 	count = 0;
-	while (strarr[count + pos] != NULL && strarr[count + pos][0] != '|')
+	i = 0;
+	while (strarr[i + pos] != NULL && strarr[i + pos][0] != '|')
 	{
-		count++;
+		if (strarr[i + pos][0] != '<' && strarr[i + pos][0] != '>')
+			count++;
+		//else
+		//	count--;
+		i++;
 	}
 	return (count);
 }
@@ -50,20 +56,23 @@ int	handle_commands(char **strarr, int pos, t_token **list)
 	token->args = malloc(sizeof(char *) * (count + 1));
 	if (!token->args)
 		exit_fill_list(strarr, pos, list);
-	while (i < count)
+	//while (i < count)
+	while (strarr[pos + i] != NULL && strarr[pos + i][0] != '|')
 	{
 		if (strarr[pos + i][0] == '<' || strarr[pos + i][0] == '>')
 		{
 			i += handle_redirec(strarr[pos + i], strarr, pos + i, list);
+			//continue ;
+			//count--;
 		}
 		else
 			token->args[j++] = strarr[pos + i];
 		i++;
 	}
 	printf("i = %d\n", i);
-	token->args[i] = NULL;
+	token->args[j] = NULL;
 	token->type = CMD;
-	return (count);
+	return (i);
 }
 /*
 char *	handle_heredoc(t_token **list)
