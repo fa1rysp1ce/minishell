@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:04:14 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/29 17:55:26 by inbar            ###   ########.fr       */
+/*   Updated: 2024/12/02 13:02:26 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    init_shell(t_shell *shell, char **env)
 	shell->execute = NULL;
 	shell->head_token = NULL;
 	shell->token = NULL;
-	shell->last_exit_status = 0;
+	shell->last_exit_status = EXIT_SUCCESS;
 }
 
 //create a copy of enviorment vars for later use

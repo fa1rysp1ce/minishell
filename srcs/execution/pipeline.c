@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/29 15:42:44 by inbar            ###   ########.fr       */
+/*   Updated: 2024/12/02 14:37:48 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ void    pipeline(t_shell *shell)
     shell->last_exit_status = fork_pipeline(shell, pipe_fd, last_pipe, new_pipe);
 
     //print heredocs
-    int i = 0;
-	while (i < shell->execute->hdocs)
-    {
-        printf("heredoc[%d] read_end after pipe: %d\n", i, shell->execute->heredocs[i].read_end_open);
-        i++;
-    }
+    // int i = 0;
+	// while (i < shell->execute->hdocs)
+    // {
+    //     printf("heredoc[%d] read_end after pipe: %d\n", i, shell->execute->heredocs[i].read_end_open);
+    //     i++;
+    // }
+    
+    free(shell->execute->pid);
     
 }
 
@@ -50,7 +52,6 @@ static void    wait_pids(t_execute *exec, int *status)
     cmd_count = 0;
     while (cmd_count < exec->cmds)
         waitpid(exec->pid[cmd_count++], status, 0);
-    free(exec->pid);
 }
 
 static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int new_pipe)
@@ -95,15 +96,18 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
     if (redirection(shell) == EXIT_SUCCESS)
     {
         if (is_builtin(args[0]))
+        {
             status = execute_builtin(shell);
+            printf("status: %d\n", status);
+        }
         else   
             cmd_path = get_cmd_path(shell, &status);
         if (cmd_path != NULL)
         {
-            if (access(cmd_path, X_OK) != 0)
-            status = NON_EXEC;
-            execve(cmd_path, args, shell->envc);
-            free(cmd_path);
+                if (access(cmd_path, X_OK) != 0)
+                status = NON_EXEC;
+                execve(cmd_path, args, shell->envc);
+                free(cmd_path);
         }
     }
     child_exec_fail(shell);

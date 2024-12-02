@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:17:35 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/28 13:36:42 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/02 13:06:12 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    clean_tokens(t_shell *shell)
 {
     free_list(shell->head_token);
     shell->head_token = NULL;
-       
+    shell->token = NULL;
 }
 
 void    clean_exec(t_shell *shell)

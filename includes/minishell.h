@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/29 15:28:57 by inbar            ###   ########.fr       */
+/*   Updated: 2024/12/02 14:28:43 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,17 +149,20 @@ void    print_list_inbar(t_token **head);
 //signals
 void    sigint_handler(int sig);
 
-//builtins
+//builtins utils
 int     is_builtin(char *str);
 int     execute_builtin(t_shell *shell);
+//builtins exit
 int    exit_cmd(t_shell *shell);
+//builtins misc
 int    export(t_shell *shell, t_token *token);
 int    unset(t_shell *shell, t_token *token);
 int     env(t_shell *shell);
 int     pwd(t_shell *shell);
 int     echo(t_token *token);
-int     cd(t_shell *shell);
 int		change_env(t_shell *shell, char *src, char *dest);
+//builtins cd
+int     cd(t_shell *shell);
 
 //execution
 void	execution_junction(t_shell *shell, t_token **head_token);

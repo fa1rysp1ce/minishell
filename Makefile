@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: inbar <inbar@student.42.fr>                +#+  +:+       +#+         #
+#    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/29 15:27:39 by inbar             #+#    #+#              #
-#    Updated: 2024/11/29 16:39:30 by inbar            ###   ########.fr        #
+#    Updated: 2024/12/02 14:32:16 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ PARSING_SRCS =  exit_funcs.c variables.c nodes.c parse.c \
 		
 EXECUTION_SRCS = init_shell.c execute.c exec_paths.c \
 		redirection.c redirection_utils.c heredoc.c \
-		builtin_utils.c builtins_misc.c builtins_cd.c \
+		builtins_utils.c builtins_misc.c builtins_cd.c builtins_exit.c \
 		pipeline.c pipeline_utils.c signals.c
 
 SRCS = 	$(addprefix srcs/, $(MAIN_SRCS)) \
