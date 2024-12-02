@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/28 13:24:00 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/02 18:26:04 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int    count_heredocs(t_shell *shell)
     }
     return (count);
 }
-
+//some problem here eof wont print result
 int    *read_heredoc(t_token *doc_token, t_heredoc heredoc)
 {
     char    *delimiter;
@@ -80,11 +80,13 @@ int    *read_heredoc(t_token *doc_token, t_heredoc heredoc)
     
     rl_initialize();
     delimiter = doc_token->args[0];
-    
-    while ((line = readline("> ")) != NULL)
+    while (1)
     {
-        if (!line || ft_strcmp(line, delimiter) == 0)
+        line = readline("> ");
+        if (line == NULL || ft_strcmp(line, delimiter) == 0)
         {
+            if (line == NULL)
+                heredoc_eof_warning(delimiter);
             free(line);
             break ;
         }
@@ -101,7 +103,7 @@ int    *read_heredoc(t_token *doc_token, t_heredoc heredoc)
 int    process_heredocs(t_shell *shell)
 {
     t_token   *doc_token;
-    int     i;
+    int         i;
 
     doc_token = NULL;
     if (!shell->execute->hdocs)

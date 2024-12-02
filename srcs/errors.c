@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:07 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/02 15:21:37 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/02 18:16:04 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,3 +50,12 @@ int abort_exec(char *msg, t_shell *shell)
     shell->token = NULL;
     return (EXEC_ERROR);
 }
+
+//bash: warning: here-document delimited by end-of-file (wanted `4')
+void    heredoc_eof_warning(char *delimiter)
+{
+    ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
+    ft_putstr_fd("here-document delimited by end-of-file (wanted `", STDERR_FILENO);
+    ft_putstr_fd(delimiter, STDERR_FILENO);
+    ft_putstr_fd("')\n", STDERR_FILENO);
+}   
