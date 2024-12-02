@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_exit.c                                     :+:      :+:    :+:   */
+/*   builtins_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:27:20 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/02 14:31:21 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/02 15:04:40 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int     is_numeric_arg(char *str)
             ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
             ft_putstr_fd(str, STDERR_FILENO);
             ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-            exit(EXIT_FAILURE);
+            return (EXIT_FAILURE);
         }
         i++;
     }
@@ -49,6 +49,8 @@ int   exit_cmd(t_shell *shell)
             }
             status = ft_atoi(shell->token->args[1]);
         }
+        else
+            status = BUILTIN_MISUSE;
     }
     clean_exec(shell);
     clean_tokens(shell);
