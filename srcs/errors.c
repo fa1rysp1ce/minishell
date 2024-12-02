@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:07 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 18:39:26 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/02 15:21:37 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 
 void    exit_error(char *str)
 {
-    printf("Error: %s\n", str);
-    exit(1);
+    ft_putstr_fd("Error: ", STDERR_FILENO);
+    ft_putstr_fd(str, STDERR_FILENO);
+    ft_putstr_fd("\n", STDERR_FILENO);
+    exit(EXIT_FAILURE);
 }
 
 void    error_msg(char *name, char *msg)

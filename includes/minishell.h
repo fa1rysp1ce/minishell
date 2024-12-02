@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/02 15:50:18 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/02 17:31:37 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #include <string.h>
 #include <errno.h>
 
+#define _POSIX_C_SOURCE 200809L
 #define GREEN "\033[32m"
 #define BOLD "\033[1m"
 #define DEFAULT "\033[0m"
@@ -196,6 +197,9 @@ void    close_used_heredocs(t_shell *shell);
 //init shell
 void    init_shell(t_shell *shell, char **env);
 char	*expand_arg(t_shell *shell, char *arg);
+
+//signals
+int     event_hook(void);
 
 //clean free
 void 	clean_shell(t_shell *shell);

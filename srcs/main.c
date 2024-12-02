@@ -14,7 +14,7 @@ int	main(int ac, char **av, char **env)
 	char	*line;
 
 
-	signal(SIGINT, sigint_handler);
+	// signal(SIGINT, sigint_handler);
 	ls_ptr = NULL;
 	init_shell(&shell, env);
     
@@ -25,11 +25,15 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 
+	rl_event_hook = event_hook;
 
-	// /*
-	while (1)
+
+	while ((rl_event_hook != NULL))
 	{
+
 		line = readline(GREEN BOLD"minishell>"DEFAULT" ");
+		if (line == NULL)
+			break ;
 		//add_history(line);
 		//rl_replace_line((const char *)line, 0);
 		//printf("%s (main)\n", line);
@@ -44,12 +48,7 @@ int	main(int ac, char **av, char **env)
 		clean_tokens(&shell);
 		printf("exit status: %d\n", shell.last_exit_status);
 	}
-	// */
 
-	// execution_junction(&shell, &head_token); //for debug
-
-
-	// clean_tokens(&shell);
 
 	clean_shell(&shell);
 

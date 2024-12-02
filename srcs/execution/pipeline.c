@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/02 14:37:48 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/02 15:18:54 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,7 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
     if (redirection(shell) == EXIT_SUCCESS)
     {
         if (is_builtin(args[0]))
-        {
             status = execute_builtin(shell);
-            printf("status: %d\n", status);
-        }
         else   
             cmd_path = get_cmd_path(shell, &status);
         if (cmd_path != NULL)

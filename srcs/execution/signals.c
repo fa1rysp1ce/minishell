@@ -3,17 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:24:46 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/29 15:30:33 by inbar            ###   ########.fr       */
+/*   Updated: 2024/12/02 17:14:24 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    sigint_handler(int sig)
+void    handle_sigint(int sig)
 {
-    (void) sig;
-    exit(0);
+    (void)sig;
+    write(1, "\n", 1);
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+}
+
+int     event_hook(void)
+{
+    struct sigaction sa;
+
+    sa.sa_handler = handle_sigint;
+    sigemptyset(&sa.sa_mask);  // Initialize the signal mask
+    sa.sa_flags = 0;  // No special flags
+
+    sigaction(SIGINT, &sa, NULL);
+
+    sa.sa_handler = SIG_IGN;
+    sigaction(SIGQUIT, &sa, NULL);
+    return (EXIT_SUCCESS);
+    
 }
