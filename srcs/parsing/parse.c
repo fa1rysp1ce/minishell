@@ -1,13 +1,13 @@
 #include "minishell.h"
 
 
-int	parse(t_token **list, char **line)
+int	parse(t_token **list, char **line, t_shell *shell)
 {
 	char 	**strarr;
 	int		arrsize;
 
 	strarr = NULL;
-	check_vars(line);
+	check_vars(line, shell);
 	if (check_input(*line) != 0)
 		return (1);
 	arrsize = cmd_split(*line, &strarr);

@@ -38,7 +38,7 @@ int	main(int ac, char **av, char **env)
 		//rl_replace_line((const char *)line, 0);
 		//printf("%s (main)\n", line);
 		//rl_redisplay();
-		if (parse(&ls_ptr, &line) != 0)
+		if (parse(&ls_ptr, &line, &shell) != 0)
 			continue ;
 		print_list_inbar(&ls_ptr);
 		print_list(&ls_ptr);

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	check_vars(char **line)
+void	check_vars(char **line, t_shell *shell)
 {
 	int	i;
 	int j;
@@ -21,24 +21,37 @@ void	check_vars(char **line)
 			{
 				j++;
 			}
-			handle_vars(line, i, j);
+			if (i + 1 < j)
+				handle_vars(line, i, j - i, shell);
 		}
 		if (line[0][i] != 0)
 			i++;
 	}
 }
 
-char *find_var(char *str)
+char *find_var(char *str, t_shell *shell)
 {
-	char *res;
+	char 	*res;
+	int		i;
 
-	res = getenv(str);
-	//if (res == NULL)
-	//	res[0] = 0;
+	if (!ft_strcmp(str, "?"))
+		res = ft_itoa(shell->last_exit_status);
+	else
+	{
+		i = 0;
+		res = ft_strdup(expand_arg(shell, str));
+	}
+	if (res == NULL)
+	{
+		res = malloc(sizeof(char) * 1);
+		if (!res)
+			return (NULL);
+		res[0] = 0;
+	}
 	return (res);
 }
 
-void	handle_vars(char **line, int i, int len)
+void	handle_vars(char **line, int i, int len, t_shell *shell)
 {
 	int	k;
 	char	*str;
@@ -53,16 +66,22 @@ void	handle_vars(char **line, int i, int len)
 		exit(1);
 	}
 	k = 0;
-	while (k < len)
+	while (k < len - 1)
 	{
 		str[k] = line[0][i + k + 1];
 		k++;
 	}
 	str[k] = 0;
 	printf("%s\n", str);
-	newstr = find_var(str);
-	printf("%s\n", newstr);
+	newstr = find_var(str, shell);
 	free(str);
+	if (newstr == NULL)
+	{
+		perror("malloc");
+		free(*line);
+		exit(1);
+	}
+	printf("%s\n", newstr);
 	tmp = replace_var(line, i, len, newstr);
 	if (tmp == NULL)
 	{
@@ -81,6 +100,7 @@ char	*replace_var(char **line, int start, int len, char *substr)
 	int	j;
 	char	*newline;
 
+	printf("Line length: %zu, Substring length: %zu, len: %d\n", ft_strlen(*line), ft_strlen(substr), len);
 	newline = malloc(sizeof(char) * (ft_strlen(*line) + ft_strlen(substr) - len + 1));
 	if (!newline)
 		return (NULL); 
@@ -96,10 +116,10 @@ char	*replace_var(char **line, int start, int len, char *substr)
 		newline[i] = substr[i - j];
 		i++;
 	}
-	j = len;
+	j = start + len;
 	while (line[0][j] != 0)
 		newline[i++] = line[0][j++];
 	newline[i] = 0;
-	//free(substr);
+	free(substr);
 	return (newline);
 }
