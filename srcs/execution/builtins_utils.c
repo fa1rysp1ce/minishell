@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_utils.c                                    :+:      :+:    :+:   */
+/*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:19:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/02 14:27:06 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/03 17:39:44 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int     execute_builtin(t_shell *shell)
     if (!ft_strcmp(str, "export")) //may have malloc failure
        return (export(shell, token)); //try this in a child process - shouldnt save changes
     if (!ft_strcmp(str, "pwd"))
-        return (pwd(shell));
+        return (pwd());
     if (!ft_strcmp(str, "env"))
         return (env(shell));
     if (!ft_strcmp(str, "unset")) //may have malloc failure
@@ -53,4 +53,32 @@ int     execute_builtin(t_shell *shell)
     if (!ft_strcmp(str, "exit"))
         return (exit_cmd(shell));
     return (EXIT_FAILURE);
+}
+
+//copy src string into dest variable in the envoirment vars
+int		change_env(t_shell *shell, char *src, char *dest)
+{
+    char	*new;
+    int     i;
+
+    if (src == NULL || expand_arg(shell, dest) == NULL)
+        return (EXIT_FAILURE);
+    dest = ft_strjoin(dest, "=");
+    new = ft_strjoin(dest, src);
+    if (dest == NULL || new == NULL)
+    {
+        free(src);
+        return (exit_malloc_err(shell));
+    }
+    i = 0;
+    while (shell->envc[i] != NULL)
+    {
+        if (ft_strncmp(shell->envc[i], dest, ft_strlen(dest)) == 0)
+            break;
+        i++;
+    }
+    free(dest);
+    free(shell->envc[i]);
+    shell->envc[i] = new;
+	return (EXIT_SUCCESS);
 }

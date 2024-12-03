@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:04:11 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/20 18:39:12 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/03 17:52:29 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,25 @@ int     echo(t_token *token)
     return (EXIT_SUCCESS);
 }
 
-int     pwd(t_shell *shell)
+int     pwd(void)
 {
     char    *pwd;
-    int     i;
+    char    *buff;
+    int     buff_size;
 
-    pwd = expand_arg(shell, "PWD");
+    buff = NULL;
+    buff_size = 1024;
+    pwd = getcwd(buff, buff_size);
     if (pwd == NULL)
+    {
         ft_putchar_fd('\n', STDOUT_FILENO);
+        return (EXIT_FAILURE);
+    }
     else
     {
-        i = 0;
-        while (pwd[i] != '\0')
-            ft_putchar_fd(pwd[i++], STDOUT_FILENO);
+        ft_putstr_fd(pwd, STDOUT_FILENO);
         ft_putchar_fd('\n', STDOUT_FILENO);
+        free(pwd);
     }
     return (EXIT_SUCCESS);
 }
@@ -75,6 +80,8 @@ int    unset(t_shell *shell, t_token *token)
     int len;
 
 	i = 0;
+    if (token->args[1] == NULL)
+        return(EXIT_SUCCESS);
     len = ft_strlen(token->args[1]);
 	while (shell->envc[i] != NULL) //search to remove
 	{
@@ -95,6 +102,7 @@ int    unset(t_shell *shell, t_token *token)
 	return (EXIT_SUCCESS);
 }
 
+//must check if env exists and change to it
 int    export(t_shell *shell, t_token *token)
 {
     int i;
@@ -103,12 +111,16 @@ int    export(t_shell *shell, t_token *token)
         return (env(shell));
     if (ft_strchr(token->args[1], '=') == NULL)
         return (EXIT_SUCCESS);
-    i = 0;
-    while (shell->envc[i] != NULL)
-        i++;
-    shell->envc = (char **) realloc(shell->envc, ((i + 2) * sizeof(char *)));
-    shell->envc[i] = ft_strdup(token->args[1]);
-    shell->envc[i + 1] = NULL;
-    // print_2darray(shell->envc);
+    if (expand_arg(shell, token->args[1]) == NULL)
+    {
+        i = 0;
+        while (shell->envc[i] != NULL)
+            i++;
+        shell->envc = (char **) realloc(shell->envc, ((i + 2) * sizeof(char *)));
+        shell->envc[i] = ft_strdup(token->args[1]);
+        shell->envc[i + 1] = NULL;
+    }
+    // else
+    //     change_env(shell, )
     return (EXIT_SUCCESS);
 }

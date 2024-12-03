@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:04:14 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/02 18:04:36 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/03 16:21:12 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,6 @@ char	*expand_arg(t_shell *shell, char *arg)
 	if (env[i][j] == '\0')
 		return (NULL);
 	j++;
-	// printf("%s\n", shell->envc[i] + j);
 	return (shell->envc[i] + j);
 }
-	//about $?
-	// if (ft_strcmp(arg, "?") == 0)
-		// return (ft_itoa(shell->last_exit_status));
+

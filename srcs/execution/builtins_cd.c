@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:49:37 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/29 18:06:39 by inbar            ###   ########.fr       */
+/*   Updated: 2024/12/03 17:39:34 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,6 @@ Paths not starting with '/' (e.g., documents/projects)
 '~' to represent the user's home directory
 */
 
-//copy src string into dest variable in the envoirment vars
-int		change_env(t_shell *shell, char *src, char *dest)
-{
-    char	*new;
-    int     i;
-
-    if (src == NULL || expand_arg(shell, dest) == NULL)
-        return (EXIT_FAILURE);
-    dest = ft_strjoin(dest, "=");
-    new = ft_strjoin(dest, src);
-    if (dest == NULL || new == NULL)
-    {
-        free(src);
-        return (exit_malloc_err(shell));
-    }
-    i = 0;
-    while (shell->envc[i] != NULL)
-    {
-        if (ft_strncmp(shell->envc[i], dest, ft_strlen(dest)) == 0)
-            break;
-        i++;
-    }
-    free(dest);
-    free(shell->envc[i]);
-    shell->envc[i] = new;
-	return (EXIT_SUCCESS);
-}
-
 static int cd_home(t_shell *shell) //if getcwd fails - no solution
 {
     char    *buff;
@@ -60,8 +32,9 @@ static int cd_home(t_shell *shell) //if getcwd fails - no solution
     
     buff = NULL;
     buff_size = 1024;
-    if (chdir(expand_arg(shell, "HOME")) == 0)
+    if (expand_arg(shell, "HOME") != NULL)
     {
+        chdir(expand_arg(shell, "HOME"));
         pwd = getcwd(buff, buff_size);
         src = ft_strdup(expand_arg(shell, "PWD"));
         change_env(shell, src, "OLDPWD");
@@ -71,9 +44,10 @@ static int cd_home(t_shell *shell) //if getcwd fails - no solution
         return (EXIT_SUCCESS);
     }
     else
-        error_msg(expand_arg(shell, "HOME"), strerror(errno));
+        ft_putstr_fd("Minishell: cd: HOME not set\n", STDERR_FILENO);
     return (EXIT_FAILURE);
 }
+
 
 static int cd_parent_dir(t_shell *shell)
 {
@@ -130,8 +104,8 @@ static int cd_path(t_shell *shell)
     return (EXIT_FAILURE);
 }
 
-//problem with oldpwd
-//problem with if (token->args[2] != NULL) -- cus it might no be null but full of random shit
+
+//problem with if (token->args[2] != NULL) -- cus it might no be null but full of random trash
 int     cd(t_shell *shell)
 {
     t_token *token;

@@ -1,0 +1,79 @@
+
+tests that failed
+
+
+
+MANDATORY
+
+export HELLO="beatiful world"
+
+
+
+# Empty `cd` moves to home
+cd
+#moves to home but there are some errors, maybe from parsing
+
+
+
+#invalid command, followed by empty variable, should clear the exit code
+doesntexist
+$EMPTY
+echo $?
+
+
+
+
+# Should skip the empty argument, and print hello after spaces
+echo - "" "  " hello
+
+
+PIPES
+ok except big file
+
+
+
+REDIRECTIONS
+
+
+bash-5.1$ grep hi "<infile" <         ./test_files/infile
+grep: <infile: No such file or directory
+
+minishell> grep hi "<infile" <         ./test_files/infile
+minishell: <: No such file or directory
+
+and a lot of errors
+
+
+
+cat <"./test_files/file name with spaces"
+- this worked, but while trying it in a newly opened minishell - creates parse errors
+
+
+cat <"1""2""3""4""5"
+
+
+echo <missing <"./test_files/infile" <missing
+- check this again
+
+
+|> WITH [EXPORTS A='a' B='b' C='c'] unset A 'asdf ' B ' asdf asdf asd f' ' asdf ' '' 'asdf ' C; echo $A$B$C\n
+|  STATUS: expected 0 actual -6
+|---------------------------------------EXPECTED--------------------------------
+$
+|---------------------------------------ACTUAL----------------------------------
+munmap_chunk(): invalid pointer$
+
+
+minishell> export A='fff' B='ccc' C='ttt'
+####
+type: CMD
+args[0]: export
+args[1]: A=fff B=ccc C=ttt
+args[2]: 
+args[3]: 
+args[4]: NULL
+####
+munmap_chunk(): invalid pointer
+fish: Job 1, './minishell' terminated by signal SIGABRT (Abort)
+
+

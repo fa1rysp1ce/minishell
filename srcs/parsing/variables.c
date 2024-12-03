@@ -72,7 +72,7 @@ void	handle_vars(char **line, int i, int len, t_shell *shell)
 		k++;
 	}
 	str[k] = 0;
-	printf("%s\n", str);
+	// printf("%s\n", str);
 	newstr = find_var(str, shell);
 	free(str);
 	if (newstr == NULL)
@@ -81,7 +81,7 @@ void	handle_vars(char **line, int i, int len, t_shell *shell)
 		free(*line);
 		exit(1);
 	}
-	printf("%s\n", newstr);
+	// printf("%s\n", newstr);
 	tmp = replace_var(line, i, len, newstr);
 	if (tmp == NULL)
 	{
@@ -100,7 +100,7 @@ char	*replace_var(char **line, int start, int len, char *substr)
 	int	j;
 	char	*newline;
 
-	printf("Line length: %zu, Substring length: %zu, len: %d\n", ft_strlen(*line), ft_strlen(substr), len);
+	// printf("Line length: %zu, Substring length: %zu, len: %d\n", ft_strlen(*line), ft_strlen(substr), len);
 	newline = malloc(sizeof(char) * (ft_strlen(*line) + ft_strlen(substr) - len + 1));
 	if (!newline)
 		return (NULL); 
