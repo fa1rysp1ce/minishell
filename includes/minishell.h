@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/02 18:14:59 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/03 14:48:05 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_execute
 
 //##########parsing##########
 //parse.c:
-int		parse(t_token **start, char **line);
+int		parse(t_token **start, char **line, t_shell *shell);
 int		cmd_split(char const *s, char ***strarr);
 int		fill_list(char **strarr, t_token **list);
 
@@ -105,8 +105,8 @@ int		check_input(char *s);
 int		is_op(char c);
 
 //variables.c
-void	check_vars(char **line);
-void	handle_vars(char **line, int i, int len);
+void	check_vars(char **line, t_shell *shell);
+void	handle_vars(char **line, int i, int len, t_shell *shell);
 char	*replace_var(char **line, int start, int len, char *substr);
 
 //cmd_split.c
@@ -117,7 +117,7 @@ int		ft_ccount(char const *s);
 int		eval_str(char **strarr, t_token **list);
 int		handle_commands(char **strarr, int pos, t_token **list);
 int		handle_redirec(char *str, char **strarr, int pos, t_token **list);
-int		handle_output(char *str, char **strarr, int pos, t_token **list);
+//int		handle_output(char *str, char **strarr, int pos, t_token **list);
 int		pipe_token(char **strarr, int pos, t_token **list);
 
 //nodes.c
