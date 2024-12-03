@@ -1,15 +1,14 @@
 #include "minishell.h"
 
 
-void	*add_node(t_token **node)
+void	*add_node(t_token **node, char **strarr, int pos)
 {
 	t_token	*new_node;
 	t_token *curr;
 
 	new_node = malloc(sizeof(t_token));
 	if (!new_node)
-		exit(1);
-		//exit handle
+		exit_fill_list(strarr, pos, node);
 	new_node->type = -1;
 	new_node->next = NULL;
 	new_node->args = NULL;

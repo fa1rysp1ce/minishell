@@ -14,7 +14,7 @@ int	parse(t_token **list, char **line, t_shell *shell)
 	free(*line);
 	if (arrsize < 0)
 	{
-		//rl_clear_history();
+		rl_clear_history();
 		exit(2);
 	}
 	int i = 0;
@@ -48,7 +48,7 @@ int	cmd_split(char const *s, char ***strarr)
 
 int	fill_list(char **strarr, t_token **list)
 {
-	add_node(list);
+	add_node(list, strarr, 0);
 	eval_str(strarr, list);
 	free(strarr);
 	return (0);

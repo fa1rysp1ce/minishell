@@ -93,6 +93,11 @@ typedef struct s_execute
 	t_heredoc	*heredocs;
 } t_execute;
 
+//definitions of rl funcs for use on mac
+extern void (*rl_event_hook)(void);
+void rl_replace_line(const char *text, int clear_undo);
+void rl_clear_history(void);
+
 
 //##########parsing##########
 //parse.c:
@@ -121,14 +126,15 @@ int		handle_redirec(char *str, char **strarr, int pos, t_token **list);
 int		pipe_token(char **strarr, int pos, t_token **list);
 
 //nodes.c
-void	*add_node(t_token **node);
+void	*add_node(t_token **node, char **strarr, int pos);
 t_token	*find_last(t_token **list);
 void	print_list(t_token **list);
 void	free_list(t_token **list);
 
 //exit_funcs.c
+void	exit_variables(char *str);
 void	free_split(char **arr, int last, char *s);
-void	free_input(char *s,  char *statement);
+void	free_input(char *s,  char c);
 void	exit_fill_list(char **strarr, int pos, t_token **list);
 
 

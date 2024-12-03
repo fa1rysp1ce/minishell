@@ -32,13 +32,11 @@ void	check_vars(char **line, t_shell *shell)
 char *find_var(char *str, t_shell *shell)
 {
 	char 	*res;
-	int		i;
 
 	if (!ft_strcmp(str, "?"))
 		res = ft_itoa(shell->last_exit_status);
 	else
 	{
-		i = 0;
 		res = ft_strdup(expand_arg(shell, str));
 	}
 	if (res == NULL)
@@ -60,11 +58,7 @@ void	handle_vars(char **line, int i, int len, t_shell *shell)
 
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
-	{
-		perror("malloc");
-		free(*line);
-		exit(1);
-	}
+		exit_variables(*line);
 	k = 0;
 	while (k < len - 1)
 	{
@@ -72,23 +66,15 @@ void	handle_vars(char **line, int i, int len, t_shell *shell)
 		k++;
 	}
 	str[k] = 0;
-	// printf("%s\n", str);
+	//printf("%s\n", str);
 	newstr = find_var(str, shell);
 	free(str);
 	if (newstr == NULL)
-	{
-		perror("malloc");
-		free(*line);
-		exit(1);
-	}
-	// printf("%s\n", newstr);
+		exit_variables(*line);
+	//printf("%s\n", newstr);
 	tmp = replace_var(line, i, len, newstr);
 	if (tmp == NULL)
-	{
-		perror("malloc");
-		free(*line);
-		exit(1);
-	}
+		exit_variables(*line);
 	free(*line);
 	*line = tmp;
 }
@@ -100,7 +86,7 @@ char	*replace_var(char **line, int start, int len, char *substr)
 	int	j;
 	char	*newline;
 
-	// printf("Line length: %zu, Substring length: %zu, len: %d\n", ft_strlen(*line), ft_strlen(substr), len);
+	//printf("Line length: %zu, Substring length: %zu, len: %d\n", ft_strlen(*line), ft_strlen(substr), len);
 	newline = malloc(sizeof(char) * (ft_strlen(*line) + ft_strlen(substr) - len + 1));
 	if (!newline)
 		return (NULL); 

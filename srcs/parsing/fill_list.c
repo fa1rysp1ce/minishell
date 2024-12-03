@@ -85,7 +85,7 @@ int	handle_redirec(char *str, char **strarr, int pos, t_token **list)
 {
 	t_token *token;
 
-	token = add_node(list);
+	token = add_node(list, strarr, pos);
 	token->args = malloc(sizeof(char *) * 2);
 	if (!token->args)
 		exit_fill_list(strarr, pos, list);
@@ -131,9 +131,9 @@ int	pipe_token(char **strarr, int pos, t_token **list)
 {
 	t_token *token;
 
-	token = add_node(list);
+	token = add_node(list, strarr, pos);
 	free(strarr[pos]);
 	token->type = PIPE;
-	add_node(list);
+	add_node(list, strarr, pos);
 	return (1);
 }

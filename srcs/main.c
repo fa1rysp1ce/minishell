@@ -35,10 +35,10 @@ int	main(int ac, char **av, char **env)
 				return (exit_status);
 			}
 
-	rl_event_hook = event_hook;
+	//rl_event_hook = event_hook;
 
 
-	while ((rl_event_hook != NULL))
+	while (1)//((rl_event_hook != NULL))
 	{
 		line = readline(GREEN BOLD"minishell>"DEFAULT" ");
 		if (line == NULL)
@@ -48,7 +48,7 @@ int	main(int ac, char **av, char **env)
 		rl_redisplay();
 		if (parse(&ls_ptr, &line, &shell) != 0)
 			continue ;
-		// print_list_inbar(&ls_ptr);
+		//print_list_inbar(&ls_ptr);
 		// print_list(&ls_ptr);
 		execution_junction(&shell, &ls_ptr);
 		clean_tokens(&shell);
