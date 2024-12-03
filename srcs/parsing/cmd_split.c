@@ -31,7 +31,7 @@ static int	quotes(char const *s, int *i, char c)
 	while (s[*i] != '\0' )//&& s[*i] != c)
 	{
 		if (s[*i] == c && s[*i + 1] != c)
-			break; //fix count for consec ""
+			break;
 		*i += 1;
 	}
 	if (s[*i] == c)
@@ -57,7 +57,6 @@ int	ft_ccount(char const *s)
 		// printf("%d, %c\n", i, s[i]);
 		while (s[i] == ' ' || s[i] == '|' || s[i] == '<' || s[i] == '>')
 			i++;
-		
 		// printf("%d quote flag bei %c\n", quote_flag, s[i]);
 		if (s[i] != '\0' && quote_flag == 0)
 		{
@@ -79,14 +78,17 @@ int	ft_ccount(char const *s)
 					i++;
 				if (s[i] == '"')
 					i++;*/
-				quote_flag = quotes(s, &i, s[i]);
+				if (s[i + 1] == s[i])
+					ccount++;
+				else
+					quote_flag = quotes(s, &i, s[i]);
 				//continue;
 				i++;
 			}
 			i++;
 		}
 	}
-	// printf("%d is count\n", ccount);
+	//printf("%d is count\n", ccount);
 	return (ccount);
 }
 
