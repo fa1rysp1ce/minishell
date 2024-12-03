@@ -14,13 +14,9 @@ int	main(int ac, char **av, char **env)
 	char	*line;
 
 
-	// signal(SIGINT, sigint_handler);
 	ls_ptr = NULL;
 	init_shell(&shell, env);
     
-	// t_token *head_token; //for debug
-    // head_token = NULL; //for debug
-	// init_tokens(&head_token); //for debug
 
 	(void)ac;
 	(void)av;
@@ -36,17 +32,14 @@ int	main(int ac, char **av, char **env)
 			break ;
 		//add_history(line);
 		//rl_replace_line((const char *)line, 0);
-		//printf("%s (main)\n", line);
 		//rl_redisplay();
 		if (parse(&ls_ptr, &line, &shell) != 0)
 			continue ;
-		print_list_inbar(&ls_ptr);
-		print_list(&ls_ptr);
-		// print_list_inbar(&head_token);
+		// print_list_inbar(&ls_ptr);
+		// print_list(&ls_ptr);
 		execution_junction(&shell, &ls_ptr);
-		// execution_junction(&shell, &head_token); //for debug
 		clean_tokens(&shell);
-		printf("exit status: %d\n", shell.last_exit_status);
+		// printf("exit status: %d\n", shell.last_exit_status);
 	}
 
 

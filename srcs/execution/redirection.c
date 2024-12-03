@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 19:37:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/11/28 13:44:14 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/03 14:54:04 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int    redirect_heredoc(t_shell *shell)
     dup2(shell->execute->heredocs[i].doc_pipe[0], STDIN_FILENO);
     close(shell->execute->heredocs[i].doc_pipe[0]);
     
-    ft_putstr_fd("heredoc read!\n", STDERR_FILENO);
+    // ft_putstr_fd("heredoc read!\n", STDERR_FILENO);
     
     return (EXIT_SUCCESS);
 }

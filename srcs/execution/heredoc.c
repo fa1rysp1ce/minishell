@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/02 18:26:04 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/03 14:55:18 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    close_used_heredocs(t_shell *shell)
     {
         if (current_token && current_token->type == HDOC)
         {
-            printf("open heredoc[%d] : closing in parent during pipe\n", i);
+            // printf("open heredoc[%d] : closing in parent during pipe\n", i);
             close(shell->execute->heredocs[i].doc_pipe[0]);
             shell->execute->heredocs[i].read_end_open = 0;
             i++;
@@ -52,8 +52,8 @@ void    get_next_heredoc(t_token *token, t_token **doc_token)
     while (tmp != NULL && tmp->type != HDOC)
         tmp = tmp->next;
     *doc_token = tmp;
-    if (tmp)
-        printf("next doc: %s\n", tmp->args[0]);
+    // if (tmp)
+        // printf("next doc: %s\n", tmp->args[0]);
 }
 
 int    count_heredocs(t_shell *shell)
@@ -120,7 +120,7 @@ int    process_heredocs(t_shell *shell)
         
         
         //all these stuff may happen in a child proc
-        printf("reading heredocs[%d]\n", i);
+        // printf("reading heredocs[%d]\n", i);
         read_heredoc(doc_token, shell->execute->heredocs[i]);
         shell->execute->heredocs[i].read_end_open = 1;
         

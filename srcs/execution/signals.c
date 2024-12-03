@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:24:46 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/02 17:14:24 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/03 14:58:19 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void    handle_sigint(int sig)
 {
     (void)sig;
-    write(1, "\n", 1);
+    write(1, "^C\n", 3);
     rl_on_new_line();
     rl_replace_line("", 0);
     rl_redisplay();

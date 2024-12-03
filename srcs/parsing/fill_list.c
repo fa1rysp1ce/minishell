@@ -52,7 +52,6 @@ int	handle_commands(char **strarr, int pos, t_token **list)
 	j = 0;
 	token = find_last(list);
 	count = arg_count(strarr, pos);
-	printf("arg count = %d\n", count);
 	token->args = malloc(sizeof(char *) * (count + 1));
 	if (!token->args)
 		exit_fill_list(strarr, pos, list);
@@ -69,7 +68,6 @@ int	handle_commands(char **strarr, int pos, t_token **list)
 			token->args[j++] = strarr[pos + i];
 		i++;
 	}
-	printf("i = %d\n", i);
 	token->args[j] = NULL;
 	token->type = CMD;
 	return (i);
