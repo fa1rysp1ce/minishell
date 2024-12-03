@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:17:35 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/02 16:01:25 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:38:06 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void    clean_shell(t_shell *shell)
 {
     if (shell->envc)
         free_2d_charr(shell->envc);
+    if (shell->prev_dir)
+        free(shell->prev_dir);
     //destroy tokens
     // clean_tokens(shell->head_token);
 }

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 16:11:22 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/03 20:16:12 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ struct s_execute;
 typedef struct s_shell
 {
 	char				**envc;
-	// char				**paths;
 	int					last_exit_status;
+	char				*prev_dir;
 	struct s_execute	*execute;
 	struct s_token		**head_token;
 	struct s_token		*token;

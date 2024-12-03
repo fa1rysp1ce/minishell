@@ -1,7 +1,7 @@
 
 tests that failed
 
-
+cd ~/Music
 
 MANDATORY
 
@@ -76,4 +76,7 @@ args[4]: NULL
 munmap_chunk(): invalid pointer
 fish: Job 1, './minishell' terminated by signal SIGABRT (Abort)
 
+
+
+\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t
 

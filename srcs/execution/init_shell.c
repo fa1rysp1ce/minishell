@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:04:14 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 16:21:12 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:57:46 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static	char **picture_env_vars(char **env, char **envc);
 void    init_shell(t_shell *shell, char **env)
 {
 	shell->envc = picture_env(env);
+	shell->prev_dir = NULL;
 	shell->execute = NULL;
 	shell->head_token = NULL;
 	shell->token = NULL;
