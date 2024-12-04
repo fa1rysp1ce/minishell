@@ -1,6 +1,10 @@
 
 tests that failed
 
+unset PATH
+
+cmds shouldnt work 
+
 cd ~/Music
 
 MANDATORY
