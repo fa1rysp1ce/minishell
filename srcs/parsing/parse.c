@@ -20,7 +20,7 @@ int	parse(t_token **list, char **line, t_shell *shell)
 	int i = 0;
 	while (strarr[i] != NULL)
 	{
-		// printf("%s\n", strarr[i]);
+		//printf("%s\n", strarr[i]);
 		i++;
 	}
 	fill_list(strarr, list);

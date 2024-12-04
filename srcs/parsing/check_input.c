@@ -41,16 +41,33 @@ static int	count_c(char *s, char c)
 {
 	int i;
 	int	count;
+	int is_quoted;
 
 	i = 0;
 	count = 0;
+	is_quoted = 0;
 	//printf("Input string: '%s'\n", s);
 	while (s[i] != 0)
 	{
-		if (s[i] == c) //&& i != 0 && s[i + 1] != '\0')
+		if ('"' != c && s[i] == '"' && !is_quoted)
+		{
+			i++;
+			//printf("hihi\n");
+			while (s[i] != '"' && s[i] != 0)
+				i++;
+		}
+		else if (39 != c && s[i] == 39 && !is_quoted)
+		{
+			i++;
+			while (s[i] != 39 && s[i] != 0)
+				i++;
+		}
+		else if (s[i] == c) //&& i != 0 && s[i + 1] != '\0')
 		{
 			//printf("%c, %d counted\n", s[i], i);
 			count++;
+			if (count % 2 == 1)
+				is_quoted = !is_quoted;
 		}
 		//printf("%c, %d\n", s[i], i);
 		i++;

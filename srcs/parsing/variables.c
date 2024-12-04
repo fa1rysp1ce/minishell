@@ -89,7 +89,6 @@ char	*replace_var(char **line, int start, int len, char *substr)
 	int	j;
 	char	*newline;
 
-	printf("hi\n");
 	//printf("Line length: %zu, Substring length: %zu, len: %d\n", ft_strlen(*line), ft_strlen(substr), len);
 	newline = malloc(sizeof(char) * (ft_strlen(*line) + ft_strlen(substr) - len + 1));
 	if (!newline)

@@ -170,6 +170,49 @@ static int	getslen(char const *s, int start)
 	return (len);
 }
 
+/*static int	valid_quote(const char *s, int j, int start)
+{
+	int i;
+	int	count;
+	int is_quoted;
+
+	i = 0;
+	count = 0;
+	is_quoted = 0;
+	if ('"' != s[j + start] && 39 != s[j + start])
+		return (1);
+	//printf("Input string: '%s'\n", s);
+	while (i <= j + start)
+	{
+		if ('"' != s[j + start] && s[i] == '"' && !is_quoted)
+		{
+			i++;
+			//printf("hihi\n");
+			while (s[i] != '"' && s[i] != 0)
+				i++;
+		}
+		else if (39 != s[j + start] && s[i] == 39 && !is_quoted)
+		{
+			i++;
+			while (s[i] != 39 && s[i] != 0)
+				i++;
+		}
+		else if (('"' != s[j + start] && s[i] == '"') || (39 != s[j + start] && s[i] == 39))//&& i != 0 && s[i + 1] != '\0')
+		{
+			//printf("%c, %d counted\n", s[i], i);
+			count++;
+			if (count % 2 == 1)
+				is_quoted = !is_quoted;
+		}
+		//printf("%c, %d\n", s[i], i);
+		i++;
+	}
+	printf("lalalla %d at %c, index: %d\n", is_quoted, s[j + start], j + start);
+	return (is_quoted);
+}
+
+
+
 static char	*ft_createsubstr(char const *s, int start)
 {
 	int		len;
@@ -181,14 +224,15 @@ static char	*ft_createsubstr(char const *s, int start)
 	i = 0;
 	j = 0;
 	if (len == 0)
-		return ("");
+		return (ft_strdup(""));
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
 	while (j < len)
 	{
-		if (s[j + start] != '"' && s[j + start] != 39)
+		if ((valid_quote(s, j, start) == 1))//&& (i != 0 && j != len - 1)) // (((s[j + start] != '"') && (s[j + start] != 39)) || (i != 0 && j != len - 1))
 		{
+			printf("lala\n");
 			str[i] = s[j + start];
 			i++;
 		}
@@ -196,7 +240,49 @@ static char	*ft_createsubstr(char const *s, int start)
 	}
 	str[i] = '\0';
 	return (str);
+}*/
+
+//check out the next two again perplexity helped
+static int is_quote(char c)
+{
+    return (c == '"' || c == '\'');
 }
+
+static char *ft_createsubstr(char const *s, int start)
+{
+    int len = getslen(s, start);
+    char *str = malloc(sizeof(char) * (len + 1));
+    if (!str)
+        return NULL;
+
+    int i = 0, j = 0;
+    char quote_char = '\0';
+
+    while (j < len)
+    {
+        char c = s[j + start];
+
+        if (is_quote(c) && quote_char == '\0')
+        {
+            quote_char = c;  // Start of a quoted section
+        }
+        else if (c == quote_char)
+        {
+            quote_char = '\0';  // End of a quoted section
+        }
+        else
+        {
+            str[i++] = c;  // Copy character if not a quote or inside quotes
+        }
+
+        j++;
+    }
+
+    str[i] = '\0';
+    return str;
+}
+
+
 
 int	fill_arr(char const *s, char ***strarr, int ccount)
 {
