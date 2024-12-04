@@ -11,8 +11,11 @@ void	check_vars(char **line, t_shell *shell)
 		j = 0;
 		if (line[0][i] == 39)
 		{
+			i++;
 			while (line[0][i] != 39 && line[0][i] != 0)
 				i++;
+			if (line[0][i] == 39)
+        		i++;
 		}
 		if (line[0][i] == '$')
 		{
@@ -86,6 +89,7 @@ char	*replace_var(char **line, int start, int len, char *substr)
 	int	j;
 	char	*newline;
 
+	printf("hi\n");
 	//printf("Line length: %zu, Substring length: %zu, len: %d\n", ft_strlen(*line), ft_strlen(substr), len);
 	newline = malloc(sizeof(char) * (ft_strlen(*line) + ft_strlen(substr) - len + 1));
 	if (!newline)

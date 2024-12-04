@@ -20,8 +20,8 @@ int	main(int ac, char **av, char **env)
     
 	exit_status = 0;
 	(void)ac;
-	// (void)av;
-	if (av[1] && ft_strcmp(av[1], "-c") == 0)
+	 (void)av;
+	/*if (av[1] && ft_strcmp(av[1], "-c") == 0)
 		if (av[2])
 			{
 				line = ft_strdup(av[2]);
@@ -34,11 +34,11 @@ int	main(int ac, char **av, char **env)
 
 				return (exit_status);
 			}
+	*/
+	rl_event_hook = event_hook;
 
-	//rl_event_hook = event_hook;
 
-
-	while (1)//((rl_event_hook != NULL))
+	while ((rl_event_hook != NULL))
 	{
 		line = readline(GREEN BOLD"minishell>"DEFAULT" ");
 		if (line == NULL)

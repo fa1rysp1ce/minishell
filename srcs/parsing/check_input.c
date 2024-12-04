@@ -44,12 +44,18 @@ static int	count_c(char *s, char c)
 
 	i = 0;
 	count = 0;
-	while (s[i])
+	//printf("Input string: '%s'\n", s);
+	while (s[i] != 0)
 	{
-		if (s[i] == c)
+		if (s[i] == c) //&& i != 0 && s[i + 1] != '\0')
+		{
+			//printf("%c, %d counted\n", s[i], i);
 			count++;
+		}
+		//printf("%c, %d\n", s[i], i);
 		i++;
 	}
+	//printf("lalalla %d\n", count);
 	return (count);
 }
 
@@ -86,6 +92,7 @@ int	check_input(char *s)
 {
 	if (count_c(s, '"') % 2 != 0 || count_c(s, 39) % 2 != 0)
 	{
+		//printf("count is %d\n", count_c(s, 39));
 		free_input(s, '"');
 		return (1);
 	}

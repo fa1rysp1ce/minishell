@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 20:16:12 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 15:32:53 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ typedef struct s_execute
 } t_execute;
 
 //definitions of rl funcs for use on mac
-extern void (*rl_event_hook)(void);
-void rl_replace_line(const char *text, int clear_undo);
-void rl_clear_history(void);
+//extern void (*rl_event_hook)(void);
+//void rl_replace_line(const char *text, int clear_undo);
+//void rl_clear_history(void);
 
 
 //##########parsing##########

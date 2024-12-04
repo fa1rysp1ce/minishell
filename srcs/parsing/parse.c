@@ -7,9 +7,9 @@ int	parse(t_token **list, char **line, t_shell *shell)
 	int		arrsize;
 
 	strarr = NULL;
-	check_vars(line, shell);
 	if (check_input(*line) != 0)
 		return (1);
+	check_vars(line, shell);
 	arrsize = cmd_split(*line, &strarr);
 	free(*line);
 	if (arrsize < 0)
