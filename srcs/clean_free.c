@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:17:35 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 19:38:06 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 15:56:42 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void    clean_heredocs(t_execute *exec)
         //     }
         //     i++;
         // }
+        free(exec->heredocs);
     }
-    free(exec->heredocs);
     exec->heredocs = NULL;
 }
 

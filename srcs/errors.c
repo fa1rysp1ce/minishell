@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:07 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/02 18:16:04 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 16:47:07 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int    exit_malloc_err(t_shell *shell)
 {
     clean_heredocs(shell->execute);
     clean_exec(shell);
+    clean_tokens(shell);
     clean_shell(shell); //shell init and token
     exit(MALLOC_ERROR);
 }
@@ -45,9 +46,7 @@ int abort_exec(char *msg, t_shell *shell)
 {
     ft_putstr_fd(msg, STDERR_FILENO);
     clean_exec(shell);
-    if (shell->token) //change to proper cleanup token
-        free_2d_charr(shell->token->args);
-    shell->token = NULL;
+    clean_tokens(shell);
     return (EXEC_ERROR);
 }
 

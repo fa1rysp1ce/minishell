@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:38:10 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/03 20:31:45 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 17:15:26 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 static char	**get_paths(t_shell *shell);
 static char	*find_correct_path(t_shell *shell, char *arg, char **paths, char *cmd);
+static int  is_absolute(char *path, int *status);
+static void  have_permission(char *path, char *name, int *status);
+
 
 //returns a string containing the full path and name of the command. null if no path exists
-//updates the status variable in case absolute path is not executable
+//updates the status variable in case file not executable
 char    *get_cmd_path(t_shell *shell, int *status)
 {
     char	**paths;
@@ -25,13 +28,14 @@ char    *get_cmd_path(t_shell *shell, int *status)
     char	*cmd;
     
     args = shell->token->args;
-    if (access(args[0], F_OK) == 0)
-    {
-        if (access(args[0], X_OK) != 0)
-            *status = NON_EXEC;
+    if (is_absolute(args[0], status))
         return (ft_strdup(args[0]));
-    }
     paths = get_paths(shell);
+    if (paths == NULL)
+    {
+        error_msg(args[0],"command not found");
+        return (NULL);
+    }
     cmd = ft_strjoin("/", args[0]);
     if (cmd == NULL)
     {
@@ -39,9 +43,8 @@ char    *get_cmd_path(t_shell *shell, int *status)
         exit_malloc_err(shell);
     }
     cmd_path = find_correct_path(shell, args[0], paths, cmd);
-    if (cmd_path == NULL)
-        free(cmd);
     free_2d_charr(paths);
+    have_permission(cmd_path, args[0], status);
     return (cmd_path);
 }
 
@@ -55,10 +58,13 @@ static char	**get_paths(t_shell *shell)
     env_path = NULL;
 	env_path = expand_arg(shell, "PATH");
 	if (env_path == NULL)
-		abort_exec("PATH not found\n", shell);
-	paths = ft_split(env_path, ':');
-    if (paths == NULL)
-        exit_malloc_err(shell);
+        return (NULL);
+    else
+    {
+        paths = ft_split(env_path, ':');
+        if (paths == NULL)
+            exit_malloc_err(shell);
+    }
     return (paths);
 }
 
@@ -81,7 +87,7 @@ static char	*find_correct_path(t_shell *shell, char *arg, char **paths, char *cm
             free_2d_charr(paths);
             exit_malloc_err(shell);
         }
-        if (access(possible_path, F_OK | X_OK) == 0)
+        if (access(possible_path, F_OK) == 0)
         {
             free(cmd);
             return (possible_path);
@@ -89,6 +95,28 @@ static char	*find_correct_path(t_shell *shell, char *arg, char **paths, char *cm
         free(possible_path);
         i++;
     }
-    error_msg(arg ,"command not found");
+    free(cmd);
 	return (NULL);
+}
+
+//check if the path is an existing absolute path
+static int  is_absolute(char *path, int *status)
+{
+    if (access(path, F_OK) == 0)
+    {
+        have_permission(path, path, status);
+        return (1);
+    }
+    return (0);
+}
+
+static void  have_permission(char *path, char *name, int *status)
+{
+    if (path == NULL)
+        error_msg(name ,"command not found");
+    else if (access(path, X_OK) != 0)
+    {
+        *status = NON_EXEC;
+        error_msg(name, "Permission denied");
+    }
 }

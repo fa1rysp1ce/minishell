@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:49:37 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 20:23:02 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 15:06:45 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Paths not starting with '/' (e.g., documents/projects)
 '~' to represent the user's home directory
 */
 
-static int cd_home(t_shell *shell) //if getcwd fails - no solution
+static int cd_home(t_shell *shell)
 {
     char    *buff;
     int     buff_size;
@@ -112,7 +112,7 @@ int     prev_dir(t_shell *shell)
     buff = NULL;
     buff_size = 1024;
     pwd = getcwd(buff, buff_size);
-    if (shell->prev_dir != NULL) //prev var exists
+    if (shell->prev_dir != NULL)
     {
         if (cd_path(shell, shell->prev_dir) == EXIT_FAILURE)
             return (EXIT_FAILURE);
@@ -128,16 +128,14 @@ int     prev_dir(t_shell *shell)
     return (EXIT_SUCCESS);
 }
 
-
-//problem with if (token->args[2] != NULL) -- cus it might no be null but full of random trash
 int     cd(t_shell *shell)
 {
     t_token *token;
     
     token = shell->token;
-    if (token->args[2] != NULL)
+    if (token->args[1] != NULL && token->args[2] != NULL)
     {
-        ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
+        error_msg(token->args[0], "too many arguments");
         return(EXIT_FAILURE);
     }
     if (token->args[1] == NULL || ft_strcmp(token->args[1], "~") == 0)

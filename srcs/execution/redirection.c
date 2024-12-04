@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 19:37:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 14:54:04 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 19:39:52 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int    redirect_heredoc(t_shell *shell)
 }
 
 
-int    redirection(t_shell *shell)
+int    redirection(t_shell *shell, int *status)
 {   
     t_token *red_token;
     int error;
@@ -90,6 +90,7 @@ int    redirection(t_shell *shell)
     }
     if (error == EXIT_FAILURE)
     {
+        *status = EXIT_FAILURE;
         restore_fds(shell);
         return (EXIT_FAILURE);
     }

@@ -7,15 +7,19 @@
 
 #include "minishell.h"
 
+extern	int		g_status;
+
 int	main(int ac, char **av, char **env)
 {
 	t_shell shell;
 	t_token *ls_ptr;
 	char	*line;
 	int		exit_status;
+	int		end_condition;
 
 
 	ls_ptr = NULL;
+	end_condition = 0;
 	init_shell(&shell, env);
     
 	exit_status = 0;
@@ -34,12 +38,11 @@ int	main(int ac, char **av, char **env)
 
 				return (exit_status);
 			}
+// signal(SIGINT, SIG_IGN);
 
-	//rl_event_hook = event_hook;
-
-
-	while (1)//((rl_event_hook != NULL))
+	while (1)
 	{
+		signal_interactive();
 		line = readline(GREEN BOLD"minishell>"DEFAULT" ");
 		if (line == NULL)
 			break ;
@@ -48,8 +51,9 @@ int	main(int ac, char **av, char **env)
 		rl_redisplay();
 		if (parse(&ls_ptr, &line, &shell) != 0)
 			continue ;
-		//print_list_inbar(&ls_ptr);
+		// print_list_inbar(&ls_ptr);
 		// print_list(&ls_ptr);
+		signal_noninteractive();
 		execution_junction(&shell, &ls_ptr);
 		clean_tokens(&shell);
 		// printf("exit status: %d\n", shell.last_exit_status);

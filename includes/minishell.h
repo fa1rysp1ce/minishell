@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 20:16:12 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 19:38:42 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@
 #define BUILTIN_MISUSE 	2 	//Misuse of shell builtins
 #define NON_EXEC 		126 //Command not executable
 #define NO_CMD 			127 //Command not found
+#define SIG_TERM  	 	130 //Ctrl+C
 /*
 128+n: Fatal error with signal n
-130: Script terminated by Ctrl+C
 */
 
 
@@ -94,9 +94,9 @@ typedef struct s_execute
 } t_execute;
 
 //definitions of rl funcs for use on mac
-extern void (*rl_event_hook)(void);
-void rl_replace_line(const char *text, int clear_undo);
-void rl_clear_history(void);
+// extern void (*rl_event_hook)(void);
+// void rl_replace_line(const char *text, int clear_undo);
+// void rl_clear_history(void);
 
 
 //##########parsing##########
@@ -153,7 +153,10 @@ void    print_list_inbar(t_token **head);
 //remember to remove the jake_nodes file from the makefile
 
 //signals
-void    sigint_handler(int sig);
+void    signal_interactive(void);
+void    signal_noninteractive(void);
+void    signal_child_proc(void);
+void    signal_heredoc(void);
 
 //builtins utils
 int     is_builtin(char *str);
@@ -187,7 +190,7 @@ void    update_exit_status(t_shell *shell, int status);
 void    child_exec_fail(t_shell *shell);
 
 //redirection
-int    redirection(t_shell *shell);
+int    redirection(t_shell *shell, int *status);
 
 //redirection utils
 void    get_next_redirection(t_token **red_token);
@@ -202,9 +205,6 @@ void    close_used_heredocs(t_shell *shell);
 //init shell
 void    init_shell(t_shell *shell, char **env);
 char	*expand_arg(t_shell *shell, char *arg);
-
-//signals
-int     event_hook(void);
 
 //clean free
 void 	clean_shell(t_shell *shell);

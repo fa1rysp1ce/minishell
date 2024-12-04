@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 19:39:08 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 19:39:18 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int    count_pipes(t_token **token)
 void    execution_junction(t_shell *shell, t_token **head_token)
 {   
     shell->head_token = head_token;
-    
-    shell->token = (*shell->head_token); //assuming the first one is always a CMD!
-    
+    shell->token = (*shell->head_token);
     shell->execute = malloc(sizeof(t_execute));
     if (shell->execute == NULL)
         exit_malloc_err(shell);
@@ -65,7 +63,7 @@ void    single_builtin(t_shell *shell)
 {
     int         status;
 
-    if (redirection(shell) == EXIT_FAILURE)
+    if (redirection(shell, &status) == EXIT_FAILURE)
     {
         //update correct status
         return ;

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/02 15:18:54 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 19:38:24 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,9 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
     status = NO_CMD;
     args = shell->token->args;
     cmd_path = NULL;
+    signal_child_proc();
     set_pipes(pipe_fd, last_pipe, shell->execute->cmds, cmd_count);
-    if (redirection(shell) == EXIT_SUCCESS)
+    if (redirection(shell, &status) == EXIT_SUCCESS)
     {
         if (is_builtin(args[0]))
             status = execute_builtin(shell);
@@ -101,10 +102,8 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
             cmd_path = get_cmd_path(shell, &status);
         if (cmd_path != NULL)
         {
-                if (access(cmd_path, X_OK) != 0)
-                status = NON_EXEC;
-                execve(cmd_path, args, shell->envc);
-                free(cmd_path);
+            execve(cmd_path, args, shell->envc);
+            free(cmd_path);
         }
     }
     child_exec_fail(shell);

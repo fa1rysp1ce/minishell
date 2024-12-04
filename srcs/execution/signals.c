@@ -6,33 +6,47 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:24:46 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/03 20:21:02 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 19:27:47 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    handle_sigint(int sig)
+int      g_status;
+
+static void    handle_sigint(int sig);
+
+void    signal_interactive(void)
 {
-    (void)sig;
-    write(1, "^C\n", 3);
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
+    
+    signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-int     event_hook(void)
+void    signal_noninteractive(void)
 {
-    struct sigaction sa;
+    signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+//todo
+void    signal_child_proc(void)
+{
+    signal(SIGINT, handle_sigint);
+    signal(SIGQUIT, SIG_DFL);
+}
+//todo
+void    signal_heredoc(void)
+{
+    signal(SIGINT, handle_sigint);
+    signal(SIGQUIT, SIG_IGN);
+}
 
-    sa.sa_handler = handle_sigint;
-    sigemptyset(&sa.sa_mask);  // Initialize the signal mask
-    sa.sa_flags = 0;  // No special flags
-
-    sigaction(SIGINT, &sa, NULL);
-
-    sa.sa_handler = SIG_IGN;
-    sigaction(SIGQUIT, &sa, NULL);
-    return (EXIT_SUCCESS);
-    
+static void    handle_sigint(int sig)
+{
+    (void)sig;
+    g_status = 130;
+    write(1, "\n", 1);
+    rl_replace_line("", 0);
+    rl_on_new_line();
+    rl_redisplay();
 }

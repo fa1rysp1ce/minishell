@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:04:11 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 17:52:29 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 17:22:22 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int    unset(t_shell *shell, t_token *token)
         i++;
     }
     if (shell->envc[i] == NULL)
-        return (EXIT_FAILURE); //cmd not found?
+        return (EXIT_SUCCESS); //cmd not found?
     free(shell->envc[i]);
     while (shell->envc[i] != NULL)
     {

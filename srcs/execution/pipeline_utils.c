@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 21:58:32 by inbar             #+#    #+#             */
-/*   Updated: 2024/11/28 17:13:55 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 16:02:50 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void    update_exit_status(t_shell *shell, int status)
 
 void    child_exec_fail(t_shell *shell)
 {
-    restore_fds(shell);
+    // restore_fds(shell);
     clean_exec(shell);
     clean_tokens(shell);
     clean_shell(shell);
