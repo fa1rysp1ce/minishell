@@ -11,8 +11,11 @@ void	check_vars(char **line, t_shell *shell)
 		j = 0;
 		if (line[0][i] == 39)
 		{
+			i++;
 			while (line[0][i] != 39 && line[0][i] != 0)
 				i++;
+			if (line[0][i] == 39)
+        		i++;
 		}
 		if (line[0][i] == '$')
 		{

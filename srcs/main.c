@@ -24,8 +24,8 @@ int	main(int ac, char **av, char **env)
     
 	exit_status = 0;
 	(void)ac;
-	// (void)av;
-	if (av[1] && ft_strcmp(av[1], "-c") == 0)
+	 (void)av;
+	/*if (av[1] && ft_strcmp(av[1], "-c") == 0)
 		if (av[2])
 			{
 				line = ft_strdup(av[2]);
@@ -37,7 +37,7 @@ int	main(int ac, char **av, char **env)
 				clean_shell(&shell);
 
 				return (exit_status);
-			}
+			} */
 // signal(SIGINT, SIG_IGN);
 
 	while (1)

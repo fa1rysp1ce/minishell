@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_misc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:04:11 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/04 17:22:22 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/04 19:54:00 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int     echo(t_token *token)
     {
         ft_putstr_fd(token->args[i], STDOUT_FILENO);
             i++;
-        if (token->args[i])
+        if (token->args[i] && token->args[i][0] != 0)
             ft_putstr_fd(" ", STDOUT_FILENO);
     }
     if (new_line)
