@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 14:55:18 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/05 18:03:06 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,15 @@ int    count_heredocs(t_shell *shell)
     return (count);
 }
 //some problem here eof wont print result
-int    *read_heredoc(t_token *doc_token, t_heredoc heredoc)
+void    *read_heredoc(t_shell *shell, t_token *doc_token, t_heredoc heredoc)
 {
     char    *delimiter;
     char    *line;
     int     line_len;
-    
+
     rl_initialize();
     delimiter = doc_token->args[0];
+    signal_heredoc();
     while (1)
     {
         line = readline("> ");
@@ -97,34 +98,57 @@ int    *read_heredoc(t_token *doc_token, t_heredoc heredoc)
         free(line);
     }
     close(heredoc.doc_pipe[1]);
-    return (EXIT_SUCCESS);
+
+    // (void) shell;
+    clean_heredocs(shell->execute);
+    clean_exec(shell);
+    clean_tokens(shell);
+    clean_shell(shell);
+    
+    // return (EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
 
 int    process_heredocs(t_shell *shell)
 {
-    t_token   *doc_token;
+    t_token     *doc_token;
     int         i;
+    pid_t       pid;
+    int         hdoc_status;
 
     doc_token = NULL;
     if (!shell->execute->hdocs)
         return (EXIT_SUCCESS);
+    
     shell->execute->heredocs = malloc(sizeof(t_heredoc) * shell->execute->hdocs);
     if (shell->execute->heredocs == NULL)
         exit_malloc_err(shell);
+    
+    
     i = 0;
     while (i < shell->execute->hdocs)
     {
         get_next_heredoc(shell->token, &doc_token);
         if (pipe(shell->execute->heredocs[i].doc_pipe) == -1)
             abort_exec("Error: heredoc pipe\n", shell);
+        pid = fork();
+        if (pid < 0)
+            abort_exec("Error: heredoc fork\n", shell);
+        if (pid == 0)
+            read_heredoc(shell, doc_token, shell->execute->heredocs[i]);
+        // else
+        // {
+        signal_noninteractive();
         
-        
-        //all these stuff may happen in a child proc
-        // printf("reading heredocs[%d]\n", i);
-        read_heredoc(doc_token, shell->execute->heredocs[i]);
+        close(shell->execute->heredocs[i].doc_pipe[1]);
         shell->execute->heredocs[i].read_end_open = 1;
+
         
+        waitpid(pid, &hdoc_status, 0);
+        // if (WIFSIGNALED(hdoc_status))
+            printf("hdoc terminated with: %d\n", WEXITSTATUS(hdoc_status));
         i++;
+        // }
     }
     return (EXIT_SUCCESS);
 }

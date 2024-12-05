@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:17:35 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/04 15:56:42 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/05 16:31:47 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void    clean_heredocs(t_execute *exec)
     
     if (exec->heredocs)
     {
-        //for some reason it closes the last heredoc again - no error reported
+        // //for some reason it closes the last heredoc again - no error reported
         // i = 0;
         // while (i < exec->hdocs)
         // {
@@ -60,8 +60,6 @@ void    clean_heredocs(t_execute *exec)
         //     {
         //         printf("open heredoc[%d] : closing it while cleaning\n", i);
         //         close(exec->heredocs[i].doc_pipe[0]);
-        //         // free(exec->heredocs[i].read_end_open);
-        //         //*exec->heredocs[i].read_end_open) = 0;
         //     }
         //     i++;
         // }

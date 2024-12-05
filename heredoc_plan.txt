@@ -1,0 +1,21 @@
+
+
+
+create as many pipes as heredocs
+make one child process:
+process all heredocs inside it:
+each 
+close read end
+write to its corrosponding pipe
+close write end
+
+back to parent normal
+each heredoc in the array close write end
+set open read end to 1
+
+
+back to parent in case of ctrl+c
+close all pipes read and write ends
+clean up heredocs
+set execute->hdocs to 0
+

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/04 19:38:24 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/05 14:44:32 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int n
         if (cmd_count > 0 && shell->execute->cmds > 1) //not 1st cmd and no single cmd
                 close_pipes(pipe_fd, last_pipe);
         close_used_heredocs(shell); //set 0 to indicate what heredocs were used
-        // printf("pipe!\n");
         next_cmd_token(shell);
         swap_pipes(&last_pipe, &new_pipe);
         cmd_count++;

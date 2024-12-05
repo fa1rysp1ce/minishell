@@ -14,7 +14,7 @@ int	main(int ac, char **av, char **env)
 	// char	*line;
 
 
-	signal(SIGINT, sigint_handler);
+	// signal(SIGINT, sigint_handler);
 	// ls_ptr = NULL;
 	init_shell(&shell, env);
     
@@ -38,7 +38,7 @@ int	main(int ac, char **av, char **env)
 			// continue ;
 		// print_list_inbar(&ls_ptr);
 		// execution_junction(&shell, &ls_ptr);
-		// print_list_inbar(&head_token);
+		print_list_inbar(&head_token);
 		execution_junction(&shell, &head_token); //for debug
 		clean_tokens(&shell);
 		printf("exit status: %d\n", shell.last_exit_status);
