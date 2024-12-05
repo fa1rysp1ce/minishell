@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:24:46 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/05 18:01:04 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/05 18:08:14 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ static void    handle_sigint2(int sig)
     (void)sig;
     g_status = 130;
     write(1, "\n", 1);
-    // rl_replace_line("", 0);
-    // rl_on_new_line();
-    // rl_redisplay();
     char *args = {NULL};
     execve("/bin/false", &args, NULL);
 
