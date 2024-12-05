@@ -13,8 +13,20 @@ static int	check_ops(char *s)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] != '\0')
 	{
+		if (s[i] == 39)
+		{
+			i++;
+			while (s[i] != 39 && s[i] != 0)
+				i++;
+		}
+		else if (s[i] == '"')
+		{
+			i++;
+			while (s[i] != '"' && s[i] != 0)
+				i++;
+		}
 		if (s[i] == '|' || s[i] == '=')
 		{
 			if (i > 0 && (is_op(s[i - 1])))

@@ -40,6 +40,56 @@ int	arg_count(char **strarr, int pos)
 	}
 	return (count);
 }
+/*
+char	*trim_quotes(char **strarr, int pos, t_token **list)
+{
+	char *result;
+
+	if (strarr[pos][0] == '"')
+	{
+		result = ft_strtrim(strarr[pos], "\"");
+		free(strarr[pos]);
+	}
+	else if (strarr[pos][0] == '\'')
+	{
+		result = ft_strtrim(strarr[pos], "\'");
+		free(strarr[pos]);
+	}
+	else
+		result = strarr[pos];
+	if (!result)
+		exit_fill_list(strarr, pos, list);
+	return (result);
+}*/
+
+char *remove_quotes(char *s)
+{
+    int len = strlen(s);
+
+    int i = 0, j = 0;
+    char quote_char = '\0';
+
+    while (j < len)
+    {
+        char c = s[j];
+        if ((c == '"' || c == '\'') && quote_char == '\0')
+        {
+            quote_char = c;  // Start of a quoted section
+        }
+        else if (c == quote_char)
+        {
+            quote_char = '\0';  // End of a quoted section
+        }
+        else
+        {
+            s[i++] = c;  // Copy character if not a quote or inside quotes
+        }
+        j++;
+    }
+
+    s[i] = '\0';
+    return (s);
+}
 
 int	handle_commands(char **strarr, int pos, t_token **list)
 {
@@ -65,7 +115,7 @@ int	handle_commands(char **strarr, int pos, t_token **list)
 			//count--;
 		}
 		else
-			token->args[j++] = strarr[pos + i];
+			token->args[j++] = remove_quotes(strarr[pos + i]);//trim_quotes(strarr, pos + i, list);
 		i++;
 	}
 	token->args[j] = NULL;
@@ -81,6 +131,7 @@ char *	handle_heredoc(t_token **list)
 	fd = open("heredoc.txt", O_RDWR | O_CREAT | O_TRUNC, 0666);
 }*/
 
+
 int	handle_redirec(char *str, char **strarr, int pos, t_token **list)
 {
 	t_token *token;
@@ -89,7 +140,7 @@ int	handle_redirec(char *str, char **strarr, int pos, t_token **list)
 	token->args = malloc(sizeof(char *) * 2);
 	if (!token->args)
 		exit_fill_list(strarr, pos, list);
-	token->args[0] = strarr[pos + 1];
+	token->args[0] = remove_quotes(strarr[pos + 1]);
 	token->args[1] = NULL;
 	if (str[0] == '<' && str[1] != '<')
 		token->type = IN;

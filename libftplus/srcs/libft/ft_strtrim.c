@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junruh <junruh@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:28:31 by junruh            #+#    #+#             */
-/*   Updated: 2024/05/04 21:42:07 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/05 18:46:35 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static const char	*ft_findend(char const *s1, char const *set)
 	int	i;
 
 	i = ft_strlen(s1) - 1;
-	while (ft_checkchar(s1[i], set) == 1 && i >= 0)
+	while (ft_checkchar(s1[i], set) == 1 && i > 0)
 		i--;
 	return (&s1[i + 1]);
 }

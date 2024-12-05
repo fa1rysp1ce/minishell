@@ -10,16 +10,23 @@ static int count_sym(char const *s)
 	count = 0;
 	while (s[i])
 	{
-		if (s[i] == '|' || s[i] == '<' || s[i] == '>' )
+		if (s[i] == '"')
+			while (s[i] != '\0' && s[i] != '"')
+				i++;
+		else if (s[i] == 39)
+			while (s[i] != '\0' && s[i] != 39)
+				i++;
+		else if (s[i] == '|' || s[i] == '<' || s[i] == '>' )
 		{
-			if ((i > 0 && s[i] != s[i - 1]) || i == 0)
+			if ((i > 0 && s[i] != s[i - 1] && '"' != s[i - 1] && '\'' != s[i - 1]) || i == 0)
 				count++;
 		}
 		i++;
 	}
+	//printf("%d\n", count);
 	return (count);
 }
-
+/*
 static int	quotes(char const *s, int *i, char c)
 {
 	int	re;
@@ -30,7 +37,7 @@ static int	quotes(char const *s, int *i, char c)
 	*i += 1;
 	while (s[*i] != '\0' )//&& s[*i] != c)
 	{
-		if (s[*i] == c && s[*i + 1] != c)
+		if (s[*i] == c && (s[*i + 1] == '\0' || s[*i + 1] != c))
 			break;
 		*i += 1;
 	}
@@ -40,8 +47,42 @@ static int	quotes(char const *s, int *i, char c)
 		re = 0;
 	// printf("%d re flag\n", re);
 	return (re);
+}*/
+
+int	ft_ccount(char const *s)
+{
+	int		i;
+	int		ccount;
+
+	i = 0;
+	ccount = count_sym(s);
+	while (s[i] != '\0')
+	{
+		while (s[i] == ' ' || s[i] == '|' || s[i] == '<' || s[i] == '>'
+			)//|| s[i] == '=')
+			i++;
+		if (s[i] == '"')
+			while (s[i] != '\0' && s[i] != '"')
+				i++;
+		if (s[i] == 39)
+			while (s[i] != '\0' && s[i] != 39)
+				i++;
+		if (s[i] == '"' || s[i] == '\'')
+			i++;
+		if (s[i] != '\0')
+		{
+			ccount++;
+			//printf("%c at %d: count: %d\n", s[i], i, ccount);
+		}
+		while (s[i] != ' ' && s[i] != '|' && s[i] != '<' && s[i] != '>'
+			/*&& s[i] != '=' */&& s[i] != '\0')
+			i++;
+	}
+	//printf("%d\n", ccount);
+	return (ccount);
 }
 
+/*
 int	ft_ccount(char const *s)
 {
 	int		i;
@@ -52,11 +93,15 @@ int	ft_ccount(char const *s)
 	quote_flag = 0;
 	ccount = count_sym(s);
 	//printf("%d, %c counted\n", ccount, s[i]);
+	printf("%s\n", s);
 	while (s[i] != '\0')
 	{
-		// printf("%d, %c\n", i, s[i]);
+		printf("%d, \n", i);
 		while (s[i] == ' ' || s[i] == '|' || s[i] == '<' || s[i] == '>')
+		{
 			i++;
+			printf("%d, %c\n", i, s[i]);
+		}
 		// printf("%d quote flag bei %c\n", quote_flag, s[i]);
 		if (s[i] != '\0' && quote_flag == 0)
 		{
@@ -65,32 +110,33 @@ int	ft_ccount(char const *s)
 		}
 		quote_flag = 0;
 		//printf("dann: %d, %c\n", i, s[i]);
-		/*if (s[i + 1] == 39)
+		// hier tsern anfang if (s[i + 1] == 39)
 			while (s[i] != '\0' && s[i + 1] != 39)
-				i++;*/
+				i++; // hier mit stern wieder
 		while (s[i] != ' ' && s[i] != '|' && s[i] != '<' && s[i] != '>'
 			&& s[i] != '\0')
 		{
 			if (s[i] == '"')
 			{
-				/*i++;
+				// hier tsern anfang i++;
 				while (s[i] != '\0' && s[i] != '"')
 					i++;
 				if (s[i] == '"')
-					i++;*/
+					i++; // hier auch stern
 				if (s[i + 1] == s[i])
 					ccount++;
 				else
 					quote_flag = quotes(s, &i, s[i]);
 				//continue;
-				i++;
+				//i++;
 			}
+			printf("%d, %c\n", i, s[i]);
 			i++;
 		}
 	}
 	//printf("%d is count\n", ccount);
 	return (ccount);
-}
+}*/
 
 /*
 int	ft_ccount(char const *s)
@@ -162,6 +208,7 @@ static int	getslen(char const *s, int start)
 		{
 			while (s[len + start] != '\0' && s[len + start + 1] != 39)
 				len++;
+			len += 1;
 		}
 		if (s[len + start] != 0)
 			len++;
@@ -210,7 +257,7 @@ static int	getslen(char const *s, int start)
 	printf("lalalla %d at %c, index: %d\n", is_quoted, s[j + start], j + start);
 	return (is_quoted);
 }
-
+*/
 
 
 static char	*ft_createsubstr(char const *s, int start)
@@ -230,18 +277,18 @@ static char	*ft_createsubstr(char const *s, int start)
 		return (NULL);
 	while (j < len)
 	{
-		if ((valid_quote(s, j, start) == 1))//&& (i != 0 && j != len - 1)) // (((s[j + start] != '"') && (s[j + start] != 39)) || (i != 0 && j != len - 1))
-		{
-			printf("lala\n");
+		//if ((valid_quote(s, j, start) == 1))//&& (i != 0 && j != len - 1)) // (((s[j + start] != '"') && (s[j + start] != 39)) || (i != 0 && j != len - 1))
+		//{
+		//	printf("lala\n");
 			str[i] = s[j + start];
 			i++;
-		}
+		//}
 		j++;
 	}
 	str[i] = '\0';
 	return (str);
-}*/
-
+}
+/*
 //check out the next two again perplexity helped
 static int is_quote(char c)
 {
@@ -280,7 +327,7 @@ static char *ft_createsubstr(char const *s, int start)
 
     str[i] = '\0';
     return str;
-}
+}*/
 
 
 

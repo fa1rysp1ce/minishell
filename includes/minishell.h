@@ -6,7 +6,7 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:46:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/04 19:53:18 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/05 14:09:47 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	free_list(t_token **list);
 //exit_funcs.c
 void	exit_variables(char *str);
 void	free_split(char **arr, int last, char *s);
-void	free_input(char *s,  char c);
+int		free_input(char *s,  char c);
 void	exit_fill_list(char **strarr, int pos, t_token **list);
 
 
