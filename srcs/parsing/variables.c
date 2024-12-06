@@ -31,13 +31,14 @@ void	check_vars(char **line, t_shell *shell)
 			i++;
 	}
 }
-
+//hey jake i changed something small: "get exit status"
 char *find_var(char *str, t_shell *shell)
 {
 	char 	*res;
 
 	if (!ft_strcmp(str, "?"))
-		res = ft_itoa(shell->last_exit_status);
+		res = ft_itoa(get_exit_status());
+		// res = ft_itoa(shell->last_exit_status);
 	else
 	{
 		res = ft_strdup(expand_arg(shell, str));

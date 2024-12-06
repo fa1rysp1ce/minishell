@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/06 11:42:01 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/06 15:06:58 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ int    count_pipes(t_token **token)
     return (count);
 }
 
-// t_execute *exec is mallocd here
-void    execution_junction(t_shell *shell, t_token **head_token)
+void    init_execute(t_shell *shell)
 {   
-    shell->head_token = head_token;
-    shell->token = (*shell->head_token);
     shell->execute = malloc(sizeof(t_execute));
     if (shell->execute == NULL)
         exit_malloc_err(shell);
@@ -45,6 +42,29 @@ void    execution_junction(t_shell *shell, t_token **head_token)
     // printf("cmds: %d\n", shell->execute->cmds);
     shell->execute->hdocs = count_heredocs(shell);
     // printf("hdocs: %d\n", shell->execute->hdocs);
+    // return (execute);
+}
+
+// t_execute *exec is mallocd here
+void    execution_junction(t_shell *shell, t_token **head_token)
+{   
+    // t_execute execute;
+    
+    shell->head_token = head_token;
+    shell->token = (*shell->head_token);
+    init_execute(shell);
+    // shell->execute = malloc(sizeof(t_execute));
+    // if (shell->execute == NULL)
+    //     exit_malloc_err(shell);
+    // shell->execute->org_fds = NULL;
+    // shell->execute->heredocs = NULL;
+    // shell->execute->pid = NULL;
+    // shell->execute->pipes = count_pipes(shell->head_token);
+    // // printf("pipes: %d\n", shell->execute->pipes);
+    // shell->execute->cmds = shell->execute->pipes + 1;
+    // // printf("cmds: %d\n", shell->execute->cmds);
+    // shell->execute->hdocs = count_heredocs(shell);
+    // // printf("hdocs: %d\n", shell->execute->hdocs);
     if (process_heredocs(shell) == EXIT_SUCCESS) //connect appropriate exit status
     {
         if (shell->token->args[0] != NULL)
@@ -70,6 +90,6 @@ void    single_builtin(t_shell *shell)
         return ;
     }
     status = execute_builtin(shell);
-    shell->last_exit_status = status;
+    set_exit_status(status);
     restore_fds(shell);
 }

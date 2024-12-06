@@ -38,6 +38,7 @@
 #define NON_EXEC 		126 //Command not executable
 #define NO_CMD 			127 //Command not found
 #define SIG_TERM  	 	130 //Ctrl+C
+#define SIG_QUIT		131 //ctrl+\ (during an open command)
 
 
 //Costum errors
@@ -199,6 +200,10 @@ void    close_used_heredocs(t_shell *shell);
 //init shell
 void    init_shell(t_shell *shell, char **env);
 char	*expand_arg(t_shell *shell, char *arg);
+
+//exit status
+void	set_exit_status(int nbr);
+int		get_exit_status(void);
 
 //clean free
 void 	clean_shell(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/06 12:25:01 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/06 15:35:16 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ int    process_heredocs(t_shell *shell)
     waitpid(pid, &hdoc_status, 0);
     signal_noninteractive();
     close_parent_pipes(shell);
-    // if (WIFSIGNALED(hdoc_status))
-    // printf("hdoc terminated with: %d\n", WEXITSTATUS(hdoc_status));
-    // if (WEXITSTATUS(hdoc_status) == EXIT_FAILURE)
-        // return (EXIT_FAILURE);
+    if (WEXITSTATUS(hdoc_status) == EXIT_FAILURE)
+        set_exit_status(SIG_TERM);
     return (WEXITSTATUS(hdoc_status));
 }
 //reading heredocs and storing their content in corresponding pipes for later use

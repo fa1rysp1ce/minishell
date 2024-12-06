@@ -6,7 +6,7 @@
 #    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/29 15:27:39 by inbar             #+#    #+#              #
-#    Updated: 2024/12/06 11:56:42 by ilazar           ###   ########.fr        #
+#    Updated: 2024/12/06 13:55:46 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ PARSING_SRCS =  exit_funcs.c variables.c nodes.c parse.c \
 EXECUTION_SRCS = init_shell.c execute.c exec_paths.c \
 		redirection.c redirection_utils.c heredoc.c heredoc_utils.c \
 		builtins_utils.c builtins_misc.c builtins_cd.c builtins_exit.c \
-		pipeline.c pipeline_utils.c signals.c
+		pipeline.c pipeline_utils.c signals.c exit_status.c
 
 SRCS = 	$(addprefix srcs/, $(MAIN_SRCS)) \
 	$(addprefix srcs/parsing/, $(PARSING_SRCS)) \

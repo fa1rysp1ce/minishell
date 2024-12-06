@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/06 10:25:32 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/06 14:49:28 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static void    set_pipes(int pipe_fd[2][2], int last_pipe, int new_pipe, int i);
 static void    wait_pids(t_execute *exec, int *status);
 
 
-//assumes first token is a cmd
 void    pipeline(t_shell *shell)
 {
     int     pipe_fd[2][2];
     int     last_pipe;
     int     new_pipe;
+    int     status;
     
 
     shell->execute->pid = malloc(sizeof(pid_t) * shell->execute->cmds);
@@ -31,8 +31,12 @@ void    pipeline(t_shell *shell)
     new_pipe = 1;
     last_pipe = 0;
 
-    shell->last_exit_status = fork_pipeline(shell, pipe_fd, last_pipe, new_pipe);
-
+    signal_child_proc();
+    status = fork_pipeline(shell, pipe_fd, last_pipe, new_pipe);
+    signal_noninteractive();
+    set_exit_status(status);
+    
+    
     //print heredocs
     // int i = 0;
 	// while (i < shell->execute->hdocs)
@@ -42,7 +46,6 @@ void    pipeline(t_shell *shell)
     // }
     
     free(shell->execute->pid);
-    
 }
 
 static void    wait_pids(t_execute *exec, int *status)
@@ -52,6 +55,15 @@ static void    wait_pids(t_execute *exec, int *status)
     cmd_count = 0;
     while (cmd_count < exec->cmds)
         waitpid(exec->pid[cmd_count++], status, 0);
+    if (WIFSIGNALED(*status))
+    {
+        if (WTERMSIG(*status) == SIGQUIT)
+            *status = SIG_QUIT;
+        else
+            *status = SIG_TERM;
+    }
+    else if (WIFEXITED(*status))
+        *status = WEXITSTATUS(*status);
 }
 
 static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int new_pipe)
@@ -79,7 +91,7 @@ static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int n
         cmd_count++;
     }
     wait_pids(shell->execute, &status);
-    return (WEXITSTATUS(status));
+    return (status);
 }
 
 void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count)
@@ -91,7 +103,6 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
     status = NO_CMD;
     args = shell->token->args;
     cmd_path = NULL;
-    signal_child_proc();
     set_pipes(pipe_fd, last_pipe, shell->execute->cmds, cmd_count);
     if (redirection(shell, &status) == EXIT_SUCCESS)
     {
@@ -106,6 +117,7 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
         }
     }
     child_exec_fail(shell);
+    // set_exit_status(status);
     exit(status);
 }
 
