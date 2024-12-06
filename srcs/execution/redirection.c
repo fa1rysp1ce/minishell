@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 19:37:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/05 16:41:50 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/06 12:25:25 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int    redirect_input(t_token *red_token)
     return (EXIT_SUCCESS);
     
 }
-//searches for the next unused heredoc uses and closes it.
-//the indication of being closed will only apply for the current process
+/* searches for the next unused heredoc uses and closes it.
+    the indication of being closed will only apply for the current process */
 int    redirect_heredoc(t_shell *shell)
 {
     int        i;

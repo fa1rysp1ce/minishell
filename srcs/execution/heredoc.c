@@ -6,80 +6,53 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/05 18:03:06 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/06 12:25:01 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// cat <<d1 <<d2 | cat <<d3
-//close all pipes of heredocs of the associated cmd, if there are any
-void    close_used_heredocs(t_shell *shell)
-{
-    t_token     *current_token;
-    int         i;
+static void    *read_heredoc(t_heredoc heredoc, char *delimiter);
+void static    create_pipes_hdocs(t_shell *shell);
+void static    child_process_hdocs(t_shell *shell);
+static void     close_parent_pipes(t_shell *shell);
 
-    if (shell->execute->hdocs == 0)
-        return ;
-    i = 0;
-    while (shell->execute->heredocs[i].read_end_open == 0)
-        i++;
-    current_token = shell->token->next; //current cmd next token
-    while (i < shell->execute->hdocs && current_token && (current_token->type != PIPE))
-    {
-        if (current_token && current_token->type == HDOC)
-        {
-            // printf("open heredoc[%d] : closing in parent during pipe\n", i);
-            close(shell->execute->heredocs[i].doc_pipe[0]);
-            shell->execute->heredocs[i].read_end_open = 0;
-            i++;
-        }
-        current_token = current_token->next;
-    }
+
+/* reads all heredocs in one child process.
+    returns 1 if an heredoc was terminted with ctrl+c. 0 otherwise */
+int    process_heredocs(t_shell *shell)
+{
+    pid_t       pid;
+    int         hdoc_status;
+
+    if (!shell->execute->hdocs)
+        return (EXIT_SUCCESS);
+    shell->execute->heredocs = malloc(sizeof(t_heredoc) * shell->execute->hdocs);
+    if (shell->execute->heredocs == NULL)
+        exit_malloc_err(shell);
+    create_pipes_hdocs(shell);
+    pid = fork();
+    if (pid < 0)
+        abort_exec("Error: heredoc fork\n", shell);
+    if (pid == 0)
+        child_process_hdocs(shell);
+    waitpid(pid, &hdoc_status, 0);
+    signal_noninteractive();
+    close_parent_pipes(shell);
+    // if (WIFSIGNALED(hdoc_status))
+    // printf("hdoc terminated with: %d\n", WEXITSTATUS(hdoc_status));
+    // if (WEXITSTATUS(hdoc_status) == EXIT_FAILURE)
+        // return (EXIT_FAILURE);
+    return (WEXITSTATUS(hdoc_status));
 }
-
-//if *doc_token is null - returns the first heredoc node in the token list
-//else the next heredoc in list after doc_token. if no more heredocs returns null.
-void    get_next_heredoc(t_token *token, t_token **doc_token)
+//reading heredocs and storing their content in corresponding pipes for later use
+static void    *read_heredoc(t_heredoc heredoc, char *delimiter)
 {
-    t_token     *tmp;
-
-    tmp = *doc_token;
-    if (tmp == NULL)
-        tmp = token;
-    else
-        tmp = tmp->next;
-    while (tmp != NULL && tmp->type != HDOC)
-        tmp = tmp->next;
-    *doc_token = tmp;
-    // if (tmp)
-        // printf("next doc: %s\n", tmp->args[0]);
-}
-
-int    count_heredocs(t_shell *shell)
-{
-    int     count;
-    t_token *tmp;
-
-    tmp = shell->token;
-    count = 0;
-    while (tmp != NULL)
-    {
-        if (tmp->type == HDOC)
-            count++;
-        tmp = tmp->next;
-    }
-    return (count);
-}
-//some problem here eof wont print result
-void    *read_heredoc(t_shell *shell, t_token *doc_token, t_heredoc heredoc)
-{
-    char    *delimiter;
     char    *line;
     int     line_len;
 
     rl_initialize();
-    delimiter = doc_token->args[0];
+    close(heredoc.doc_pipe[READ_END]);
     signal_heredoc();
     while (1)
     {
@@ -92,63 +65,60 @@ void    *read_heredoc(t_shell *shell, t_token *doc_token, t_heredoc heredoc)
             break ;
         }
         line_len = ft_strlen(line);
-        write(heredoc.doc_pipe[1], line, line_len);
-        write(heredoc.doc_pipe[1], "\n", 1);
+        write(heredoc.doc_pipe[WRITE_END], line, line_len);
+        write(heredoc.doc_pipe[WRITE_END], "\n", 1);
         add_history(line);
         free(line);
     }
-    close(heredoc.doc_pipe[1]);
-
-    // (void) shell;
-    clean_heredocs(shell->execute);
-    clean_exec(shell);
-    clean_tokens(shell);
-    clean_shell(shell);
-    
-    // return (EXIT_SUCCESS);
-    exit(EXIT_SUCCESS);
+    close(heredoc.doc_pipe[WRITE_END]);
+    return (EXIT_SUCCESS);
 }
 
-int    process_heredocs(t_shell *shell)
+void static    create_pipes_hdocs(t_shell *shell)
 {
-    t_token     *doc_token;
-    int         i;
-    pid_t       pid;
-    int         hdoc_status;
+    int     i;
 
+    i = 0;
+    while (i < shell->execute->hdocs)
+    {
+        if (pipe(shell->execute->heredocs[i].doc_pipe) == -1)
+            abort_exec("Error: heredoc pipe\n", shell);
+        i++;
+    }
+}
+
+void static    child_process_hdocs(t_shell *shell)
+{
+    int         i;
+    t_token     *doc_token;
+    
     doc_token = NULL;
-    if (!shell->execute->hdocs)
-        return (EXIT_SUCCESS);
-    
-    shell->execute->heredocs = malloc(sizeof(t_heredoc) * shell->execute->hdocs);
-    if (shell->execute->heredocs == NULL)
-        exit_malloc_err(shell);
-    
-    
     i = 0;
     while (i < shell->execute->hdocs)
     {
         get_next_heredoc(shell->token, &doc_token);
-        if (pipe(shell->execute->heredocs[i].doc_pipe) == -1)
-            abort_exec("Error: heredoc pipe\n", shell);
-        pid = fork();
-        if (pid < 0)
-            abort_exec("Error: heredoc fork\n", shell);
-        if (pid == 0)
-            read_heredoc(shell, doc_token, shell->execute->heredocs[i]);
-        // else
-        // {
-        signal_noninteractive();
-        
+        read_heredoc(shell->execute->heredocs[i], doc_token->args[0]);
+        i++;
+    }
+    clean_heredocs(shell->execute);
+    clean_exec(shell);
+    clean_tokens(shell);
+    clean_shell(shell);
+    exit(EXIT_SUCCESS);
+}
+
+//close all write-end pipes in parent and flag read-end as open
+static void     close_parent_pipes(t_shell *shell)
+{
+    int     i;
+    
+    i = 0;
+    while (i < shell->execute->hdocs)
+    {
         close(shell->execute->heredocs[i].doc_pipe[1]);
         shell->execute->heredocs[i].read_end_open = 1;
-
-        
-        waitpid(pid, &hdoc_status, 0);
-        // if (WIFSIGNALED(hdoc_status))
-            printf("hdoc terminated with: %d\n", WEXITSTATUS(hdoc_status));
         i++;
-        // }
     }
-    return (EXIT_SUCCESS);
 }
+
+

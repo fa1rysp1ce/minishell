@@ -38,14 +38,15 @@
 #define NON_EXEC 		126 //Command not executable
 #define NO_CMD 			127 //Command not found
 #define SIG_TERM  	 	130 //Ctrl+C
-/*
-128+n: Fatal error with signal n
-*/
 
 
 //Costum errors
 #define MALLOC_ERROR 	-1
 #define EXEC_ERROR 		-2
+
+//pipes
+#define READ_END	0
+#define WRITE_END	1
 
 
 typedef struct s_token
@@ -190,7 +191,9 @@ void    restore_fds(t_shell *shell);
 
 //heredoc
 int    process_heredocs(t_shell *shell);
+//heredoc utils
 int    count_heredocs(t_shell *shell);
+void    get_next_heredoc(t_token *token, t_token **doc_token);
 void    close_used_heredocs(t_shell *shell);
 
 //init shell

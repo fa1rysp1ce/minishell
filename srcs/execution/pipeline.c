@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/05 18:12:28 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/06 10:25:32 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,12 @@ static void    set_pipes(int pipe_fd[2][2], int last_pipe, int cmds, int cmd_cou
         new_pipe = 1;
     if (cmd_count > 0) //not first cmd, read from last pipe
     {
-        dup2(pipe_fd[last_pipe][0], STDIN_FILENO);
+        dup2(pipe_fd[last_pipe][READ_END], STDIN_FILENO);
         close_pipes(pipe_fd, last_pipe);
     }
     if (cmd_count < cmds - 1) //not last cmd. write to new pipe
     {
-        dup2(pipe_fd[new_pipe][1], STDOUT_FILENO);
+        dup2(pipe_fd[new_pipe][WRITE_END], STDOUT_FILENO);
         close_pipes(pipe_fd, new_pipe);
     }
 }

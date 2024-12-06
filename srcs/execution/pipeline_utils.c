@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 21:58:32 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/04 16:02:50 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/06 10:26:28 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void    next_cmd_token(t_shell *shell)
 
 void    close_pipes(int pipe_fd[2][2], int pipe)
 {
-    close(pipe_fd[pipe][0]);
-    close(pipe_fd[pipe][1]);
+    close(pipe_fd[pipe][READ_END]);
+    close(pipe_fd[pipe][WRITE_END]);
 }
 
 void    swap_pipes(int *last_pipe, int *new_pipe)
