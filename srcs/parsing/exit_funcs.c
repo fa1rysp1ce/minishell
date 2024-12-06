@@ -23,10 +23,11 @@ void	free_split(char **arr, int last, char *s)
 	arr = NULL;
 }
 
-void free_input(char *s, char c)
+int free_input(char *s, char c)
 {
 	printf("minishell: syntax error near unexpected token '%c'\n", c);
 	free(s);
+	return (1);
 }
 
 void	exit_fill_list(char **strarr, int pos, t_token **list)
