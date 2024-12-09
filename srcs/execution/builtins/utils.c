@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:19:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 17:39:44 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/09 16:09:34 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,19 @@ int     execute_builtin(t_shell *shell)
     return (EXIT_FAILURE);
 }
 
-//copy src string into dest variable in the envoirment vars
-int		change_env(t_shell *shell, char *src, char *dest)
+//copy content string into dest variable in the envoirment vars
+int		change_env(t_shell *shell, char *content, char *dest)
 {
     char	*new;
     int     i;
 
-    if (src == NULL || expand_arg(shell, dest) == NULL)
+    if (content == NULL || expand_arg(shell, dest) == NULL)
         return (EXIT_FAILURE);
     dest = ft_strjoin(dest, "=");
-    new = ft_strjoin(dest, src);
+    new = ft_strjoin(dest, content);
     if (dest == NULL || new == NULL)
     {
-        free(src);
+        free(content);
         return (exit_malloc_err(shell));
     }
     i = 0;

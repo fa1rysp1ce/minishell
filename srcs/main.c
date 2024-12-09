@@ -54,7 +54,7 @@ int	main(int ac, char **av, char **env)
 		rl_redisplay();
 		if (parse(&ls_ptr, &line, &shell) != 0)
 			continue ;
-		//print_list_inbar(&ls_ptr);
+		print_list_inbar(&ls_ptr);
 		// print_list(&ls_ptr);
 		signal_noninteractive();
 		execution_junction(&shell, &ls_ptr);

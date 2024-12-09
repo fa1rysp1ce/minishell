@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:04:14 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/03 19:57:46 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/09 17:02:45 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void    init_shell(t_shell *shell, char **env)
 	shell->head_token = NULL;
 	shell->token = NULL;
 	shell->last_exit_status = EXIT_SUCCESS;
+	if (expand_arg(shell, "SHELL") != NULL)
+		change_env(shell, "/bin/minishell", "SHELL");
 }
 
 //create a copy of enviorment vars for later use
