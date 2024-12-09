@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/06 15:06:58 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/09 19:13:19 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,20 @@ void    execution_junction(t_shell *shell, t_token **head_token)
 {   
     // t_execute execute;
     
+    //empty list
+    // if (head_token == NULL)
+    // {
+    //     set_exit_status(EXIT_SUCCESS);
+    //     return ;
+    // }
+
+    
     shell->head_token = head_token;
     shell->token = (*shell->head_token);
+
     init_execute(shell);
+
+    
     // shell->execute = malloc(sizeof(t_execute));
     // if (shell->execute == NULL)
     //     exit_malloc_err(shell);

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:38:10 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/06 14:02:34 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/09 19:44:58 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,13 @@ char    *get_cmd_path(t_shell *shell, int *status)
         error_msg(args[0],"command not found");
         return (NULL);
     }
-    cmd = ft_strjoin("/", args[0]);
+    if (args[0][0] != '/')
+        cmd = ft_strjoin("/", args[0]);
+    else
+        cmd = ft_strdup(args[0]);
+        
+    // printf("cmd: %s\n", cmd);
+    
     if (cmd == NULL)
     {
         free_2d_charr(paths);
@@ -110,11 +116,21 @@ static int  is_absolute(char *path, int *status)
     return (0);
 }
 
-static void  have_permission(char *path, char *name, int *status)
+static void  have_permission(char *file_path, char *name, int *status)
 {
-    if (path == NULL)
-        error_msg(name ,"command not found");
-    else if (access(path, X_OK) != 0)
+    struct stat     path_stat;
+    
+    // printf("have permission file path: %s\n", file_path);
+    // printf("have permission name: %s\n", name);
+    if (file_path == NULL)
+    {
+        if ((stat(name, &path_stat) != 0))
+            error_msg(name ,"Is a directory");
+        else
+            error_msg(name ,"command not found");
+        
+    }
+    else if (access(file_path, X_OK) != 0)
     {
         *status = NON_EXEC;
         error_msg(name, "Permission denied");

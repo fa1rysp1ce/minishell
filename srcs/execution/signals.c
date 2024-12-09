@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:24:46 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/06 15:31:36 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/09 19:46:04 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ static void    handle_sigint(int sig)
 
 static void    handle_sigint_hdoc(int sig)
 {
+    char    *args;
+    
     (void)sig;
     write(1, "\n", 1);
-    char *args = {NULL};
+    args = NULL;
     execve("/bin/false", &args, NULL);
 }
