@@ -130,6 +130,9 @@ void	free_split(char **arr, int last, char *s);
 int		free_input(char *s,  char c);
 void	exit_fill_list(char **strarr, int pos, t_token **list);
 
+//helpers.c
+int		skip_quoted(const char *s, int i);
+
 
 
 

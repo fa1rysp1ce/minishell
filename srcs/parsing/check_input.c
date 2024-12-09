@@ -15,18 +15,7 @@ static int	check_ops(char *s)
 	i = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == 39)
-		{
-			i++;
-			while (s[i] != 39 && s[i] != 0)
-				i++;
-		}
-		else if (s[i] == '"')
-		{
-			i++;
-			while (s[i] != '"' && s[i] != 0)
-				i++;
-		}
+		i = skip_quoted(s, i);
 		if (s[i] == '|' || s[i] == '=')
 		{
 			if (i > 0 && (is_op(s[i - 1])))
@@ -49,6 +38,7 @@ static int	check_ops(char *s)
 	return (0);
 }
 
+//alr checked, rm comments
 static int	count_c(char *s, char c)
 {
 	int i;
@@ -62,18 +52,9 @@ static int	count_c(char *s, char c)
 	while (s[i] != 0)
 	{
 		if ('"' != c && s[i] == '"' && !is_quoted)
-		{
-			i++;
-			//printf("hihi\n");
-			while (s[i] != '"' && s[i] != 0)
-				i++;
-		}
+			i = skip_quoted(s, i);
 		else if (39 != c && s[i] == 39 && !is_quoted)
-		{
-			i++;
-			while (s[i] != 39 && s[i] != 0)
-				i++;
-		}
+			i = skip_quoted(s, i);
 		else if (s[i] == c) //&& i != 0 && s[i + 1] != '\0')
 		{
 			//printf("%c, %d counted\n", s[i], i);
@@ -119,10 +100,14 @@ static int	check_ends(char *s)
 
 int	check_input(char *s)
 {
-	if (count_c(s, '"') % 2 != 0 || count_c(s, 39) % 2 != 0)
+	if (count_c(s, '"') % 2 != 0)
 	{
-		//printf("count is %d\n", count_c(s, 39));
 		free_input(s, '"');
+		return (1);
+	}
+	if (count_c(s, 39) % 2 != 0)
+	{
+		free_input(s, '\'');
 		return (1);
 	}
 	if (check_ops(s) != 0 || check_ends(s) != 0)

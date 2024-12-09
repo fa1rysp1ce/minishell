@@ -10,20 +10,18 @@ static int count_sym(char const *s)
 	count = 0;
 	while (s[i])
 	{
-		if (s[i] == '"')
-			while (s[i] != '\0' && s[i] != '"')
-				i++;
-		else if (s[i] == 39)
-			while (s[i] != '\0' && s[i] != 39)
-				i++;
-		else if (s[i] == '|' || s[i] == '<' || s[i] == '>' )
+		i = skip_quoted(s, i);
+		if (s[i] == '|' || s[i] == '<' || s[i] == '>' )
 		{
-			if ((i > 0 && s[i] != s[i - 1] && '"' != s[i - 1] && '\'' != s[i - 1]) || i == 0)
+			if ((i > 0 && s[i] != s[i - 1] /*&& '"' != s[i - 1]*/ && '\'' != s[i - 1]) || i == 0)
+			{
 				count++;
+				//printf("%c at %d: count: %d\n", s[i], i, count);
+			}
 		}
 		i++;
 	}
-	//printf("%d\n", count);
+	//printf("sym count: %d\n", count);
 	return (count);
 }
 /*
@@ -78,7 +76,7 @@ int	ft_ccount(char const *s)
 			/*&& s[i] != '=' */&& s[i] != '\0')
 			i++;
 	}
-	//printf("%d\n", ccount);
+	//printf("ccount : %d\n", ccount);
 	return (ccount);
 }
 

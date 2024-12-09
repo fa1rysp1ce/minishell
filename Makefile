@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
+#    By: junruh <junruh@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/29 15:27:39 by inbar             #+#    #+#              #
-#    Updated: 2024/12/06 13:55:46 by ilazar           ###   ########.fr        #
+#    Updated: 2024/12/09 16:25:56 by junruh           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ LIB_LINK = -L$(LIB_DIR) -L$(MALLOC_DIR)
 MAIN_SRCS = main.c errors.c debug.c clean_free.c debug_nodes_to_delete.c
 
 PARSING_SRCS =  exit_funcs.c variables.c nodes.c parse.c \
-		cmd_split.c check_input.c fill_list.c
+		cmd_split.c check_input.c fill_list.c helpers.c
 		
 EXECUTION_SRCS = init_shell.c execute.c exec_paths.c \
 		redirection.c redirection_utils.c heredoc.c heredoc_utils.c \

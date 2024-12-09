@@ -9,6 +9,8 @@ cd ~/Music
 
 MANDATORY
 
+# update env variable value
+export HELLO=123
 export HELLO="beatiful world"
 
 

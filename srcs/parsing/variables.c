@@ -19,36 +19,35 @@ void	check_vars(char **line, t_shell *shell)
 		}
 		if (line[0][i] == '$')
 		{
-			j = i;
-			while (line[0][j] != 0 && line[0][j] != ' ' && line[0][j] != '"')
+			j = i + 1;
+			while (line[0][j] != 0 && line[0][j] != ' ' && line[0][j] != '"' && line[0][j] != '$')
 			{
 				j++;
 			}
 			if (i + 1 < j)
 				handle_vars(line, i, j - i, shell);
+			//i = j;
 		}
 		if (line[0][i] != 0)
 			i++;
 	}
 }
-//hey jake i changed something small: "get exit status"
+
 char *find_var(char *str, t_shell *shell)
 {
 	char 	*res;
 
 	if (!ft_strcmp(str, "?"))
 		res = ft_itoa(get_exit_status());
-		// res = ft_itoa(shell->last_exit_status);
 	else
 	{
 		res = ft_strdup(expand_arg(shell, str));
 	}
-	if (res == NULL)
+	if (res == NULL || res[0] == 0)
 	{
-		res = malloc(sizeof(char) * 1);
+		res = ft_strdup("");
 		if (!res)
 			return (NULL);
-		res[0] = 0;
 	}
 	return (res);
 }
