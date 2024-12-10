@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:04:14 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/10 16:02:30 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:17:49 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,21 @@ static	char **picture_env_vars(char **env, char **envc);
 
 void    init_shell(t_shell *shell, char **env)
 {
+	char    *pwd;
+    char    *buff;
+    int     buff_size;
+	
 	shell->envc = picture_env(env);
-	shell->prev_dir = NULL;
 	shell->execute = NULL;
 	shell->head_token = NULL;
 	shell->token = NULL;
 	shell->last_exit_status = EXIT_SUCCESS;
+	shell->prev_dir = NULL;
+
+    buff = NULL;
+    buff_size = 1024;
+    pwd = getcwd(buff, buff_size);
+    shell->prev_dir = pwd;
 	// if (expand_arg(shell, "SHELL") != NULL)
 		// change_env(shell, "/bin/minishell", "SHELL");
 }

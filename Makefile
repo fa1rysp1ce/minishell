@@ -6,7 +6,7 @@
 #    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/29 15:27:39 by inbar             #+#    #+#              #
-#    Updated: 2024/12/10 16:58:29 by ilazar           ###   ########.fr        #
+#    Updated: 2024/12/10 18:06:31 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ EXECUTION_SRCS = init_shell.c execute.c exec_paths.c \
 		pipeline.c pipeline_utils.c signals.c signals_utils.c exit_status.c
 		
 
-EXEC_BUILTINS = utils.c builtins.c cd.c exit.c export.c unset.c
+EXEC_BUILTINS = utils.c builtins.c cd_utils.c exit.c export.c unset.c
 
 
 SRCS = 	$(addprefix srcs/, $(MAIN_SRCS)) \

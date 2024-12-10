@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:49:37 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/10 14:04:13 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/10 18:04:09 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 /*
 Handling absolute paths:
@@ -23,7 +25,7 @@ Paths not starting with '/' (e.g., documents/projects)
 '~' to represent the user's home directory
 */
 
-static int cd_home(t_shell *shell)
+int cd_home(t_shell *shell)
 {
     char    *buff;
     int     buff_size;
@@ -49,7 +51,7 @@ static int cd_home(t_shell *shell)
 }
 
 
-static int cd_parent_dir(t_shell *shell)
+int cd_parent_dir(t_shell *shell)
 {
     char    *pwd;
     char    *buff;
@@ -76,7 +78,7 @@ static int cd_parent_dir(t_shell *shell)
     return (EXIT_FAILURE);
 }
 
-static int cd_path(t_shell *shell ,char *path)
+int cd_path(t_shell *shell ,char *path)
 {
     char    *pwd;
     char    *buff;
@@ -85,6 +87,8 @@ static int cd_path(t_shell *shell ,char *path)
     
     buff = NULL;
     buff_size = 1024;
+    if (path[0] == '~')
+        return (cd_path_tilde(shell, path));
     if (chdir(path) == 0)
     {
         pwd = getcwd(buff, buff_size);
@@ -102,6 +106,30 @@ static int cd_path(t_shell *shell ,char *path)
     return (EXIT_FAILURE);
 }
 
+int cd_path_tilde(t_shell *shell ,char *path)
+{
+    int     status;
+    char    *full_path;
+    char    *no_tilde;
+
+    if (expand_arg(shell, "HOME") == NULL)
+    {
+        ft_putstr_fd("Minishell: cd: HOME not set\n", STDERR_FILENO);
+        return (EXIT_FAILURE);
+    }
+    no_tilde = ft_strdup(&path[1]);
+    full_path = ft_strjoin(expand_arg(shell, "HOME"), no_tilde);
+    free(no_tilde);
+    if (chdir(full_path) == 0)
+        status = cd_path(shell, full_path);
+    else
+    {
+        status = EXIT_FAILURE;
+        error_msg(path, strerror(errno));
+    }
+    free(full_path);
+    return (status);
+    }
 
 int     prev_dir(t_shell *shell)
 {
@@ -111,7 +139,7 @@ int     prev_dir(t_shell *shell)
 
     buff = NULL;
     buff_size = 1024;
-    pwd = getcwd(buff, buff_size);
+    pwd = getcwd(buff, buff_size);  
     if (shell->prev_dir != NULL)
     {
         if (cd_path(shell, shell->prev_dir) == EXIT_FAILURE)
@@ -128,21 +156,3 @@ int     prev_dir(t_shell *shell)
     return (EXIT_SUCCESS);
 }
 
-int     cd(t_shell *shell)
-{
-    t_token *token;
-    
-    token = shell->token;
-    if (token->args[1] != NULL && token->args[2] != NULL)
-    {
-        error_msg(token->args[0], "too many arguments");
-        return(EXIT_FAILURE);
-    }
-    if (token->args[1] == NULL || ft_strcmp(token->args[1], "~") == 0)
-        return (cd_home(shell));
-    if (ft_strcmp(token->args[1], "..") == 0)
-        return (cd_parent_dir(shell));
-    if (ft_strcmp(token->args[1], "-") == 0)
-        return (prev_dir(shell));
-    return (cd_path(shell, shell->token->args[1]));
-}

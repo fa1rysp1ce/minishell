@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_misc.c                                    :+:      :+:    :+:   */
+/*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:04:11 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/09 17:26:32 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/10 18:03:32 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,21 @@ int     env(t_shell *shell)
     return (EXIT_SUCCESS);
 }
 
+int     cd(t_shell *shell)
+{
+    t_token *token;
 
-
+    token = shell->token;
+    if (token->args[1] != NULL && token->args[2] != NULL)
+    {
+        error_msg(token->args[0], "too many arguments");
+        return(EXIT_FAILURE);
+    }
+    if (token->args[1] == NULL || ft_strcmp(token->args[1], "~") == 0)
+        return (cd_home(shell));
+    if (ft_strcmp(token->args[1], "..") == 0)
+        return (cd_parent_dir(shell));
+    if (ft_strcmp(token->args[1], "-") == 0)
+        return (prev_dir(shell));
+    return (cd_path(shell, shell->token->args[1]));
+}

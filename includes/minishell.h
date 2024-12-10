@@ -158,16 +158,21 @@ void    signal_heredoc(void);
 int     is_builtin(char *str);
 int     execute_builtin(t_shell *shell);
 //builtins exit
-int    exit_cmd(t_shell *shell);
+int    	exit_cmd(t_shell *shell);
 //builtins misc
-int    export(t_shell *shell, t_token *token);
-int    unset(t_shell *shell, t_token *token);
+int    	export(t_shell *shell, t_token *token);
+int    	unset(t_shell *shell, t_token *token);
 int     env(t_shell *shell);
 int     pwd(void);
 int     echo(t_token *token);
 int		change_env(t_shell *shell, char *src, char *dest);
-//builtins cd
 int     cd(t_shell *shell);
+//builtins cd utils
+int 	cd_path_tilde(t_shell *shell ,char *path);
+int 	cd_home(t_shell *shell);
+int 	cd_parent_dir(t_shell *shell);
+int 	cd_path(t_shell *shell ,char *path);
+int     prev_dir(t_shell *shell);
 
 //execution
 void	execution_junction(t_shell *shell, t_token **head_token);
@@ -186,17 +191,17 @@ void    update_exit_status(t_shell *shell, int status);
 void    child_exec_fail(t_shell *shell);
 
 //redirection
-int    redirection(t_shell *shell, int *status);
+int    	redirection(t_shell *shell, int *status);
 
 //redirection utils
 void    get_next_redirection(t_token **red_token);
-int    save_fds(t_shell *shell);
+int    	save_fds(t_shell *shell);
 void    restore_fds(t_shell *shell);
 
 //heredoc
-int    process_heredocs(t_shell *shell);
+int    	process_heredocs(t_shell *shell);
 //heredoc utils
-int    count_heredocs(t_shell *shell);
+int    	count_heredocs(t_shell *shell);
 void    get_next_heredoc(t_token *token, t_token **doc_token);
 void    close_used_heredocs(t_shell *shell);
 
@@ -224,8 +229,8 @@ void    free_2d_charr(char **arr);
 //errors
 void    exit_error(char *str);
 void    error_msg(char *name, char *msg);
-int    exit_malloc_err(t_shell *shell);
-int    abort_exec(char *msg, t_shell *shell);
+int    	exit_malloc_err(t_shell *shell);
+int    	abort_exec(char *msg, t_shell *shell);
 void    heredoc_eof_warning(char *delimiter);
 
 //debug

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:17:35 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/05 16:31:47 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:18:56 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void    clean_shell(t_shell *shell)
         free_2d_charr(shell->envc);
     if (shell->prev_dir)
         free(shell->prev_dir);
-    //destroy tokens
-    // clean_tokens(shell->head_token);
 }
 
 void    clean_tokens(t_shell *shell)
@@ -32,16 +30,13 @@ void    clean_tokens(t_shell *shell)
 void    clean_exec(t_shell *shell)
 {
     if (shell->execute->org_fds)
-    {
-        // restore_fds(shell);
         free(shell->execute->org_fds);
-    }
     shell->execute->org_fds = NULL;
     if (shell->execute->pid)
         free(shell->execute->pid);
     shell->execute->pid = NULL;
     clean_heredocs(shell->execute);
-    if (shell->execute) //is there anything still mallocd inside?
+    if (shell->execute)
         free(shell->execute);
     shell->execute = NULL;
 }
