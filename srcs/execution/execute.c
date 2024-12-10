@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/09 19:13:19 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/10 16:17:59 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,8 @@ void    single_builtin(t_shell *shell)
 {
     int         status;
 
-    if (redirection(shell, &status) == EXIT_FAILURE)
-    {
-        //update correct status
-        return ;
-    }
-    status = execute_builtin(shell);
+    if (redirection(shell, &status) != EXIT_FAILURE)
+        status = execute_builtin(shell);
     set_exit_status(status);
     restore_fds(shell);
 }

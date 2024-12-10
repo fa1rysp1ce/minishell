@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_utils.c                                   :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:19:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/09 16:09:34 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/10 14:42:22 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int     execute_builtin(t_shell *shell)
     if (!ft_strcmp(str, "unset")) //may have malloc failure
         return (unset(shell, token));
     if (!ft_strcmp(str, "cd"))
-        cd(shell);
+        return (cd(shell));
     if (!ft_strcmp(str, "exit"))
         return (exit_cmd(shell));
     return (EXIT_FAILURE);

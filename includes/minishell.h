@@ -209,6 +209,12 @@ char	*expand_arg(t_shell *shell, char *arg);
 void	set_exit_status(int nbr);
 int		get_exit_status(void);
 
+//signal_utils
+void    handle_sigint(int sig);
+void    handle_sigint_hdoc(int sig);
+void    handle_sigquit(int sig);
+void    handle_sigint_child(int sig);
+
 //clean free
 void 	clean_shell(t_shell *shell);
 void    clean_exec(t_shell *shell);

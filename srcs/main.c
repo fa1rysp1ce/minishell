@@ -41,7 +41,6 @@ int	main(int ac, char **av, char **env)
 
 	while (1)
 	{
-		shell.last_exit_status = g_status;
 		signal_interactive();
 		line = readline(GREEN BOLD"minishell>"DEFAULT" ");
 		if (line == NULL)

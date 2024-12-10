@@ -6,18 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:24:46 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/09 19:51:33 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/10 16:28:00 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern int     g_status;
-
-static void    handle_sigint(int sig);
-static void    handle_sigint_hdoc(int sig);
-static void    handle_sigquit(int sig);
-static void    handle_sigint_child(int sig);
 
 void    signal_interactive(void)
 {
@@ -42,42 +35,4 @@ void    signal_heredoc(void)
     signal(SIGINT, handle_sigint_hdoc);
     signal(SIGQUIT, SIG_IGN);
 }
-//ctrl+\ while in cmd child, for example in case of an open command waiting for input
-static void    handle_sigquit(int sig)
-{
-    (void)sig;
-    ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
-    // set_exit_status(SIG_QUIT);
-}
 
-//ctrl+c while in cmd child
-static void    handle_sigint_child(int sig)
-{
-    (void)sig;
-    // set_exit_status(SIG_TERM);
-    write(1, "\n", 1);
-    // rl_replace_line("", 0);
-    // rl_on_new_line();
-    // rl_redisplay();
-}
-
-//ctrl+c in parent must update global and prompt new line
-static void    handle_sigint(int sig)
-{
-    (void)sig;
-    set_exit_status(SIG_TERM);
-    write(1, "\n", 1);
-    rl_replace_line("", 0);
-    rl_on_new_line();
-    rl_redisplay();
-}
-
-static void    handle_sigint_hdoc(int sig)
-{
-    char    *args;
-    
-    (void)sig;
-    args = NULL;
-    write(1, "\n", 1);
-    execve("/bin/false", &args, NULL);
-}
