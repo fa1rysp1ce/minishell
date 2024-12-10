@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 15:01:05 by junruh            #+#    #+#             */
+/*   Updated: 2024/12/10 19:54:31 by junruh           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 
@@ -7,14 +19,15 @@ int	parse(t_token **list, char **line, t_shell *shell)
 	int		arrsize;
 
 	strarr = NULL;
-	//printf("1\n");
+	printf("1\n");
 	if (check_input(*line) != 0)
 		return (1);
-	//printf("2\n");
+	printf("2\n");
 	check_vars(line, shell);
-	//printf("3\n");
+	printf("new line: %s \n", *line);
+	printf("3\n");
 	arrsize = cmd_split(*line, &strarr);
-	//printf("4\n");
+	printf("4\n");
 	free(*line);
 	if (arrsize < 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/09 19:13:19 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/10 19:13:53 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void    execution_junction(t_shell *shell, t_token **head_token)
     // t_execute execute;
     
     //empty list
-    // if (head_token == NULL)
+    // if (*head_token == NULL)
     // {
     //     set_exit_status(EXIT_SUCCESS);
     //     return ;
