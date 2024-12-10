@@ -6,7 +6,7 @@
 #    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/29 15:27:39 by inbar             #+#    #+#              #
-#    Updated: 2024/12/10 16:23:45 by ilazar           ###   ########.fr        #
+#    Updated: 2024/12/10 16:58:29 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,8 @@ NAME = minishell
 LIB_DIR = ./libftplus
 LIB = libftplus.a
 LIB_PATH = $(addprefix $(LIB_DIR)/,$(LIB))
-MALLOC_DIR = ./safe_malloc
-MALLOC = lib_malloc.a
-MALLOC_PATH = $(addprefix $(MALLOC_DIR)/,$(MALLOC))
 
-EXTRA_PATH = $(LIB_PATH) $(MALLOC_PATH)
-LIB_LINK = -L$(LIB_DIR) -L$(MALLOC_DIR)
+LIB_LINK = -L$(LIB_DIR)
 
 
 MAIN_SRCS = main.c errors.c debug.c clean_free.c debug_nodes_to_delete.c
@@ -53,7 +49,7 @@ LIB_INC_DIR = $(LIB_DIR)/includes/
 CC = cc
 RM = rm -rf
 CFLAGS = -Wall -Werror -Wextra
-IFLAGS = -I $(INCLUDE_DIR) -I$(LIB_INC_DIR) -I$(MALLOC_DIR)
+IFLAGS = -I $(INCLUDE_DIR) -I$(LIB_INC_DIR)
 RLFLAGS = -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include -lreadline -lhistory
 
 
@@ -64,10 +60,6 @@ all: $(NAME)
 $(LIB_PATH):
 	make -C $(LIB_DIR)
 	cp $(LIB_PATH) .
-	
-$(MALLOC_PATH):
-	make -C $(MALLOC_DIR)
-	cp $(MALLOC_PATH) .
 	
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -85,14 +77,13 @@ $(OBJ_DIR)/%.o: srcs/execution/builtins/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(IFLAGS) -c -o $@ $<
 
 
-$(NAME):  $(LIB_PATH) $(MALLOC_PATH) $(OBJS)
-	$(CC) $(OBJS) $(EXTRA_PATH) $(LIB_LINK) $(RLFLAGS) -lftplus -o $(NAME)
+$(NAME):  $(LIB_PATH) $(OBJS)
+	$(CC) $(OBJS) $(LIB_PATH) $(LIB_LINK) $(RLFLAGS) -lftplus -o $(NAME)
 
 clean:
 	make fclean -C $(LIB_DIR)
-	make fclean -C $(MALLOC_DIR)
 	$(RM) $(OBJ_DIR)
-	$(RM) $(LIB) $(MALLOC)
+	$(RM) $(LIB)
 
 fclean: clean 
 	$(RM) $(NAME)

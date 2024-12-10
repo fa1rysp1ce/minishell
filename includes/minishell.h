@@ -5,7 +5,6 @@
 # define MINISHELL_H 
 
 #include "libft.h"
-#include "safe_malloc.h"
 
 #include <stdio.h>
 #include <stdlib.h>
