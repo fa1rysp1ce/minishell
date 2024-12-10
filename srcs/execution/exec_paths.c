@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:38:10 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/09 19:44:58 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/10 05:20:53 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static char	**get_paths(t_shell *shell);
 static char	*find_correct_path(t_shell *shell, char *arg, char **paths, char *cmd);
-static int  is_absolute(char *path, int *status);
-static void  have_permission(char *path, char *name, int *status);
+// static int  is_absolute(char *path, int *status);
+static void  check_permissions(char *filename, int *status);
 
 
 //returns a string containing the full path and name of the command. null if no path exists
@@ -28,29 +28,40 @@ char    *get_cmd_path(t_shell *shell, int *status)
     char	*cmd;
     
     args = shell->token->args;
-    if (is_absolute(args[0], status))
+    // if (is_absolute(args[0], status))
+    if (ft_strrchr(args[0], '/') != NULL)
+    {
+        check_permissions(args[0], status);
         return (ft_strdup(args[0]));
-    paths = get_paths(shell);
-    if (paths == NULL)
-    {
-        error_msg(args[0],"command not found");
-        return (NULL);
     }
-    if (args[0][0] != '/')
-        cmd = ft_strjoin("/", args[0]);
     else
-        cmd = ft_strdup(args[0]);
-        
-    // printf("cmd: %s\n", cmd);
-    
-    if (cmd == NULL)
     {
+        paths = get_paths(shell);
+        if (paths == NULL)
+        {
+            error_msg(args[0],"command not found");
+            return (NULL);
+        }
+
+        //search in paths
+        // if (args[0][0] != '/')
+        // else
+            // cmd = ft_strdup(args[0]);
+            
+        // printf("cmd: %s\n", cmd);
+        
+        cmd = ft_strjoin("/", args[0]);
+        if (cmd == NULL)
+        {
+            free_2d_charr(paths);
+            exit_malloc_err(shell);
+        }
+        cmd_path = find_correct_path(shell, args[0], paths, cmd);
         free_2d_charr(paths);
-        exit_malloc_err(shell);
+        if (cmd_path == NULL)
+            error_msg(args[0], "command not found");
+        check_permissions(cmd_path, status);
     }
-    cmd_path = find_correct_path(shell, args[0], paths, cmd);
-    free_2d_charr(paths);
-    have_permission(cmd_path, args[0], status);
     return (cmd_path);
 }
 
@@ -106,33 +117,38 @@ static char	*find_correct_path(t_shell *shell, char *arg, char **paths, char *cm
 }
 
 //check if the path is an existing absolute path
-static int  is_absolute(char *path, int *status)
-{
-    if (access(path, F_OK) == 0)
-    {
-        have_permission(path, path, status);
-        return (1);
-    }
-    return (0);
-}
-
-static void  have_permission(char *file_path, char *name, int *status)
+// static int  is_absolute(char *path, int *status)
+// {
+//     if (access(path, F_OK) == 0)
+//     {
+//         have_permission(path, status);
+//         return (1);
+//     }
+//     return (0);
+// }
+//check if file exists, check if its executable, check if its a directory
+static void  check_permissions(char *filename, int *status)
 {
     struct stat     path_stat;
     
     // printf("have permission file path: %s\n", file_path);
-    // printf("have permission name: %s\n", name);
-    if (file_path == NULL)
-    {
-        if ((stat(name, &path_stat) != 0))
-            error_msg(name ,"Is a directory");
-        else
-            error_msg(name ,"command not found");
-        
-    }
-    else if (access(file_path, X_OK) != 0)
+    // printf("have permissions: %s\n", filename);
+    if (filename == NULL)
+        return ;
+
+    else if ((stat(filename, &path_stat) == 0))
+        error_msg(filename ,"Is a directory");
+
+    else if (access(filename, F_OK) != 0)
+        error_msg(filename ,"No such file or directory");
+    
+    else if (access(filename, X_OK) != 0)
     {
         *status = NON_EXEC;
-        error_msg(name, "Permission denied");
+        error_msg(filename, "Permission denied");
     }
+    
+    
+    // else
+        // error_msg(name ,"command not found");
 }

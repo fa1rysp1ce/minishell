@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:50:04 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/06 16:33:53 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/10 04:56:47 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void    *read_heredoc(t_heredoc heredoc, char *delimiter);
-void static    create_pipes_hdocs(t_shell *shell);
-void static    child_process_hdocs(t_shell *shell);
+static void    create_pipes_hdocs(t_shell *shell);
+static void    child_process_hdocs(t_shell *shell);
 static void     close_parent_pipes(t_shell *shell);
 
 
@@ -72,7 +72,7 @@ static void    *read_heredoc(t_heredoc heredoc, char *delimiter)
     return (EXIT_SUCCESS);
 }
 
-void static    create_pipes_hdocs(t_shell *shell)
+static void    create_pipes_hdocs(t_shell *shell)
 {
     int     i;
 
@@ -85,7 +85,7 @@ void static    create_pipes_hdocs(t_shell *shell)
     }
 }
 
-void static    child_process_hdocs(t_shell *shell)
+static void    child_process_hdocs(t_shell *shell)
 {
     int         i;
     t_token     *doc_token;
