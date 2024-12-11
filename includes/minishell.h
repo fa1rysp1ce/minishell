@@ -100,6 +100,8 @@ int		fill_list(char **strarr, t_token **list);
 
 //chck_input.c
 int		check_input(char *s);
+int		check_ends(char *s);
+int		check_ops(char *s);
 int		is_op(char c);
 
 //variables.c

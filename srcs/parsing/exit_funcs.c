@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_funcs.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 15:00:14 by junruh            #+#    #+#             */
+/*   Updated: 2024/12/11 19:00:02 by junruh           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	exit_variables(char *str)
@@ -26,6 +38,7 @@ void	free_split(char **arr, int last, char *s)
 int free_input(char *s, char c)
 {
 	printf("minishell: syntax error near unexpected token '%c'\n", c);
+	set_exit_status(EXIT_FAILURE);
 	free(s);
 	return (1);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_list.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 15:00:26 by junruh            #+#    #+#             */
+/*   Updated: 2024/12/10 20:17:56 by junruh           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	eval_str(char **strarr, t_token **list)
@@ -10,13 +22,6 @@ int	eval_str(char **strarr, t_token **list)
 		//printf("iteration index: %d\n", i);
 		if (strarr[i][0] == '|')
 			i += pipe_token(strarr, i, list);
-		/*else if (strarr[i][0] == '<' || strarr[i][0] == '>')
-		{
-			if (strarr[i][0] == '<')
-				i += handle_input(strarr[i], strarr, i, list);
-			else if (strarr[i][0] == '>')
-				i += handle_output(strarr[i], strarr, i, list);
-		}*/
 		else
 			i += handle_commands(strarr, i, list);
 	}
@@ -34,8 +39,6 @@ int	arg_count(char **strarr, int pos)
 	{
 		if (strarr[i + pos][0] != '<' && strarr[i + pos][0] != '>')
 			count++;
-		//else
-		//	count--;
 		i++;
 	}
 	return (count);
@@ -64,30 +67,29 @@ char	*trim_quotes(char **strarr, int pos, t_token **list)
 
 char *remove_quotes(char *s)
 {
-    int len = strlen(s);
+    int		len;
+	int		i;
+	int		j;
+	char	quote_char;
 
-    int i = 0, j = 0;
-    char quote_char = '\0';
-
+	i = 0;
+	j = 0;
+    quote_char = '\0';
+	len = strlen(s);
     while (j < len)
     {
         char c = s[j];
         if ((c == '"' || c == '\'') && quote_char == '\0')
-        {
-            quote_char = c;  // Start of a quoted section
-        }
+            quote_char = c;
         else if (c == quote_char)
-        {
-            quote_char = '\0';  // End of a quoted section
-        }
+            quote_char = '\0';
         else
-        {
-            s[i++] = c;  // Copy character if not a quote or inside quotes
-        }
+            s[i++] = c;
         j++;
     }
-
     s[i] = '\0';
+	if (ft_strcmp(s, "$EMPTY") == 0)
+		return (ft_strdup(""));
     return (s);
 }
 
