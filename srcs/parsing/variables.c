@@ -6,7 +6,7 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:01:29 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/10 20:36:19 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:47:15 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	check_vars(char **line, t_shell *shell)
 	while (line[0][i] != 0)
 	{
 		j = 0;
+		printf("starting loop %d", i);
 		if (line[0][i] == 39)
 			i = skip_quoted(*line, i);
 		else if (line[0][i] == '$')
@@ -34,7 +35,7 @@ void	check_vars(char **line, t_shell *shell)
 				if (handle_vars(line, i, j - i, shell) != -1)
 					i--;
 				else
-					i++;
+					i = j - 1;
 			}
 		}
 		if (line[0][i] != 0)
