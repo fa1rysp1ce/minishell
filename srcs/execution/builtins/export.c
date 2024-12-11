@@ -6,13 +6,13 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:30:23 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/10 15:57:55 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/11 18:52:01 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void     export_var(t_shell *shell, int indx, int *status);
+static void     export_var(t_shell *shell, int indx);
 static int      valid_identifier(char *str);
 static void     add_new_env(t_shell *shell, int indx);
 static void     add_existing_env(t_shell *shell, char *var_name, int indx);
@@ -28,13 +28,22 @@ int    export(t_shell *shell, t_token *token)
     i = 1;
     while (token->args[i] != NULL)
     {
-        export_var(shell, i, &status);
+        if (valid_identifier(token->args[i]))
+        {
+            if (ft_strrchr(token->args[i], '=') != NULL)
+                export_var(shell, i);
+        }
+        else
+        {
+            error_msg(token->args[i], "not a valid identifier");
+            status = EXIT_FAILURE;
+        }
         i++;
     }
     return (status);
 }
 
-static void     export_var(t_shell *shell, int indx, int *status)
+static void     export_var(t_shell *shell, int indx)
 {
     char    *equal;
     char    *var_name;
@@ -43,23 +52,17 @@ static void     export_var(t_shell *shell, int indx, int *status)
     token = shell->token;
     equal = ft_strchr(token->args[indx], '=');
     var_name = ft_substr(token->args[indx], 0, (equal - token->args[indx]));
-    // printf("varname: %s\n", var_name);
-    if (var_name[0] != '\0' && valid_identifier(var_name))
+    if (var_name[0] != '\0')
     {
         if (expand_arg(shell, var_name) == NULL)
             add_new_env(shell, indx);
         else
             add_existing_env(shell, var_name, indx);
     }
-    else
-    {
-        *status = EXIT_FAILURE;
-        error_msg(token->args[indx], "not a valid identifier");
-    }
     free(var_name);
 }
 
-//returns 1 if str follows the rules of naming variables in bash
+// returns 1 if str follows the rules of naming variables in bash
 static int  valid_identifier(char *str)
 {
     int     i;
@@ -68,6 +71,8 @@ static int  valid_identifier(char *str)
     if (ft_isalpha(str[i]) || str[i] == '_')
         while (str[++i] != '\0')
         {
+            if (str[i] == '=')
+                return (1);
             if (!(str[i] == '_' || ft_isalpha(str[i]) || ft_isdigit(str[i])))
                 return (0);
         }
@@ -104,4 +109,5 @@ static void    add_existing_env(t_shell *shell, char *var_name, int indx)
     len = ft_strlen(shell->token->args[indx]) - (i + 1);
     content = ft_substr(shell->token->args[indx], i+1, len);    
     change_env(shell, content, var_name);
+    free(content);
 }

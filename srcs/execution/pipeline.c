@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/06 14:49:28 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:16:59 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ static void    wait_pids(t_execute *exec, int *status)
         *status = WEXITSTATUS(*status);
 }
 
+/* open pipes - unless it's the last cmd
+close pipes - unless its the 1st cmd or a single cmd */
 static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int new_pipe)
 {
     int status;
@@ -75,7 +77,7 @@ static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int n
     cmd_count = 0;
     while (cmd_count < shell->execute->cmds)
     {
-        if (cmd_count < shell->execute->cmds - 1 ) //if it's not the last cmd
+        if (cmd_count < shell->execute->cmds - 1 ) 
             if (pipe(pipe_fd[new_pipe]) < 0)
                 return (abort_exec("Error: pipe\n", shell));
         shell->execute->pid[cmd_count] = fork();
@@ -83,9 +85,9 @@ static int fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe, int n
             return (abort_exec("Error: fork\n", shell));
         if (shell->execute->pid[cmd_count] == 0)
             child_exec(shell, pipe_fd, last_pipe, cmd_count);
-        if (cmd_count > 0 && shell->execute->cmds > 1) //not 1st cmd and no single cmd
+        if (cmd_count > 0 && shell->execute->cmds > 1)
                 close_pipes(pipe_fd, last_pipe);
-        close_used_heredocs(shell); //set 0 to indicate what heredocs were used
+        close_used_heredocs(shell);
         next_cmd_token(shell);
         swap_pipes(&last_pipe, &new_pipe);
         cmd_count++;
@@ -108,7 +110,7 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
     {
         if (is_builtin(args[0]))
             status = execute_builtin(shell);
-        else   
+        else
             cmd_path = get_cmd_path(shell, &status);
         if (cmd_path != NULL)
         {
@@ -117,11 +119,12 @@ void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count
         }
     }
     child_exec_fail(shell);
-    // set_exit_status(status);
     exit(status);
 }
 
-//set the pipes. do nothing if theres only one cmd
+/* set the pipes. do nothing if theres only one cmd
+read from last pipe unless its the first cmd
+write to new pipe unless its the last cmd */
 static void    set_pipes(int pipe_fd[2][2], int last_pipe, int cmds, int cmd_count)
 {
     int new_pipe;
@@ -129,12 +132,12 @@ static void    set_pipes(int pipe_fd[2][2], int last_pipe, int cmds, int cmd_cou
     new_pipe = 0;
     if (last_pipe == 0)
         new_pipe = 1;
-    if (cmd_count > 0) //not first cmd, read from last pipe
+    if (cmd_count > 0)
     {
         dup2(pipe_fd[last_pipe][READ_END], STDIN_FILENO);
         close_pipes(pipe_fd, last_pipe);
     }
-    if (cmd_count < cmds - 1) //not last cmd. write to new pipe
+    if (cmd_count < cmds - 1)
     {
         dup2(pipe_fd[new_pipe][WRITE_END], STDOUT_FILENO);
         close_pipes(pipe_fd, new_pipe);
@@ -142,16 +145,20 @@ static void    set_pipes(int pipe_fd[2][2], int last_pipe, int cmds, int cmd_cou
 }
 
 /* 
-    if the next cmd in the pipe is the last and it's a builtin - 
+    if shopt -s lastpipe option is enabled:
+    when the next cmd in the pipe is the last and it's a builtin - 
     will execute it in the parent and end the pipe loop.
+    to disable: shopt -u lastpipe
+    
     can be placed before "next_cmd_token()" in pipeline function
-static void    parent(t_shell *shell, int status, pid_t pid, int *cmd_count) //maybe pid is always 0 ?
+    
+static void    lastpipe_optin(t_shell *shell, int status, pid_t pid, int *cmd_count) //maybe pid is always 0 ?
 {
-    // if (*cmd_count == shell->execute->cmds - 1) 
-    //     if (is_builtin(shell->token->args[0])) //last cmd and builtin - do in parent
-    //     {
-    //         single_builtin(shell);
-    //         *cmd_count = *cmd_count + 1;
-    //     }
+    if (*cmd_count == shell->execute->cmds - 1) 
+        if (is_builtin(shell->token->args[0])) //last cmd and builtin - do in parent
+        {
+            single_builtin(shell);
+            *cmd_count = *cmd_count + 1;
+        }
 }
 */ 

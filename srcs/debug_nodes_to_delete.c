@@ -15,7 +15,7 @@ void    init_tokens(t_token **head)
     new_node->type = CMD;
     new_node->args = malloc(sizeof(char *) * 3);
     new_node->args[0] = ft_strdup("echo");
-    new_node->args[1] = ft_strdup("<<");
+    new_node->args[1] = ft_strdup("-n hello world");
     // new_node->args[2] = ft_strdup("l");
     new_node->args [2] = NULL;
 

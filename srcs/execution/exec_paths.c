@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:38:10 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/10 13:59:34 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/11 15:24:05 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,21 @@ char    *get_cmd_path(t_shell *shell, int *status)
     char    *cmd_path;
     
     arg = shell->token->args[0];
-    if (ft_strrchr(arg, '/') != NULL)
+    cmd_path = NULL;
+    if (arg != NULL)
     {
-        check_permissions(arg, status);
-        return (ft_strdup(arg));
-    }
-    else
-    {
-        cmd_path = search_in_paths(shell, arg);
-        if (cmd_path == NULL)
-            error_msg(arg, "command not found");
-        check_permissions(cmd_path, status);
+        if (ft_strrchr(arg, '/') != NULL)
+        {
+            check_permissions(arg, status);
+            return (ft_strdup(arg));
+        }
+        else
+        {
+            cmd_path = search_in_paths(shell, arg);
+            if (cmd_path == NULL)
+                error_msg(arg, "command not found");
+            check_permissions(cmd_path, status);
+        }
     }
     return (cmd_path);
 }

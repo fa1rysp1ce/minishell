@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 21:19:05 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/10 14:42:22 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/11 13:50:42 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int     is_builtin(char *str)
 {   
+    if (str == NULL)
+        return (0);
     if (!ft_strcmp(str, "echo"))
         return (1);
     if (!ft_strcmp(str, "export"))

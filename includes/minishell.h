@@ -176,12 +176,12 @@ int     prev_dir(t_shell *shell);
 
 //execution
 void	execution_junction(t_shell *shell, t_token **head_token);
-int    	count_pipes(t_token **token);
-void    single_builtin(t_shell *shell);
-void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count);
+// int    	count_pipes(t_token **token);
+// void    single_builtin(t_shell *shell);
 
 //pipeline
 void    pipeline(t_shell *shell);
+void 	child_exec(t_shell *shell, int pipe_fd[2][2], int last_pipe, int cmd_count);
 
 //pipeline utils
 void    next_cmd_token(t_shell *shell);

@@ -14,16 +14,12 @@ int	main(int ac, char **av, char **env)
 	t_shell shell;
 	t_token *ls_ptr;
 	char	*line;
-	// int		exit_status;
 
 
 	ls_ptr = NULL;
-
 	init_shell(&shell, env);
-    
-
 	(void)ac;
-	 (void)av;
+	(void)av;
 	/*if (av[1] && ft_strcmp(av[1], "-c") == 0)
 		if (av[2])
 			{
@@ -59,10 +55,7 @@ int	main(int ac, char **av, char **env)
 		execution_junction(&shell, &ls_ptr);
 		shell.last_exit_status = g_status;
 		clean_tokens(&shell);
-		// printf("exit status: %d\n", shell.last_exit_status);
 	}
-
-	// exit_status = shell.last_exit_status;
 	clean_shell(&shell);
 
 	rl_clear_history();
