@@ -6,7 +6,7 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:59:58 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/11 16:28:08 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:53:33 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,23 @@ int	ft_ccount(char const *s)
 	ccount = count_sym(s);
 	while (s[i] != '\0')
 	{
-		while (s[i] == ' ' || s[i] == '|' || s[i] == '<' || s[i] == '>'
-			)//|| s[i] == '=')
+		while (s[i] == ' ' || s[i] == '|' || s[i] == '<' || s[i] == '>')
 			i++;
-		if (s[i] == '"')
-			while (s[i] != '\0' && s[i] != '"')
-				i++;
-		if (s[i] == 39)
-			while (s[i] != '\0' && s[i] != 39)
-				i++;
-		if (s[i] == '"' || s[i] == '\'')
+		i = skip_quoted(s, i);
+	/*if (s[i] == '"')
+	{
+		//i++;
+		while (s[i] != '\0' && s[i] != '"')
 			i++;
+	}
+	if (s[i] == 39)
+	{
+		//i++;
+		while (s[i] != '\0' && s[i] != 39)
+			i++;
+	}*/
+		//if (s[i] == '"' || s[i] == '\'')
+		//	i++;
 		if (s[i] != '\0')
 		{
 			ccount++;
@@ -361,6 +367,8 @@ int	fill_arr(char const *s, char ***strarr, int ccount)
 			free_split(*strarr, i, (char *)s);
 			return (-1);
 		}
+		//else if (strarr[0][i][0] == '\0')
+		//	break ;
 		i++;
 	}
 	strarr[0][i] = NULL;

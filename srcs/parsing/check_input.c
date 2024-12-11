@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junruh <junruh@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:59:24 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/10 14:59:27 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/11 18:52:04 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_op(char c)
 	return (0);
 }
 
-static int	check_ops(char *s)
+int	check_ops(char *s)
 {
 	int	i;
 
@@ -81,7 +81,7 @@ static int	count_c(char *s, char c)
 	return (count);
 }
 
-static int	check_ends(char *s)
+int	check_ends(char *s)
 {
 	int	i;
 

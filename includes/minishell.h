@@ -101,11 +101,13 @@ int		fill_list(char **strarr, t_token **list);
 
 //chck_input.c
 int		check_input(char *s);
+int		check_ends(char *s);
+int		check_ops(char *s);
 int		is_op(char c);
 
 //variables.c
 void	check_vars(char **line, t_shell *shell);
-int		handle_vars(char **line, int i, int len, t_shell *shell);
+void	handle_vars(char **line, int i, int len, t_shell *shell);
 char	*replace_var(char **line, int start, int len, char *substr);
 
 //cmd_split.c

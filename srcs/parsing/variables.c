@@ -6,7 +6,7 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:01:29 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/11 16:47:15 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:03:07 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	check_vars(char **line, t_shell *shell)
 	while (line[0][i] != 0)
 	{
 		j = 0;
-		printf("starting loop %d", i);
 		if (line[0][i] == 39)
 			i = skip_quoted(*line, i);
 		else if (line[0][i] == '$')
@@ -32,10 +31,9 @@ void	check_vars(char **line, t_shell *shell)
 				j++;
 			if (i + 1 < j)
 			{
-				if (handle_vars(line, i, j - i, shell) != -1)
+				handle_vars(line, i, j - i, shell);
+				if (i > 0)
 					i--;
-				else
-					i = j - 1;
 			}
 		}
 		if (line[0][i] != 0)
@@ -53,14 +51,14 @@ char	*find_var(char **line, char *str, t_shell *shell)
 		res = ft_strdup(expand_arg(shell, str));
 	if (res == NULL || res[0] == 0)
 	{
-		res = ft_strdup("$EMPTY");
+		res = ft_strdup("");
 	}
 	if (!res)
 		exit_variables(*line);
 	return (res);
 }
 
-int	handle_vars(char **line, int i, int len, t_shell *shell)
+void	handle_vars(char **line, int i, int len, t_shell *shell)
 {
 	int		k;
 	char	*str;
@@ -80,17 +78,12 @@ int	handle_vars(char **line, int i, int len, t_shell *shell)
 	//printf("%s\n", str);
 	newstr = find_var(line, str, shell);
 	free(str);
-	if (ft_strcmp(newstr, "$EMPTY") == 1)
-		k = -1;
-	//k = ft_strlen(newstr);
-	//printf("%s\n", newstr);
 	tmp = replace_var(line, i, len, newstr);
 	if (tmp == NULL)
 		exit_variables(*line);
 	free(newstr);
 	free(*line);
 	*line = tmp;
-	return (k);
 }
 
 
