@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junruh <junruh@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:00:40 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/10 15:00:43 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/12 17:51:00 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,11 @@ int skip_quoted(const char *s, int i)
 			i++;
 	}
 	return (i);
+}
+
+int	is_op(char c)
+{
+	if (c == '|' || c == '<' || c == '>' || c == '=')
+		return (1);
+	return (0);
 }
