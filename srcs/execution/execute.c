@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 13:03:54 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/12 16:47:59 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/12 18:37:43 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	execution_junction(t_shell *shell, t_token **head_token)
 			pipeline(shell);
 	}
 	clean_heredocs(shell->execute);
+	clean_tokens(shell);
 	free(shell->execute);
 	shell->execute = NULL;
 }
