@@ -96,7 +96,6 @@ int						fill_list(char **strarr, t_token **list);
 int						check_input(char *s);
 int						check_ends(char *s);
 int						check_ops(char *s);
-int						is_op(char c);
 
 // variables.c
 void					check_vars(char **line, t_shell *shell);
@@ -131,6 +130,7 @@ void					exit_fill_list(char **strarr, int pos, t_token **list);
 
 // helpers.c
 int						skip_quoted(const char *s, int i);
+int						is_op(char c);
 
 //##########execution##########
 // exec_paths
