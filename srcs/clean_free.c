@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:17:35 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/12 16:57:28 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/12 19:45:30 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	clean_shell(t_shell *shell)
 		free_2d_charr(shell->envc);
 	if (shell->prev_dir)
 		free(shell->prev_dir);
+	rl_clear_history();
 }
 
 void	clean_tokens(t_shell *shell)

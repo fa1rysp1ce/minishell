@@ -2,6 +2,13 @@
 
 #include "minishell.h"
 
+void	set_history(char *line)
+{
+	add_history(line);
+	rl_replace_line((const char *)line, 0);
+	rl_redisplay();
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_shell	shell;
@@ -21,15 +28,12 @@ int	main(int ac, char **av, char **env)
 			set_exit_status(EXIT_SUCCESS);
 			break ;
 		}
-		add_history(line);
-		rl_replace_line((const char *)line, 0);
-		rl_redisplay();
+		set_history(line);
 		if (parse(&ls_ptr, &line, &shell) != 0)
 			continue ;
 		signal_noninteractive();
 		execution_junction(&shell, &ls_ptr);
 	}
 	clean_shell(&shell);
-	rl_clear_history();
 	return (get_exit_status());
 }
