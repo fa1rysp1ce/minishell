@@ -22,6 +22,7 @@ int	main(int ac, char **av, char **env)
 				execution_junction(&shell, &ls_ptr);
 				clean_tokens(&shell);
 				shell.last_exit_status = g_status;
+				shell.last_exit_status = g_status;
 				clean_shell(&shell);
 				return (shell.last_exit_status);
 			}
