@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junruh <junruh@student.42berlin.de>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 18:28:01 by junruh            #+#    #+#             */
+/*   Updated: 2024/12/12 18:28:07 by junruh           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -52,7 +62,7 @@ typedef struct s_token
 	struct s_token		*next;
 }						t_token;
 
-struct s_execute;
+struct	s_execute;
 
 typedef struct s_shell
 {
@@ -113,13 +123,12 @@ int						eval_str(char **strarr, t_token **list);
 int						handle_commands(char **strarr, int pos, t_token **list);
 int						handle_redirec(char *str, char **strarr, int pos,
 							t_token **list);
-// int		handle_output(char *str, char **strarr, int pos, t_token **list);
 int						pipe_token(char **strarr, int pos, t_token **list);
 
 // nodes.c
 void					*add_node(t_token **node, char **strarr, int pos);
 t_token					*find_last(t_token **list);
-void					print_list(t_token **list);
+//void					print_list(t_token **list);
 void					free_list(t_token **list);
 
 // exit_funcs.c

@@ -6,7 +6,7 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:01:29 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/11 19:03:07 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/12 18:07:46 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	handle_vars(char **line, int i, int len, t_shell *shell)
 		k++;
 	}
 	str[k] = 0;
-	//printf("%s\n", str);
 	newstr = find_var(line, str, shell);
 	free(str);
 	tmp = replace_var(line, i, len, newstr);
@@ -86,16 +85,14 @@ void	handle_vars(char **line, int i, int len, t_shell *shell)
 	*line = tmp;
 }
 
-
 char	*replace_var(char **line, int start, int len, char *substr)
 {
 	int		i;
 	int		j;
 	char	*newline;
 
-	//printf("Line length: %zu, Substring length: %zu, len: %d\n", ft_strlen(*line), ft_strlen(substr), len);
 	newline = malloc(sizeof(char) * (ft_strlen(*line)
-		+ ft_strlen(substr) - len + 1));
+				+ ft_strlen(substr) - len + 1));
 	if (!newline)
 		return (NULL); 
 	i = 0;
@@ -114,6 +111,5 @@ char	*replace_var(char **line, int start, int len, char *substr)
 	while (line[0][j] != 0)
 		newline[i++] = line[0][j++];
 	newline[i] = 0;
-	//free(substr);
 	return (newline);
 }

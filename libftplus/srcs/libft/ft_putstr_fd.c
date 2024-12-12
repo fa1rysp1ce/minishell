@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 19:08:48 by ilazar            #+#    #+#             */
-/*   Updated: 2024/05/01 21:12:49 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/12 18:25:26 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	x;
-	
+
 	x = write(fd, s, ft_strlen(s));
 	(void)x;
 }
