@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_funcs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:00:14 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/11 19:00:02 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/12 17:11:58 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ void	free_split(char **arr, int last, char *s)
 	arr = NULL;
 }
 
-int free_input(char *s, char c)
+int	free_input(char *s, char c)
 {
-	printf("minishell: syntax error near unexpected token '%c'\n", c);
+	ft_putstr_fd("minishell: syntax error near unexpected token '",
+		STDERR_FILENO);
+	ft_putchar_fd(c, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
 	set_exit_status(EXIT_FAILURE);
 	free(s);
 	return (1);

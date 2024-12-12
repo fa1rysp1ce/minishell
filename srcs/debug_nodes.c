@@ -1,8 +1,16 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug_nodes.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 13:49:48 by ilazar            #+#    #+#             */
+/*   Updated: 2024/12/12 13:53:26 by ilazar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
-
-void    print_list_inbar(t_token **head);
 
 void    init_tokens(t_token **head)
 {
@@ -81,13 +89,7 @@ void    init_tokens(t_token **head)
     new_node->args[0] = ft_strdup("2");
     new_node->args [1] = NULL;
 
-
-
-
 */
-
-
-
 
 /*
     //PIPE
@@ -113,9 +115,6 @@ void    init_tokens(t_token **head)
     new_node->args[0] = ft_strdup("2");
     new_node->args [1] = NULL;
 
-
-
-// 2 cmds 
     new_node = add_node_inbar(head);
     new_node->type = PIPE;
 
@@ -129,10 +128,8 @@ void    init_tokens(t_token **head)
     new_node->args [1] = NULL;
 */
     print_list_inbar(head);
-
-
-
 }
+
 void    print_list_inbar(t_token **head)
 {
     t_token *node;
@@ -165,7 +162,6 @@ void    print_list_inbar(t_token **head)
                 printf("type: OUT_APP\n");
                 break ;
         }
-        // printf("type: %d\n", node->type);
         if (node->args != NULL)
         {
             i = 0;
@@ -189,15 +185,11 @@ t_token	*add_node_inbar(t_token **node)
 	t_token *curr;
 
 	new_node = malloc(sizeof(t_token));
-	// if (!new_node)
-		//exit handle
 	new_node->next = NULL;
 	new_node->args = NULL;
 	new_node->type = 7;
-	
 	if (*node == NULL)
 	{
-	//	new_node->prev = NULL;
 		*node = new_node;
 		return (*node);
 	}
@@ -206,7 +198,6 @@ t_token	*add_node_inbar(t_token **node)
 	{
 		curr = curr->next;
 	}
-	//new_node->prev = curr;
 	curr->next = new_node;
     return (new_node);
 }
@@ -221,7 +212,6 @@ void    clean_tokens_inbar(t_token **head_token)
     token = *head_token;
     while (token != NULL)
     {
-        // printf("clean: node type: %d\n", token->type);
         if (token->args != NULL)
             free_2d_charr(token->args);
         tmp = token;
