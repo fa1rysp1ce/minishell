@@ -6,13 +6,13 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:00:40 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/12 17:51:00 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/12 18:02:39 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int skip_quoted(const char *s, int i)
+int	skip_quoted(const char *s, int i)
 {
 	if (s[i] == '"')
 	{

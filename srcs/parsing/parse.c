@@ -6,30 +6,24 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:01:05 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/11 19:00:58 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/12 18:20:43 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 int	parse(t_token **list, char **line, t_shell *shell)
 {
-	char 	**strarr;
+	char	**strarr;
 	int		arrsize;
 
 	strarr = NULL;
-	//printf("1\n");
 	if (check_input(*line) != 0)
 		return (1);
-	//printf("2\n");
 	check_vars(line, shell);
 	if (check_ops(*line) != 0 || check_ends(*line) != 0)
 		return (1);
-	//printf("new line: %s \n", *line);
-	//printf("3\n");
 	arrsize = cmd_split(*line, &strarr);
-	//printf("4\n");
 	free(*line);
 	if (arrsize < 0)
 	{
@@ -41,12 +35,6 @@ int	parse(t_token **list, char **line, t_shell *shell)
 		set_exit_status(EXIT_SUCCESS);
 		return (1);
 	}
-	/*int i = 0;
-	while (strarr[i] != NULL)
-	{
-		printf("%s\n", strarr[i]);
-		i++;
-	}*/
 	fill_list(strarr, list);
 	return (0);
 }
@@ -55,8 +43,6 @@ int	cmd_split(char const *s, char ***strarr)
 {
 	int		ccount;
 
-	//if (s[0] == '\0')
-	//	return (0);
 	ccount = ft_ccount(s);
 	*strarr = malloc(sizeof(char *) * (ccount + 1));
 	if (!strarr[0])
@@ -67,6 +53,21 @@ int	cmd_split(char const *s, char ***strarr)
 	if (fill_arr(s, strarr, ccount) < 0)
 		return (-1);
 	return (ccount);
+}
+
+int	eval_str(char **strarr, t_token **list)
+{
+	int	i;
+
+	i = 0;
+	while (strarr[i] != NULL)
+	{
+		if (strarr[i][0] == '|')
+			i += pipe_token(strarr, i, list);
+		else
+			i += handle_commands(strarr, i, list);
+	}
+	return (i);
 }
 
 int	fill_list(char **strarr, t_token **list)
