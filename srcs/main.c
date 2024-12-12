@@ -14,19 +14,18 @@ int	main(int ac, char **av, char **env)
 	init_shell(&shell, env);
 	(void)ac;
 	(void)av;
-	/*if (av[1] && ft_strcmp(av[1], "-c") == 0)
+	if (av[1] && ft_strcmp(av[1], "-c") == 0)
 		if (av[2])
 			{
 				line = ft_strdup(av[2]);
 				parse(&ls_ptr, &line, &shell);
-				// print_list_inbar(&ls_ptr);
 				execution_junction(&shell, &ls_ptr);
 				clean_tokens(&shell);
-				exit_status = shell.last_exit_status;
+				shell.last_exit_status = g_status;
 				clean_shell(&shell);
-				return (exit_status);
-			} */
-	// signal(SIGINT, SIG_IGN);
+				return (shell.last_exit_status);
+			}
+
 	while (1)
 	{
 		signal_interactive();
@@ -41,7 +40,7 @@ int	main(int ac, char **av, char **env)
 		rl_redisplay();
 		if (parse(&ls_ptr, &line, &shell) != 0)
 			continue ;
-		print_list_inbar(&ls_ptr);
+		// print_list_inbar(&ls_ptr);
 		// print_list(&ls_ptr);
 		signal_noninteractive();
 		execution_junction(&shell, &ls_ptr);
