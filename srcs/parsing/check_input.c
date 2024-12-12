@@ -6,7 +6,7 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:59:24 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/11 18:52:04 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/12 17:44:18 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,35 @@ int	is_op(char c)
 {
 	if (c == '|' || c == '<' || c == '>' || c == '=')
 		return (1);
+	return (0);
+}
+
+int check_ops2(char *s, int i)
+{
+	int	j;
+
+	j = i;
+	if ((i > 1 && (s[i] == s[i - 1] && s[i] == s[i - 2])) || (i > 0 && (s[i - 1] !=
+		s[i] && is_op(s[i - 1]))))
+	{
+		free_input(s, s[i]);
+		return (1);
+	}
+	while (j > 0 && s[j] == ' ')
+		j--;
+	if (s[j] == '>' || s[j] == '<')
+	{
+		free_input(s, s[i]);
+		return (2);
+	}
+	j = i;
+	while (s[j] == ' ')
+		j++;;
+	if (s[j] == '>' || s[j] == '<')
+	{
+		free_input(s, s[i]);
+		return (2);
+	}
 	return (0);
 }
 
@@ -38,10 +67,8 @@ int	check_ops(char *s)
 		}
 		if (s[i] == '<' || s[i] == '>')
 		{
-			if ((i > 1 && (s[i] == s[i - 1] && s[i] == s[i - 2])) || (i > 0 && (s[i - 1] !=
-				s[i] && is_op(s[i - 1]))))
+			if (check_ops2(s, i) != 0)
 			{
-				free_input(s, s[i]);
 				return (2);
 			}
 		}
