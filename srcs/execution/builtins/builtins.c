@@ -6,39 +6,13 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:04:11 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/12 16:44:33 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/13 14:05:31 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//{"echo", "-n" / "", "txt...", "txt...", "null"}
-int	echo(t_token *token)
-{
-	int	i;
-	int	new_line;
-
-	i = 1;
-	new_line = 1;
-	if (token->args[1] != NULL)
-	{
-		if (ft_strcmp(token->args[1], "-n") == 0)
-		{
-			new_line = 0;
-			i++;
-		}
-	}
-	while (token->args[i] != NULL)
-	{
-		ft_putstr_fd(token->args[i], STDOUT_FILENO);
-		i++;
-		if (token->args[i] && token->args[i][0] != 0)
-			ft_putstr_fd(" ", STDOUT_FILENO);
-	}
-	if (new_line)
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (EXIT_SUCCESS);
-}
+static int	is_newline(char *arg, int *new_line);
 
 int	pwd(void)
 {
@@ -93,4 +67,51 @@ int	cd(t_shell *shell)
 	if (ft_strcmp(token->args[1], "-") == 0)
 		return (prev_dir(shell));
 	return (cd_path(shell, shell->token->args[1]));
+}
+
+//{"echo", "-n" / "", "txt...", "txt...", "null"}
+int	echo(t_token *token)
+{
+	int	i;
+	int	new_line;
+
+	i = 1;
+	new_line = 1;
+	if (token->args[1] != NULL)
+	{
+		while (token->args[i] != NULL && ft_strncmp(token->args[i], "-n",
+				2) == 0)
+		{
+			if (!is_newline(token->args[i], &new_line))
+				break ;
+			i++;
+		}
+	}
+	while (token->args[i] != NULL)
+	{
+		ft_putstr_fd(token->args[i], STDOUT_FILENO);
+		i++;
+		if (token->args[i] && token->args[i][0] != 0)
+			ft_putstr_fd(" ", STDOUT_FILENO);
+	}
+	if (new_line)
+		ft_putstr_fd("\n", STDOUT_FILENO);
+	return (EXIT_SUCCESS);
+}
+
+// for echo:
+// returns 1 if 3rd char and on of arg consists of only chars of 'n'
+static int	is_newline(char *arg, int *new_line)
+{
+	int	i;
+
+	i = 2;
+	while (arg[i] != '\0')
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	*new_line = 0;
+	return (1);
 }

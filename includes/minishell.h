@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:01 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/13 12:45:26 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/13 13:14:34 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ struct	s_execute;
 typedef struct s_shell
 {
 	char				**envc;
-	int					last_exit_status;
 	char				*prev_dir;
 	struct s_execute	*execute;
 	struct s_token		**head_token;
@@ -184,7 +183,6 @@ void					child_exec(t_shell *shell, int pipe_fd[2][2],
 void					next_cmd_token(t_shell *shell);
 void					swap_pipes(int *last_pipe, int *new_pipe);
 void					close_pipes(int pipe_fd[2][2], int pipe);
-void					update_exit_status(t_shell *shell, int status);
 void					child_exec_fail(t_shell *shell);
 
 // redirection

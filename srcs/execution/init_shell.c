@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 13:04:14 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/12 16:52:31 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/13 13:14:41 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	init_shell(t_shell *shell, char **env)
 	shell->execute = NULL;
 	shell->head_token = NULL;
 	shell->token = NULL;
-	shell->last_exit_status = EXIT_SUCCESS;
 	shell->prev_dir = NULL;
 	buff = NULL;
 	buff_size = 1024;
