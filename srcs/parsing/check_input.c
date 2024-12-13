@@ -6,7 +6,7 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:59:24 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/12 17:58:12 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/13 14:45:15 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,10 @@ int	check_ops2(char *s, int i)
 		free_input(s, s[i]);
 		return (1);
 	}
-	while (j > 0 && s[j] == ' ')
-		j--;
-	if ((s[j] == '>' || s[j] == '<') && j != i)
-	{
-		free_input(s, s[i]);
-		return (2);
-	}
-	j = i;
+	j = i + 1;
 	while (s[j] == ' ')
 		j++;
-	if ((s[j] == '>' || s[j] == '<') && j != i)
+	if ((s[j] == '>' || s[j] == '<') && j != i + 1)
 	{
 		free_input(s, s[i]);
 		return (2);
