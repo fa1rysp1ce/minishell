@@ -1,0 +1,12 @@
+a
+b
+how_to_update_git.txt
+includes
+libftplus
+libftplus.a
+Makefile
+minishell
+minishell_tester
+obj
+readline.supp
+srcs
