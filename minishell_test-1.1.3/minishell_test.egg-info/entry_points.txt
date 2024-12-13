@@ -1,3 +1,0 @@
-[console_scripts]
-minishell_test = minishell_test.__main__:main
-
