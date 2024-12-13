@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:01:05 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/13 14:32:03 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/13 15:29:10 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,23 @@ int	parse(t_token **list, char **line, t_shell *shell)
 		return (1);
 	}
 	fill_list(strarr, list);
+	return (0);
+}
+
+int	check_input(char *s)
+{
+	if (count_c(s, '"') % 2 != 0)
+	{
+		free_input(s, '"');
+		return (1);
+	}
+	if (count_c(s, 39) % 2 != 0)
+	{
+		free_input(s, '\'');
+		return (1);
+	}
+	if (check_ops(s) != 0 || check_ends(s) != 0)
+		return (2);
 	return (0);
 }
 

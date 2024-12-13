@@ -6,30 +6,55 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:59:24 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/13 14:45:15 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/13 15:29:22 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_ops2(char *s, int i)
+int	check_rd(char *s, int i)
 {
 	int	j;
 
-	j = i;
-	if ((i > 1 && (s[i] == s[i - 1] && s[i] == s[i - 2])) || (i > 0
-			&& (s[i - 1] != s[i] && is_op(s[i - 1]))))
+	if (s[i] == '<' || s[i] == '>')
 	{
-		free_input(s, s[i]);
-		return (1);
+		if ((i > 1 && (s[i] == s[i - 1] && s[i] == s[i - 2])) || (i > 0
+				&& (s[i - 1] != s[i] && (s[i - 1] == '>' || s[i - 1] == '<'))))
+		{
+			free_input(s, s[i]);
+			return (1);
+		}
+		j = i + 1;
+		while (s[j] == ' ')
+			j++;
+		if ((s[j] == '>' || s[j] == '<') && j != i + 1)
+		{
+			free_input(s, s[i]);
+			return (2);
+		}
 	}
-	j = i + 1;
-	while (s[j] == ' ')
-		j++;
-	if ((s[j] == '>' || s[j] == '<') && j != i + 1)
+	return (0);
+}
+
+int	check_pe(char *s, int i)
+{
+	int	j;
+
+	if (s[i] == '|' || s[i] == '=')
 	{
-		free_input(s, s[i]);
-		return (2);
+		if (i > 0 && (is_op(s[i - 1])))
+		{
+			free_input(s, s[i]);
+			return (1);
+		}
+		j = i + 1;
+		while (s[j] == ' ')
+			j++;
+		if ((s[j] == '|' || s[j] == '=') && j != i + 1)
+		{
+			free_input(s, s[i]);
+			return (2);
+		}
 	}
 	return (0);
 }
@@ -42,27 +67,16 @@ int	check_ops(char *s)
 	while (s[i] != '\0')
 	{
 		i = skip_quoted(s, i);
-		if (s[i] == '|' || s[i] == '=')
-		{
-			if (i > 0 && (is_op(s[i - 1])))
-			{
-				free_input(s, s[i]);
-				return (1);
-			}
-		}
-		if (s[i] == '<' || s[i] == '>')
-		{
-			if (check_ops2(s, i) != 0)
-			{
-				return (2);
-			}
-		}
+		if (check_pe(s, i) != 0)
+			return (1);
+		if (check_rd(s, i) != 0)
+			return (2);
 		i++;
 	}
 	return (0);
 }
 
-static int	count_c(char *s, char c)
+int	count_c(char *s, char c)
 {
 	int	i;
 	int	count;
@@ -114,22 +128,5 @@ int	check_ends(char *s)
 		free_input(s, s[i]);
 		return (3);
 	}
-	return (0);
-}
-
-int	check_input(char *s)
-{
-	if (count_c(s, '"') % 2 != 0)
-	{
-		free_input(s, '"');
-		return (1);
-	}
-	if (count_c(s, 39) % 2 != 0)
-	{
-		free_input(s, '\'');
-		return (1);
-	}
-	if (check_ops(s) != 0 || check_ends(s) != 0)
-		return (2);
 	return (0);
 }

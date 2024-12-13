@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:01 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/13 13:14:34 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/13 15:30:47 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,12 @@ typedef struct s_execute
 int						parse(t_token **start, char **line, t_shell *shell);
 int						cmd_split(char const *s, char ***strarr);
 int						fill_list(char **strarr, t_token **list);
+int						check_input(char *s);
 
 // chck_input.c
-int						check_input(char *s);
 int						check_ends(char *s);
 int						check_ops(char *s);
+int						count_c(char *s, char c);
 
 // variables.c
 void					check_vars(char **line, t_shell *shell);
