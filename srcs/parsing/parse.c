@@ -6,7 +6,7 @@
 /*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:01:05 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/12 18:20:43 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/13 14:06:41 by junruh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	parse(t_token **list, char **line, t_shell *shell)
 	if (check_input(*line) != 0)
 		return (1);
 	check_vars(line, shell);
+	if (line[0][0] == '\0')
+		set_exit_status(EXIT_SUCCESS);
 	if (check_ops(*line) != 0 || check_ends(*line) != 0)
 		return (1);
 	arrsize = cmd_split(*line, &strarr);
@@ -30,7 +32,7 @@ int	parse(t_token **list, char **line, t_shell *shell)
 		rl_clear_history();
 		exit(2);
 	}
-	if (arrsize == 0)
+	if (arrsize == 0 || strarr[0] == NULL)
 	{
 		set_exit_status(EXIT_SUCCESS);
 		return (1);
@@ -44,6 +46,7 @@ int	cmd_split(char const *s, char ***strarr)
 	int		ccount;
 
 	ccount = ft_ccount(s);
+
 	*strarr = malloc(sizeof(char *) * (ccount + 1));
 	if (!strarr[0])
 	{
