@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:07 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/12 16:59:07 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/13 12:38:17 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ int	exit_malloc_err(t_shell *shell)
 int	abort_exec(char *msg, t_shell *shell)
 {
 	ft_putstr_fd(msg, STDERR_FILENO);
+	clean_heredocs(shell->execute);
 	clean_exec(shell);
 	clean_tokens(shell);
-	return (EXEC_ERROR);
+	clean_shell(shell);
+	exit (EXEC_ERROR);
 }

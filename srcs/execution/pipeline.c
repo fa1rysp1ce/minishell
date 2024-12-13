@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:08 by inbar             #+#    #+#             */
-/*   Updated: 2024/12/12 16:54:54 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/13 12:41:10 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	pipeline(t_shell *shell)
 	free(shell->execute->pid);
 }
 
+//wait for all child processes to terminate and updates their exit status
 static void	wait_pids(t_execute *exec, int *status)
 {
 	int	cmd_count;
@@ -68,10 +69,10 @@ static int	fork_pipeline(t_shell *shell, int pipe_fd[2][2], int last_pipe,
 	{
 		if (cmd_count < shell->execute->cmds - 1)
 			if (pipe(pipe_fd[new_pipe]) < 0)
-				return (abort_exec("Error: pipe\n", shell));
+				abort_exec("Error: pipe\n", shell);
 		shell->execute->pid[cmd_count] = fork();
 		if (shell->execute->pid[cmd_count] < 0)
-			return (abort_exec("Error: fork\n", shell));
+			abort_exec("Error: fork\n", shell);
 		if (shell->execute->pid[cmd_count] == 0)
 			child_exec(shell, pipe_fd, last_pipe, cmd_count);
 		if (cmd_count > 0 && shell->execute->cmds > 1)

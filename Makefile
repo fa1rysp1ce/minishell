@@ -6,7 +6,7 @@
 #    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/29 15:27:39 by inbar             #+#    #+#              #
-#    Updated: 2024/12/12 13:55:01 by ilazar           ###   ########.fr        #
+#    Updated: 2024/12/13 12:44:13 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIB_PATH = $(addprefix $(LIB_DIR)/,$(LIB))
 LIB_LINK = -L$(LIB_DIR)
 
 
-MAIN_SRCS = main.c errors.c debug.c clean_free.c debug_nodes.c
+MAIN_SRCS = main.c errors.c clean_free.c
 
 PARSING_SRCS =  exit_funcs.c variables.c nodes.c parse.c \
 		cmd_split.c check_input.c fill_list.c helpers.c

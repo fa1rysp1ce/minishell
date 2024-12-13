@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+t_token					*add_node_inbar(t_token **node);
+void					init_tokens(t_token **head);
+void					clean_tokens_inbar(t_token **head_token);
+void					print_list_inbar(t_token **head);
+
+
 // a main for debuging purposes
 int	main(int ac, char **av, char **env)
 {

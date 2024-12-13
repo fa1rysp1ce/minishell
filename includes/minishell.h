@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junruh <junruh@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:28:01 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/12 18:28:07 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/13 12:45:26 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 
 // Costum errors
 # define MALLOC_ERROR -1
-# define EXEC_ERROR -2
+# define EXEC_ERROR -2	  // pipe or fork error
 
 // pipes
 # define READ_END 0
@@ -145,13 +145,6 @@ int						is_op(char c);
 // exec_paths
 char					*get_cmd_path(t_shell *shell, int *status);
 
-// jake nodes
-t_token					*add_node_inbar(t_token **node);
-void					init_tokens(t_token **head);
-void					clean_tokens_inbar(t_token **head_token);
-void					print_list_inbar(t_token **head);
-// remember to remove the jake_nodes file from the makefile
-
 // signals
 void					signal_interactive(void);
 void					signal_noninteractive(void);
@@ -236,8 +229,5 @@ void					exit_error(char *str);
 void					error_msg(char *name, char *msg);
 int						exit_malloc_err(t_shell *shell);
 int						abort_exec(char *msg, t_shell *shell);
-
-// debug
-void					print_2darray(char **arr);
 
 #endif

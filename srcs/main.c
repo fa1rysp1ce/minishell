@@ -1,13 +1,18 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/13 12:46:28 by ilazar            #+#    #+#             */
+/*   Updated: 2024/12/13 12:51:57 by ilazar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_history(char *line)
-{
-	add_history(line);
-	rl_replace_line((const char *)line, 0);
-	rl_redisplay();
-}
+static void	set_history(char *line);
 
 int	main(int ac, char **av, char **env)
 {
@@ -36,4 +41,11 @@ int	main(int ac, char **av, char **env)
 	}
 	clean_shell(&shell);
 	return (get_exit_status());
+}
+
+static void	set_history(char *line)
+{
+	add_history(line);
+	rl_replace_line((const char *)line, 0);
+	rl_redisplay();
 }
