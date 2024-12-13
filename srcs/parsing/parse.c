@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junruh <junruh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:01:05 by junruh            #+#    #+#             */
-/*   Updated: 2024/12/13 14:06:41 by junruh           ###   ########.fr       */
+/*   Updated: 2024/12/13 14:32:03 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	cmd_split(char const *s, char ***strarr)
 	int		ccount;
 
 	ccount = ft_ccount(s);
-
 	*strarr = malloc(sizeof(char *) * (ccount + 1));
 	if (!strarr[0])
 	{

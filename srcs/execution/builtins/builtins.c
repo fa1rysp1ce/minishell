@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 19:04:11 by ilazar            #+#    #+#             */
-/*   Updated: 2024/12/13 14:05:31 by ilazar           ###   ########.fr       */
+/*   Updated: 2024/12/13 14:31:14 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int	env(t_shell *shell)
 {
 	int	i;
 
+	if (shell->token->args[1] != NULL)
+	{
+		error_msg(shell->token->args[1], "No such file or directory");
+		return (NO_CMD);
+	}
 	i = 0;
 	while (shell->envc[i] != NULL)
 	{
